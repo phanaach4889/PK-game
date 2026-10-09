@@ -261,6 +261,10 @@
       background: linear-gradient(90deg, #0077ff, #00f0ff, #99ffff);
     }
 
+    #katanaBar {
+      background: linear-gradient(90deg, #ff0077, #ff66b2, #ffe600);
+    }
+
     #overdriveBar {
       background: linear-gradient(90deg, #ff0077, #ffe600, #00f0ff, #ff0077);
       background-size: 200% 100%;
@@ -319,7 +323,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
       contain: layout style;
       transition: opacity 0.2s ease;
     }
@@ -335,6 +339,7 @@
       backdrop-filter: blur(4px);
       padding: 3px 12px;
       border-radius: 99px;
+      pointer-events: auto;
     }
 
     .score-display {
@@ -360,6 +365,98 @@
       border: 1px solid rgba(0, 240, 255, 0.24);
       border-radius: 99px;
       white-space: nowrap;
+    }
+
+    .threat-badge {
+      font-size: 0.56rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      color: #ff2a55;
+      padding: 2px 8px;
+      background: rgba(255, 0, 85, 0.14);
+      border: 1px solid rgba(255, 0, 85, 0.45);
+      border-radius: 99px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .threat-badge:hover {
+      background: rgba(255, 0, 85, 0.28);
+      transform: scale(1.04);
+    }
+
+    /* Live Interactive Cyber-Contract HUD Banner */
+    .contract-tracker {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 268px;
+      max-width: 360px;
+      background: linear-gradient(160deg, rgba(10, 14, 30, 0.72), rgba(4, 6, 16, 0.8));
+      border: 1px solid rgba(255, 230, 0, 0.42);
+      border-left: 3px solid var(--yellow);
+      border-radius: 6px;
+      padding: 4px 10px 5px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+      pointer-events: auto;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.2s ease;
+    }
+
+    .contract-tracker:hover {
+      transform: translateY(-1px);
+      border-color: var(--cyan);
+    }
+
+    .contract-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.58rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: var(--yellow);
+      text-transform: uppercase;
+    }
+
+    .contract-timer-pill {
+      font-family: 'Courier New', monospace;
+      font-size: 0.56rem;
+      font-weight: 900;
+      color: #ffffff;
+      background: rgba(255, 0, 119, 0.25);
+      border: 1px solid rgba(255, 0, 119, 0.5);
+      padding: 0 5px;
+      border-radius: 3px;
+    }
+
+    .contract-sub-row {
+      font-size: 0.54rem;
+      color: #cbd5e1;
+      text-align: left;
+      letter-spacing: 0.04em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .contract-bar-bg {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .contract-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--yellow), var(--magenta));
+      transition: width 0.12s ease;
     }
 
     .combo-badge {
@@ -738,6 +835,115 @@
       transition: width 0.1s;
     }
 
+    /* Tactical Active Cyber-Skill Hotbar Dock */
+    .skill-hotbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 5px 10px;
+      background: linear-gradient(180deg, rgba(8, 12, 26, 0.72) 0%, rgba(3, 5, 14, 0.86) 100%);
+      border: 1px solid rgba(0, 240, 255, 0.28);
+      border-bottom: 2px solid var(--cyan);
+      border-radius: 10px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+      pointer-events: auto;
+    }
+
+    .skill-slot {
+      position: relative;
+      width: 96px;
+      padding: 5px 7px 4px;
+      background: rgba(12, 18, 36, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-top: 2px solid var(--slot-color, var(--cyan));
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.14s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .skill-slot:hover {
+      transform: translateY(-2px);
+      border-color: var(--slot-color, var(--cyan));
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+    }
+
+    .skill-slot.skill-ready {
+      border-color: var(--slot-color, var(--cyan));
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.16);
+    }
+
+    .skill-slot.skill-active {
+      background: rgba(255, 230, 0, 0.18);
+      border-color: #ffe600;
+      box-shadow: 0 0 16px rgba(255, 230, 0, 0.45);
+    }
+
+    .skill-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .skill-key-pill {
+      font-family: 'Courier New', monospace;
+      font-size: 0.54rem;
+      font-weight: 900;
+      color: #030712;
+      background: var(--slot-color, var(--cyan));
+      padding: 1px 5px;
+      border-radius: 3px;
+      letter-spacing: 0.04em;
+    }
+
+    .skill-status-text {
+      font-family: 'Courier New', monospace;
+      font-size: 0.5rem;
+      font-weight: 900;
+      color: #e2e8f0;
+      letter-spacing: 0.04em;
+    }
+
+    .skill-name-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.54rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      color: #ffffff;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .skill-name-row svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      stroke: var(--slot-color, var(--cyan));
+    }
+
+    .skill-cd-bar {
+      width: 100%;
+      height: 3.5px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .skill-cd-fill {
+      height: 100%;
+      width: 100%;
+      background: var(--slot-color, var(--cyan));
+      transition: width 0.08s linear;
+    }
+
     .quick-tips {
       font-size: 0.58rem;
       letter-spacing: 0.1em;
@@ -857,11 +1063,47 @@
 
     .controls-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      max-width: 720px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 780px;
       width: 100%;
-      margin-bottom: 32px;
+      margin-bottom: 18px;
+    }
+
+    .threat-selector-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .threat-mode-btn {
+      background: rgba(12, 18, 34, 0.78);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      color: #cbd5e1;
+      padding: 8px 16px;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .threat-mode-btn.selected {
+      border-color: var(--magenta);
+      color: #ffffff;
+      background: rgba(255, 0, 119, 0.24);
+      box-shadow: 0 0 18px rgba(255, 0, 119, 0.45);
+    }
+
+    .threat-mode-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--yellow);
+      color: var(--yellow);
     }
 
     @media (max-width: 680px) {
@@ -877,7 +1119,7 @@
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(0, 240, 255, 0.2);
       border-radius: 12px;
-      padding: 14px 10px;
+      padding: 11px 10px;
       transition: transform 0.2s, border-color 0.2s;
     }
 
@@ -1306,34 +1548,469 @@
       cursor: not-allowed;
     }
 
-    .stats-summary {
-      display: flex;
-      gap: 24px;
-      margin-bottom: 30px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 16px 28px;
-      border-radius: 14px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .stat-box {
+    /* =========================================================================
+       CYBERPUNK BLACK-BOX POST-MORTEM DOSSIER (#gameOverScreen)
+       ========================================================================= */
+    .gameover-dossier {
+      width: min(920px, 95vw);
+      background: linear-gradient(165deg, rgba(10, 14, 28, 0.94) 0%, rgba(5, 7, 16, 0.97) 60%, rgba(24, 6, 22, 0.94) 100%);
+      border: 1.5px solid rgba(255, 0, 119, 0.55);
+      clip-path: polygon(22px 0, calc(100% - 22px) 0, 100% 22px, 100% calc(100% - 22px), calc(100% - 22px) 100%, 22px 100%, 0 calc(100% - 22px), 0 22px);
+      box-shadow:
+        0 24px 65px rgba(0, 0, 0, 0.92),
+        0 0 42px rgba(255, 0, 119, 0.22),
+        inset 0 0 28px rgba(0, 240, 255, 0.06);
+      padding: 20px 26px 22px;
+      position: relative;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 14px;
+      animation: dossierReveal 0.36s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .stat-label {
+    @keyframes dossierReveal {
+      0% { opacity: 0; transform: scale(0.92) translateY(18px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .gameover-dossier::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        180deg,
+        transparent 0px,
+        transparent 3px,
+        rgba(255, 0, 119, 0.03) 3px,
+        rgba(255, 0, 119, 0.03) 4px
+      );
+      pointer-events: none;
+    }
+
+    .go-header-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 0, 119, 0.32);
+      position: relative;
+    }
+
+    .go-header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .go-crest-svg {
+      width: 68px;
+      height: 68px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 14px rgba(255, 0, 119, 0.55));
+    }
+
+    .go-alert-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Courier New', monospace;
       font-size: 0.72rem;
-      letter-spacing: 0.15em;
+      font-weight: 900;
+      letter-spacing: 0.24em;
+      color: #ff2a55;
+      background: rgba(255, 0, 85, 0.14);
+      border: 1px solid rgba(255, 0, 85, 0.45);
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    .go-main-title {
+      font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      line-height: 1.05;
+      color: #ffffff;
+      text-transform: uppercase;
+      text-shadow: 3px 3px 0px #ff0077, 0 0 22px rgba(255, 0, 119, 0.65);
+    }
+
+    .go-sub-telemetry {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      color: #94a3b8;
+      letter-spacing: 0.12em;
+      margin-top: 4px;
+    }
+
+    .go-record-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+    }
+
+    .go-record-badge {
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      padding: 5px 12px;
+      border-radius: 6px;
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid rgba(0, 240, 255, 0.45);
+      color: var(--cyan);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .go-record-badge.new-record {
+      background: linear-gradient(90deg, rgba(255, 230, 0, 0.24), rgba(255, 0, 119, 0.24));
+      border-color: var(--yellow);
+      color: var(--yellow);
+      box-shadow: 0 0 18px rgba(255, 230, 0, 0.45);
+      animation: pulsePip 1s infinite;
+    }
+
+    /* Hero Row: Tactical Rank Medallion + Primary Score Comparison */
+    .go-hero-row {
+      display: grid;
+      grid-template-columns: 255px 1fr;
+      gap: 14px;
+    }
+
+    .go-rank-card {
+      background: linear-gradient(145deg, rgba(16, 22, 42, 0.9), rgba(8, 11, 24, 0.95));
+      border: 1.5px solid var(--rank-color, #ffe600);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: inset 0 0 22px rgba(255, 230, 0, 0.08), 0 0 18px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .go-rank-medallion {
+      width: 68px;
+      height: 68px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(255, 230, 0, 0.18) 0%, rgba(5, 8, 20, 0.95) 75%);
+      border: 2px solid var(--rank-color, #ffe600);
+      clip-path: polygon(28% 0%, 72% 0%, 100% 28%, 100% 72%, 72% 100%, 28% 100%, 0% 72%, 0% 28%);
+      font-size: 2.1rem;
+      font-weight: 900;
+      font-style: italic;
+      color: var(--rank-color, #ffe600);
+      text-shadow: 0 0 16px var(--rank-color, #ffe600);
+    }
+
+    .go-rank-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      gap: 3px;
+    }
+
+    .go-rank-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.64rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      color: #94a3b8;
+    }
+
+    .go-rank-title {
+      font-size: 0.96rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .go-rank-sub {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--rank-color, #ffe600);
+      letter-spacing: 0.05em;
+    }
+
+    .go-score-card {
+      background: linear-gradient(145deg, rgba(12, 19, 38, 0.9), rgba(6, 10, 22, 0.95));
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 10px;
+      padding: 12px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .go-score-split {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .go-score-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    .go-score-block.right {
+      align-items: flex-end;
+    }
+
+    .go-score-Val {
+      font-size: clamp(1.65rem, 2.8vw, 2.25rem);
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      color: var(--cyan);
+      text-shadow: 0 0 16px rgba(0, 240, 255, 0.55);
+      line-height: 1.05;
+    }
+
+    .go-best-val {
+      font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      color: var(--green);
+      text-shadow: 0 0 14px rgba(0, 255, 136, 0.45);
+      line-height: 1.05;
+    }
+
+    .go-record-progress-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .go-record-bar-bg {
+      flex: 1;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .go-record-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--green), var(--yellow));
+      border-radius: 99px;
+      transition: width 0.5s ease;
+    }
+
+    .go-record-pct {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #cbd5e1;
+      letter-spacing: 0.08em;
+    }
+
+    /* 6-Card Tactical Telemetry Grid */
+    .go-telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+    }
+
+    .go-stat-card {
+      background: rgba(10, 16, 32, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 2.5px solid var(--stat-accent, #00f0ff);
+      border-radius: 8px;
+      padding: 10px 10px 9px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      gap: 3px;
+      position: relative;
+    }
+
+    .go-stat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
       color: #94a3b8;
       text-transform: uppercase;
     }
 
-    .stat-val {
-      font-size: 1.6rem;
+    .go-stat-top svg {
+      width: 13px;
+      height: 13px;
+      stroke: var(--stat-accent, #00f0ff);
+      flex-shrink: 0;
+    }
+
+    .go-stat-num {
+      font-size: 1.28rem;
       font-weight: 900;
+      color: var(--stat-accent, #00f0ff);
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+    }
+
+    .go-stat-sub {
+      font-family: 'Courier New', monospace;
+      font-size: 0.63rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      opacity: 0.85;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    /* Installed Cyber-Augmentation Loadout Strip */
+    .go-loadout-panel {
+      background: rgba(7, 11, 24, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .go-loadout-title {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      color: #94a3b8;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .go-loadout-list {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    .go-perk-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--chip-color, #00f0ff);
+      color: #f8fafc;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .go-perk-chip svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .go-perk-chip .chip-lvl {
+      color: var(--chip-color, #00f0ff);
+      font-weight: 900;
+    }
+
+    /* Footer Actions & Threat Switcher */
+    .go-footer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .go-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-reboot-cyber {
+      position: relative;
+      padding: 13px 32px;
+      font-size: 0.96rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #04060e;
+      background: linear-gradient(90deg, #00f0ff 0%, #00ff88 52%, #ffe600 100%);
+      border: none;
+      clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+      cursor: pointer;
+      box-shadow: 0 0 28px rgba(0, 240, 255, 0.55);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-reboot-cyber:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 38px rgba(0, 255, 136, 0.85), 0 0 18px rgba(255, 230, 0, 0.6);
+      filter: brightness(1.08);
+    }
+
+    .btn-terminal-sec {
+      padding: 12px 20px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #cbd5e1;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(148, 163, 184, 0.4);
+      clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .btn-terminal-sec:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.3);
+    }
+
+    @media (max-width: 820px) {
+      .go-hero-row {
+        grid-template-columns: 1fr;
+      }
+      .go-telemetry-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .go-footer-bar {
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -1389,6 +2066,19 @@
         <div class="stat-row">
           <div class="bar-label">
             <span class="label-left">
+              <svg viewBox="0 0 16 16" fill="none" stroke="#ff0077" stroke-width="1.8">
+                <path d="M2.5 13.5L13.5 2.5M9.5 2.5H13.5V6.5M4.5 9.5L6.5 11.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>KATANA [Q]</span>
+            </span>
+            <span class="stat-readout-pill" id="katanaText">READY</span>
+          </div>
+          <div class="bar-container"><div id="katanaBar" class="bar-fill" style="width: 100%;"></div></div>
+        </div>
+
+        <div class="stat-row">
+          <div class="bar-label">
+            <span class="label-left">
               <svg viewBox="0 0 16 16" fill="none" stroke="#ffe600" stroke-width="1.8">
                 <circle cx="8" cy="8" r="3.2"/>
                 <path d="M8 1V3.2M8 12.8V15M1 8H3.2M12.8 8H15M3.1 3.1L4.7 4.7M11.3 11.3L12.9 12.9M12.9 3.1L11.3 4.7M4.7 11.3L3.1 12.9" stroke-linecap="round"/>
@@ -1421,7 +2111,21 @@
         <div class="center-top-ribbon">
           <div class="score-display" id="scoreDisplay">0</div>
           <div class="wave-badge" id="waveDisplay">SECTOR 1</div>
+          <div class="threat-badge" id="threatBadge" title="Click or press [T] to cycle Enemy Threat Level">💀 HARDENED 1.4x</div>
           <div class="zone-badge" id="zoneDisplay">NEXUS CORE</div>
+        </div>
+        <div class="contract-tracker" id="contractTracker" title="Click or press [C] to launch a new Live Cyber-Contract">
+          <div class="contract-top-row">
+            <span id="contractTitle">🎯 LIVE CONTRACT // STANDBY</span>
+            <span class="contract-timer-pill" id="contractTimer">[C] START</span>
+          </div>
+          <div class="contract-sub-row">
+            <span id="contractDesc">Press [C] anytime to deploy Slalom, Heist, or VIP Bounty!</span>
+            <span id="contractProgText" style="color: var(--cyan); font-weight: 800;">0%</span>
+          </div>
+          <div class="contract-bar-bg">
+            <div class="contract-bar-fill" id="contractBar"></div>
+          </div>
         </div>
         <div class="combo-badge" id="comboDisplay">x2 OVERCLOCK</div>
         <div class="killstreak-banner" id="announcementBanner">SYSTEM INITIALIZED</div>
@@ -1494,7 +2198,7 @@
           <canvas id="radarCanvas" width="122" height="122"></canvas>
           <div class="radar-legend">
             <span><i class="r-dot" style="background:#00f0ff"></i>SHRN</span>
-            <span><i class="r-dot" style="background:#ffe600"></i>VLT</span>
+            <span><i class="r-dot" style="background:#ffe600"></i>EVT</span>
             <span><i class="r-dot" style="background:#00ff88"></i>TRT</span>
             <span><i class="r-dot" style="background:#d946ef"></i>WRP</span>
           </div>
@@ -1512,8 +2216,71 @@
           <div id="bossHpBar"></div>
         </div>
       </div>
+
+      <div class="skill-hotbar" id="skillHotbar">
+        <div class="skill-slot skill-ready" id="skillSlotQ" style="--slot-color: #00ff88;" title="[Q] or Middle-Click: Cyber-Katana Crescent Slash &amp; 3x Bullet Parry">
+          <div class="skill-top">
+            <span class="skill-key-pill">[Q]</span>
+            <span class="skill-status-text" id="skillTextQ">READY</span>
+          </div>
+          <div class="skill-name-row">
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M2 14L14 2M9 2H14V7"/></svg>
+            <span>KATANA</span>
+          </div>
+          <div class="skill-cd-bar"><div class="skill-cd-fill" id="skillBarQ"></div></div>
+        </div>
+
+        <div class="skill-slot skill-ready" id="skillSlotR" style="--slot-color: #00f0ff;" title="[R]: Omega Ion Cannon — Continuous Sweeping Hyper-Laser that vaporizes bullets &amp; melts armor">
+          <div class="skill-top">
+            <span class="skill-key-pill">[R]</span>
+            <span class="skill-status-text" id="skillTextR">READY</span>
+          </div>
+          <div class="skill-name-row">
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><circle cx="4" cy="8" r="2.5"/><line x1="6.5" y1="8" x2="15" y2="8"/><line x1="8" y1="5" x2="15" y2="5" stroke-opacity="0.6"/><line x1="8" y1="11" x2="15" y2="11" stroke-opacity="0.6"/></svg>
+            <span>ION BEAM</span>
+          </div>
+          <div class="skill-cd-bar"><div class="skill-cd-fill" id="skillBarR"></div></div>
+        </div>
+
+        <div class="skill-slot skill-ready" id="skillSlotF" style="--slot-color: #d946ef;" title="[F]: Chrono-Stasis Dome — Freezes enemies/bullets &amp; +50% DMG! Press [F] again to detonate!">
+          <div class="skill-top">
+            <span class="skill-key-pill">[F]</span>
+            <span class="skill-status-text" id="skillTextF">READY</span>
+          </div>
+          <div class="skill-name-row">
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><circle cx="8" cy="8" r="6"/><polyline points="8,4.5 8,8 10.8,9.8"/></svg>
+            <span>CHRONO DOME</span>
+          </div>
+          <div class="skill-cd-bar"><div class="skill-cd-fill" id="skillBarF"></div></div>
+        </div>
+
+        <div class="skill-slot skill-ready" id="skillSlotX" style="--slot-color: #ffe600;" title="[X]: Phantom Decoy &amp; 12-Missile Macross Swarm Barrage">
+          <div class="skill-top">
+            <span class="skill-key-pill">[X]</span>
+            <span class="skill-status-text" id="skillTextX">READY</span>
+          </div>
+          <div class="skill-name-row">
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><polygon points="8,2 13,13 8,10.5 3,13"/><circle cx="8" cy="6" r="1.5"/></svg>
+            <span>PHANTOM SALVO</span>
+          </div>
+          <div class="skill-cd-bar"><div class="skill-cd-fill" id="skillBarX"></div></div>
+        </div>
+
+        <div class="skill-slot" id="skillSlotE" style="--slot-color: #ff0077;" title="[E] or Right-Click: Overdrive Supernova Ultimate (Requires 100% Charge)">
+          <div class="skill-top">
+            <span class="skill-key-pill">[E]</span>
+            <span class="skill-status-text" id="skillTextE">0%</span>
+          </div>
+          <div class="skill-name-row">
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><polygon points="9,1 3,9 8,9 7,15 13,7 8,7"/></svg>
+            <span>OVERDRIVE</span>
+          </div>
+          <div class="skill-cd-bar"><div class="skill-cd-fill" id="skillBarE" style="width: 0%;"></div></div>
+        </div>
+      </div>
+
       <div class="quick-tips">
-        <span>[WASD]</span> THRUST &nbsp;•&nbsp; <span>[SPACE]</span> DASH &nbsp;•&nbsp; <span>[E / R-CLICK]</span> NOVA &nbsp;•&nbsp; <span>[F]</span> AUTO-FIRE
+        <span>[SPACE]</span> DASH &nbsp;•&nbsp; <span>[Q]</span> KATANA &nbsp;•&nbsp; <span>[R]</span> ION BEAM &nbsp;•&nbsp; <span>[F]</span> CHRONO DOME &nbsp;•&nbsp; <span>[X]</span> PHANTOM SALVO &nbsp;•&nbsp; <span>[E]</span> NOVA &nbsp;•&nbsp; <span>[C]</span> CONTRACT
       </div>
     </div>
   </div>
@@ -1672,26 +2439,40 @@
       </svg>
     </div>
     <p class="game-desc">
-      Drop into a vast beat-reactive open cyber-sector with a live procedural Darksynth soundtrack. Explore 5 biomes, unlock ancient shrines, vaporize escalating sentinel fleets, and trigger <strong>OVERDRIVE NOVA</strong>.
+      Drop into an overclocked cyber-sector against <strong>HARDENED SENTINEL ARMADAS</strong>. Unleash <strong>[Q] CYBER-KATANA PARRY</strong>, sweep the <strong>[R] OMEGA ION LASER</strong>, freeze time with <strong>[F] CHRONO SINGULARITY</strong>, deploy <strong>[X] PHANTOM SWARM SALVOS</strong>, and conquer <strong>[C] LIVE CONTRACTS</strong>!
     </p>
 
     <div class="controls-grid">
       <div class="control-card">
-        <div class="key-badge">WASD / ARROWS</div>
-        <div style="font-size: 0.8rem; color: #cbd5e1;">Vector Drift Thrust</div>
+        <div class="key-badge" style="border-color: #00ff88; color: #00ff88; background: rgba(0,255,136,0.16);">[Q] / MID-CLICK</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1;">Cyber-Katana &amp; 3x Parry</div>
       </div>
       <div class="control-card">
-        <div class="key-badge">CLICK / [F] AUTO</div>
-        <div style="font-size: 0.8rem; color: #cbd5e1;">Plasma & Rail Cannons</div>
+        <div class="key-badge" style="border-color: var(--cyan); color: var(--cyan); background: rgba(0,240,255,0.16);">[R] OMEGA BEAM</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1;">Sweeping Hyper-Ion Laser</div>
       </div>
       <div class="control-card">
-        <div class="key-badge">SPACE / SHIFT</div>
-        <div style="font-size: 0.8rem; color: #cbd5e1;">Phase Dash + Bullet-Time</div>
+        <div class="key-badge" style="border-color: #d946ef; color: #f0abfc; background: rgba(217,70,239,0.18);">[F] CHRONO DOME</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1;">Time-Stop Field + Shatter</div>
       </div>
       <div class="control-card">
-        <div class="key-badge">E / RIGHT-CLICK</div>
-        <div style="font-size: 0.8rem; color: #cbd5e1;">Overdrive Supernova</div>
+        <div class="key-badge" style="border-color: var(--yellow); color: var(--yellow); background: rgba(255,230,0,0.16);">[X] PHANTOM SALVO</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1;">Holo-Decoy + 12x Missiles</div>
       </div>
+      <div class="control-card">
+        <div class="key-badge" style="border-color: var(--magenta); color: #ff66b2; background: rgba(255,0,119,0.18);">[E] / [SPACE]</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1;">Overdrive Nova &amp; Phase Dash</div>
+      </div>
+      <div class="control-card">
+        <div class="key-badge">[C] CONTRACT / [G] AUTO</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1;">Live Missions &amp; Auto-Fire</div>
+      </div>
+    </div>
+
+    <div class="threat-selector-bar" id="threatSelectorBar">
+      <button class="threat-mode-btn selected" data-threat="0">💀 HARDENED FLEET (1.4x)</button>
+      <button class="threat-mode-btn" data-threat="1">🔥 OVERKILL SWARM (2.0x)</button>
+      <button class="threat-mode-btn" data-threat="2">👑 APEX GODSLAYER (2.8x)</button>
     </div>
 
     <button class="btn-main" id="startBtn">⚡ INITIALIZE PROTOCOL &amp; DROP BEAT</button>
@@ -1713,31 +2494,151 @@
     </div>
   </div>
 
-  <!-- GAME OVER SCREEN -->
+  <!-- GAME OVER SCREEN (CYBERPUNK BLACK-BOX POST-MORTEM DOSSIER) -->
   <div class="overlay hidden" id="gameOverScreen">
-    <div style="font-size: 1.05rem; letter-spacing: 0.35em; color: var(--magenta); font-weight: 800; margin-bottom: 10px;">
-      // CRITICAL SYSTEM FAILURE //
+    <div class="gameover-dossier">
+      <!-- 1. Header Banner with Custom Critical Alert SVG Crest -->
+      <div class="go-header-banner">
+        <div class="go-header-left">
+          <svg class="go-crest-svg" viewBox="-74 -74 148 148" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="0,-68 48,-48 68,0 48,48 0,68 -48,48 -68,0 -48,-48" fill="#090614" stroke="#ff0077" stroke-width="4"/>
+            <polygon class="crest-glitch-ring" points="0,-58 41,-41 58,0 41,41 0,58 -41,41 -58,0 -41,-41" fill="none" stroke="#00f0ff" stroke-width="2" stroke-dasharray="16 8"/>
+            <path d="M-52,-22 L-62,-12 L-62,12 L-52,22" stroke="#ffe600" stroke-width="3"/>
+            <path d="M52,-22 L62,-12 L62,12 L52,22" stroke="#ffe600" stroke-width="3"/>
+            <polygon points="8,-68 -20,-6 4,-6 -12,68 24,2 -2,2" fill="#ff0077" opacity="0.88"/>
+            <g transform="rotate(-35)">
+              <polygon points="36,0 6,-11 -8,-30 -26,-19 -15,-6 -22,0 -15,6 -26,19 -8,30 6,11" fill="#050814" stroke="#ffe600" stroke-width="3"/>
+              <polygon points="22,0 -4,-7 -11,0 -4,7" fill="#ff0077"/>
+            </g>
+          </svg>
+          <div>
+            <div class="go-alert-tag">
+              <span>⚠️ SYS.ERR // CRITICAL HULL BREACH</span>
+            </div>
+            <h2 class="go-main-title">PROTOCOL TERMINATED</h2>
+            <div class="go-sub-telemetry" id="goCauseText">BLACK-BOX FLIGHT RECORDER // VALKYRIE MK-IV TELEMETRY ARCHIVED</div>
+          </div>
+        </div>
+
+        <div class="go-record-pill">
+          <div class="go-record-badge" id="goRecordBadge">// BLACK-BOX ARCHIVED //</div>
+          <div class="go-sub-telemetry" id="goThreatTag">THREAT: 💀 HARDENED (1.4x)</div>
+        </div>
+      </div>
+
+      <!-- 2. Hero Row: Tactical Rank Medallion + Primary Score Comparison -->
+      <div class="go-hero-row">
+        <div class="go-rank-card" id="goRankCard" style="--rank-color: #ffe600;">
+          <div class="go-rank-medallion" id="goRankLetter">S</div>
+          <div class="go-rank-info">
+            <span class="go-rank-label">COMBAT RATING</span>
+            <span class="go-rank-title" id="goRankTitle">OMEGA VALKYRIE</span>
+            <span class="go-rank-sub" id="goRankSub">TOP TIER INTERCEPTOR</span>
+          </div>
+        </div>
+
+        <div class="go-score-card">
+          <div class="go-score-split">
+            <div class="go-score-block">
+              <span class="stat-label">FINAL COMBAT SCORE</span>
+              <span class="go-score-Val" id="finalScore">0</span>
+            </div>
+            <div class="go-score-block right">
+              <span class="stat-label">ALL-TIME HIGH SCORE</span>
+              <span class="go-best-val" id="bestScore">0</span>
+            </div>
+          </div>
+          <div class="go-record-progress-row">
+            <span class="go-record-pct">RECORD SYNC</span>
+            <div class="go-record-bar-bg">
+              <div class="go-record-bar-fill" id="goRecordBar" style="width: 100%;"></div>
+            </div>
+            <span class="go-record-pct" id="goRecordPctText">100% OF BEST</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 6-Card Tactical Telemetry Grid -->
+      <div class="go-telemetry-grid">
+        <div class="go-stat-card" style="--stat-accent: #ffe600;">
+          <div class="go-stat-top">
+            <span>SECTOR</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><circle cx="8" cy="8" r="6"/><path d="M8 2V14M2 8H14"/></svg>
+          </div>
+          <div class="go-stat-num" id="finalWave">1</div>
+          <div class="go-stat-sub" id="finalBiome">NEXUS CORE</div>
+        </div>
+
+        <div class="go-stat-card" style="--stat-accent: #ff0077;">
+          <div class="go-stat-top">
+            <span>VAPORIZED</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><circle cx="8" cy="8" r="5.5"/><line x1="8" y1="1" x2="8" y2="4"/><line x1="8" y1="12" x2="8" y2="15"/><line x1="1" y1="8" x2="4" y2="8"/><line x1="12" y1="8" x2="15" y2="8"/></svg>
+          </div>
+          <div class="go-stat-num" id="finalKills">0</div>
+          <div class="go-stat-sub" id="finalKpm">0 KILLS/MIN</div>
+        </div>
+
+        <div class="go-stat-card" style="--stat-accent: #00f0ff;">
+          <div class="go-stat-top">
+            <span>PEAK COMBO</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><polygon points="9,1 3,9 8,9 7,15 13,7 8,7"/></svg>
+          </div>
+          <div class="go-stat-num" id="finalMaxCombo">x1</div>
+          <div class="go-stat-sub" id="finalMaxStreak">0 KILLSTREAK</div>
+        </div>
+
+        <div class="go-stat-card" style="--stat-accent: #a855f7;">
+          <div class="go-stat-top">
+            <span>NEURAL CORE</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><polygon points="8,1.5 14,5 14,11 8,14.5 2,11 2,5"/></svg>
+          </div>
+          <div class="go-stat-num" id="finalLevel">LVL 1</div>
+          <div class="go-stat-sub" id="finalAugCount">0 AUGMENTS</div>
+        </div>
+
+        <div class="go-stat-card" style="--stat-accent: #00ff88;">
+          <div class="go-stat-top">
+            <span>PARRY / OPS</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><path d="M2 14L14 2M9 2H14V7"/></svg>
+          </div>
+          <div class="go-stat-num" id="finalParries">0</div>
+          <div class="go-stat-sub" id="finalContracts">0 CONTRACTS</div>
+        </div>
+
+        <div class="go-stat-card" style="--stat-accent: #38bdf8;">
+          <div class="go-stat-top">
+            <span>FLIGHT TIME</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><circle cx="8" cy="8" r="6"/><polyline points="8,4.5 8,8 10.8,9.8"/></svg>
+          </div>
+          <div class="go-stat-num" id="finalTime">00:00</div>
+          <div class="go-stat-sub">ACTIVE SORTIE</div>
+        </div>
+      </div>
+
+      <!-- 4. Installed Cyber-Augmentation Loadout Strip -->
+      <div class="go-loadout-panel">
+        <div class="go-loadout-title">
+          <span>⚙️ INSTALLED CYBER-AUGMENTATIONS</span>
+        </div>
+        <div class="go-loadout-list" id="finalPerksList">
+          <span style="font-size: 0.72rem; color: #64748b;">NO AUGMENTATIONS INSTALLED</span>
+        </div>
+      </div>
+
+      <!-- 5. Footer Bar: Threat Level Selector + Reboot / Terminal Buttons -->
+      <div class="go-footer-bar">
+        <div class="threat-selector-bar" style="margin-bottom: 0;">
+          <button class="threat-mode-btn selected" data-threat="0">💀 HARDENED (1.4x)</button>
+          <button class="threat-mode-btn" data-threat="1">🔥 OVERKILL (2.0x)</button>
+          <button class="threat-mode-btn" data-threat="2">👑 GODSLAYER (2.8x)</button>
+        </div>
+
+        <div class="go-actions-right">
+          <button class="btn-terminal-sec" id="homeBtn">🏠 MAIN TERMINAL</button>
+          <button class="btn-reboot-cyber" id="restartBtn">⚡ REBOOT SYSTEM [SPACE]</button>
+        </div>
+      </div>
     </div>
-    <h2 style="font-size: 3rem; font-weight: 900; margin-bottom: 22px; text-shadow: 0 0 25px var(--magenta);">PROTOCOL TERMINATED</h2>
-    <div class="stats-summary">
-      <div class="stat-box">
-        <span class="stat-label">FINAL SCORE</span>
-        <span class="stat-val" id="finalScore" style="color: var(--cyan);">0</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-label">HIGH SCORE</span>
-        <span class="stat-val" id="bestScore" style="color: var(--green);">0</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-label">SECTORS CLEARED</span>
-        <span class="stat-val" id="finalWave" style="color: var(--yellow);">0</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-label">HOSTILES VAPORIZED</span>
-        <span class="stat-val" id="finalKills" style="color: var(--magenta);">0</span>
-      </div>
-    </div>
-    <button class="btn-main" id="restartBtn">↻ REBOOT SYSTEM</button>
   </div>
 
   <script>
@@ -2253,6 +3154,127 @@
         noise.stop(t + dur);
       }
 
+      explode(isBig = false) {
+        this.explosion(isBig);
+      }
+
+      katanaSlash() {
+        if (!this.enabled || !this.ctx) return;
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(1650, t);
+        osc.frequency.exponentialRampToValueAtTime(240, t + 0.14);
+        gain.gain.setValueAtTime(0.14, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+        osc.connect(gain);
+        gain.connect(this.sfxBus);
+        osc.start(t);
+        osc.stop(t + 0.16);
+      }
+
+      parryDeflect() {
+        if (!this.enabled || !this.ctx) return;
+        const t = this.ctx.currentTime;
+        [880, 1318.5, 1760].forEach((freq, i) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, t + i * 0.025);
+          gain.gain.setValueAtTime(0.13, t + i * 0.025);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + i * 0.025 + 0.18);
+          osc.connect(gain);
+          gain.connect(this.sfxBus);
+          osc.start(t + i * 0.025);
+          osc.stop(t + i * 0.025 + 0.19);
+        });
+      }
+
+      ringPass(stepIdx = 1) {
+        if (!this.enabled || !this.ctx) return;
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        const base = 587.33 * Math.pow(1.12, stepIdx);
+        osc.frequency.setValueAtTime(base, t);
+        osc.frequency.exponentialRampToValueAtTime(base * 1.35, t + 0.14);
+        gain.gain.setValueAtTime(0.14, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.16);
+        osc.connect(gain);
+        gain.connect(this.sfxBus);
+        osc.start(t);
+        osc.stop(t + 0.17);
+      }
+
+      ionBeam() {
+        if (!this.enabled || !this.ctx) return;
+        const t = this.ctx.currentTime;
+        [220, 440, 880].forEach((freq, i) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = i === 0 ? 'sawtooth' : 'square';
+          osc.frequency.setValueAtTime(freq * 1.6, t);
+          osc.frequency.exponentialRampToValueAtTime(freq, t + 0.35);
+          gain.gain.setValueAtTime(0.09, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+          osc.connect(gain);
+          gain.connect(this.sfxBus);
+          osc.start(t);
+          osc.stop(t + 0.46);
+        });
+      }
+
+      chronoField(detonate = false) {
+        if (!this.enabled || !this.ctx) return;
+        const t = this.ctx.currentTime;
+        if (!detonate) {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(980, t);
+          osc.frequency.exponentialRampToValueAtTime(140, t + 0.32);
+          gain.gain.setValueAtTime(0.16, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.34);
+          osc.connect(gain);
+          gain.connect(this.sfxBus);
+          osc.start(t);
+          osc.stop(t + 0.35);
+        } else {
+          [523.25, 783.99, 1046.5, 1567.98].forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, t + idx * 0.03);
+            gain.gain.setValueAtTime(0.14, t + idx * 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + idx * 0.03 + 0.25);
+            osc.connect(gain);
+            gain.connect(this.sfxBus);
+            osc.start(t + idx * 0.03);
+            osc.stop(t + idx * 0.03 + 0.26);
+          });
+        }
+      }
+
+      phantomSalvo() {
+        if (!this.enabled || !this.ctx) return;
+        const t = this.ctx.currentTime;
+        for (let i = 0; i < 5; i++) {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(420 + i * 160, t + i * 0.035);
+          osc.frequency.exponentialRampToValueAtTime(1280 + i * 120, t + i * 0.035 + 0.11);
+          gain.gain.setValueAtTime(0.08, t + i * 0.035);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + i * 0.035 + 0.12);
+          osc.connect(gain);
+          gain.connect(this.sfxBus);
+          osc.start(t + i * 0.035);
+          osc.stop(t + i * 0.035 + 0.13);
+        }
+      }
+
       dash() {
         if (!this.enabled || !this.ctx) return;
         const t = this.ctx.currentTime;
@@ -2327,6 +3349,36 @@
     let camX = WORLD_W / 2 - canvas.width / 2;
     let camY = WORLD_H / 2 - canvas.height / 2;
 
+    // Escalated Threat Protocol Tiers (Default HARDENED 1.4x makes enemies much stronger right from Sector 1!)
+    const THREAT_MODES = [
+      { id: 0, label: '💀 HARDENED 1.4x', name: 'HARDENED FLEET', hpMult: 1.4, speedMult: 1.15, fireMult: 1.28, dmgMult: 1.25, eliteBonus: 0.20, color: '#ff2a55' },
+      { id: 1, label: '🔥 OVERKILL 2.0x', name: 'OVERKILL SWARM', hpMult: 2.0, speedMult: 1.28, fireMult: 1.50, dmgMult: 1.45, eliteBonus: 0.34, color: '#ff7b00' },
+      { id: 2, label: '👑 GODSLAYER 2.8x', name: 'APEX GODSLAYER', hpMult: 2.8, speedMult: 1.42, fireMult: 1.75, dmgMult: 1.65, eliteBonus: 0.50, color: '#ffe600' }
+    ];
+    let threatModeIdx = 0;
+
+    function getThreatConfig() {
+      return THREAT_MODES[threatModeIdx] || THREAT_MODES[0];
+    }
+
+    function setThreatMode(idx, notify = true) {
+      threatModeIdx = ((idx % THREAT_MODES.length) + THREAT_MODES.length) % THREAT_MODES.length;
+      const cfg = getThreatConfig();
+      const badge = document.getElementById('threatBadge');
+      if (badge) {
+        badge.textContent = cfg.label;
+        badge.style.color = cfg.color;
+        badge.style.borderColor = cfg.color;
+      }
+      document.querySelectorAll('.threat-mode-btn').forEach(btn => {
+        btn.classList.toggle('selected', Number(btn.dataset.threat) === threatModeIdx);
+      });
+      if (notify) {
+        sound.dash();
+        announce(`⚠️ THREAT PROTOCOL: ${cfg.name} (${cfg.hpMult}x ENEMY POWER) ⚠️`, cfg.color);
+      }
+    }
+
     const BIOME_ZONES = [
       { id: 'nexus', name: 'NEXUS CORE // CITADEL HUB', shortName: 'NEXUS CORE', x: 2100, y: 2100, r: 780, color: '#00f0ff', rgb: '0, 240, 255' },
       { id: 'foundry', name: 'CRIMSON FOUNDRY // WEAPON FORGE', shortName: 'CRIMSON FOUNDRY', x: 920, y: 920, r: 720, color: '#ff0055', rgb: '255, 0, 85' },
@@ -2363,11 +3415,29 @@
           e.preventDefault();
           player.tryDash();
         }
-        if (e.code === 'KeyE') {
+        if (e.code === 'KeyQ' || e.code === 'Digit1') {
+          player.tryKatana();
+        }
+        if (e.code === 'KeyR' || e.code === 'Digit2') {
+          player.tryIonBeam();
+        }
+        if (e.code === 'KeyF' || e.code === 'Digit3') {
+          player.tryChronoField();
+        }
+        if (e.code === 'KeyX' || e.code === 'Digit4') {
+          player.tryPhantomBarrage();
+        }
+        if (e.code === 'KeyE' || e.code === 'Digit5') {
           player.tryOverdrive();
         }
-        if (e.code === 'KeyF') {
+        if (e.code === 'KeyG') {
           toggleAutoFire();
+        }
+        if (e.code === 'KeyC') {
+          triggerLiveContract(true);
+        }
+        if (e.code === 'KeyT') {
+          setThreatMode(threatModeIdx + 1, true);
         }
       } else if (gameState === 'UPGRADE') {
         if (e.code === 'Digit1' && currentUpgradeChoices[0]) applyUpgrade(currentUpgradeChoices[0]);
@@ -2375,6 +3445,14 @@
         if (e.code === 'Digit3' && currentUpgradeChoices[2]) applyUpgrade(currentUpgradeChoices[2]);
         if (e.code === 'KeyR') rerollUpgrades();
         if (e.code === 'KeyH') healSkipUpgrade();
+      } else if (gameState === 'GAMEOVER') {
+        if ((e.code === 'Space' || e.code === 'Enter') && performance.now() - gameOverTimestamp > 450) {
+          e.preventDefault();
+          sound.init();
+          startNewGame();
+        } else if (e.code === 'KeyT') {
+          setThreatMode(threatModeIdx + 1, true);
+        }
       }
     });
 
@@ -2388,12 +3466,15 @@
     window.addEventListener('mousedown', e => {
       if (e.button === 2) {
         if (gameState === 'PLAYING') player.tryOverdrive();
+      } else if (e.button === 1) {
+        e.preventDefault();
+        if (gameState === 'PLAYING') player.tryKatana();
       } else {
         mouse.down = true;
       }
     });
     window.addEventListener('mouseup', e => {
-      if (e.button !== 2) mouse.down = false;
+      if (e.button === 0) mouse.down = false;
     });
     window.addEventListener('contextmenu', e => e.preventDefault());
 
@@ -2467,6 +3548,36 @@
         stat: '▸ FIRE RATE: +25% CYCLING | BOLT VELOCITY +18%',
         desc: 'Supercharges weapon capacitors to cycle plasma salvos at blistering hyper-frequency.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#ff0077" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="23,3 9,22 20,22 17,37 31,18 20,18" fill="rgba(255,0,119,0.28)"/><circle cx="20" cy="20" r="16" stroke-dasharray="5 4" stroke="#ffe600" stroke-width="1.6"/></svg>`
+      },
+      {
+        id: 'katana',
+        title: 'Plasma Katana Overdrive',
+        category: '// MELEE DEFLECTOR',
+        color: '#ff0077',
+        icon: '⚔️',
+        stat: '▸ KATANA [Q]: +1 CRESCENT WAVE | +30% CLEAVE & PARRY',
+        desc: 'Expands your [Q] Cyber-Katana arc to hurl relativistic sword-waves and reflect bullets at 3.5x damage.',
+        svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#ff0077" stroke-width="2.4" stroke-linecap="round"><path d="M7 33L33 7" stroke="#ffe600" stroke-width="3"/><path d="M12 6C24 6 34 16 34 28" stroke="#00f0ff" stroke-width="2.5"/><polygon points="34,6 26,8 32,14" fill="#ffe600"/></svg>`
+      },
+      {
+        id: 'ion_beam',
+        title: 'Omega Ion Cannon Core',
+        category: '// HYPER-LASER SKILL [R]',
+        color: '#00f0ff',
+        icon: '🔦',
+        stat: '▸ ION BEAM [R]: +35% BEAM WIDTH & DURATION | +30% DMG',
+        desc: 'Supercharges your [R] Omega Ion Cannon to project a wider, longer-lasting orbital deathray.',
+        svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#00f0ff" stroke-width="2.4"><circle cx="10" cy="20" r="5" fill="#ffe600" stroke="#ffffff"/><line x1="15" y1="20" x2="38" y2="20" stroke="#ffffff" stroke-width="4"/><line x1="15" y1="14" x2="38" y2="14" stroke="#00f0ff" stroke-width="2"/><line x1="15" y1="26" x2="38" y2="26" stroke="#ff0077" stroke-width="2"/></svg>`
+      },
+      {
+        id: 'chrono_phantom',
+        title: 'Chrono-Phantom Matrix',
+        category: '// TACTICAL SKILLS [F] & [X]',
+        color: '#d946ef',
+        icon: '⏳',
+        stat: '▸ [F] DOME +35% SIZE/BLAST | [X] SALVO +4 MISSILES',
+        desc: 'Amplifies your [F] Chrono-Stasis Singularity Dome and adds +4 seekers to your [X] Phantom Swarm Salvo.',
+        svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#d946ef" stroke-width="2.3"><circle cx="20" cy="20" r="14" stroke-dasharray="5 3"/><polyline points="20,10 20,20 27,24" stroke="#00f0ff" stroke-width="2.6"/><circle cx="20" cy="20" r="3" fill="#ffe600"/></svg>`
       },
       {
         id: 'railgun',
@@ -2596,6 +3707,31 @@
         this.dashDuration = 0;
         this.invulnTimer = 0;
         this.boostTimer = 0;
+        this.frenzyTimer = 0;
+
+        // Cyber-Katana Slash & Parry Deflector [Q]
+        this.katanaCooldown = 0;
+        this.katanaMaxCooldown = 115;
+        this.katanaSlashTimer = 0;
+        this.katanaSlashAngle = 0;
+        this.katanaLevel = 0;
+
+        // Omega Ion Laser Cannon [R]
+        this.ionBeamCooldown = 0;
+        this.ionBeamMaxCooldown = 480;
+        this.ionBeamTimer = 0;
+        this.ionBeamMaxTimer = 135;
+        this.ionBeamLevel = 0;
+
+        // Chrono-Stasis Singularity Dome [F]
+        this.chronoCooldown = 0;
+        this.chronoMaxCooldown = 560;
+        this.chronoLevel = 0;
+
+        // Phantom Decoy Clone & Macross Swarm Salvo [X]
+        this.phantomCooldown = 0;
+        this.phantomMaxCooldown = 500;
+        this.phantomLevel = 0;
 
         this.lastShot = 0;
         this.fireInterval = 11;
@@ -2630,12 +3766,209 @@
         this.orbitAngle = 0;
       }
 
+      tryKatana() {
+        if (this.katanaCooldown > 0 && this.overdriveActive <= 0 && this.frenzyTimer <= 0) return;
+
+        const maxCd = Math.max(48, this.katanaMaxCooldown - this.katanaLevel * 18);
+        this.katanaCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 24 : maxCd;
+        this.katanaSlashTimer = 14;
+        this.katanaSlashAngle = this.angle;
+        this.invulnTimer = Math.max(this.invulnTimer, 16);
+
+        sound.katanaSlash();
+        screenShake = Math.max(screenShake, 11);
+        const slashRadius = 135 + this.katanaLevel * 28;
+        addGridRipple(this.x, this.y, slashRadius + 75, 28, '#ff0077');
+
+        // Launch wide crescent sword-beam projectile(s)
+        const waveCount = 1 + this.katanaLevel;
+        for (let w = 0; w < waveCount; w++) {
+          const wAng = this.angle + (w - (waveCount - 1) / 2) * 0.22;
+          projectiles.push(new Projectile(
+            this.x + Math.cos(wAng) * 22,
+            this.y + Math.sin(wAng) * 22,
+            wAng,
+            w % 2 === 0 ? '#ff0077' : '#ffe600',
+            18.5,
+            68 + this.level * 8 + this.katanaLevel * 22,
+            this.ricochetLevel,
+            true,
+            'overdrive'
+          ));
+        }
+
+        // 1. PARRY & DEFLECT ENEMY PROJECTILES BACK AT HOSTILES AT 3X DAMAGE!
+        let deflected = 0;
+        for (let i = 0; i < enemyProjectiles.length; i++) {
+          const ep = enemyProjectiles[i];
+          if (!ep.active) continue;
+          const dist = Math.hypot(ep.x - this.x, ep.y - this.y);
+          if (dist <= slashRadius + 24) {
+            ep.active = false;
+            deflected++;
+            let targetAng = this.angle + (Math.random() - 0.5) * 0.16;
+            let bestDist = 900;
+            for (let j = 0; j < enemies.length; j++) {
+              const en = enemies[j];
+              if (!en.active) continue;
+              const dEn = Math.hypot(en.x - ep.x, en.y - ep.y);
+              if (dEn < bestDist) {
+                bestDist = dEn;
+                targetAng = Math.atan2(en.y - ep.y, en.x - ep.x);
+              }
+            }
+            projectiles.push(new Projectile(
+              ep.x,
+              ep.y,
+              targetAng,
+              '#ffe600',
+              22,
+              (85 + this.level * 12) * (1 + this.katanaLevel * 0.25),
+              1 + this.ricochetLevel,
+              true,
+              'rail'
+            ));
+            lightningBolts.push({ x1: this.x, y1: this.y, x2: ep.x, y2: ep.y, color: '#ffe600', life: 9 });
+          }
+        }
+
+        // 2. CLEAVE NEARBY ENEMIES WITH MASSIVE CRIT DAMAGE & KNOCKBACK
+        let cleaved = 0;
+        const cleaveDmg = (115 + this.level * 22) * (1 + this.katanaLevel * 0.3);
+        for (let i = 0; i < enemies.length; i++) {
+          const e = enemies[i];
+          if (!e.active) continue;
+          const dist = Math.hypot(e.x - this.x, e.y - this.y);
+          if (dist <= slashRadius + e.radius) {
+            cleaved++;
+            const pushAng = Math.atan2(e.y - this.y, e.x - this.x);
+            if (e.type !== 'boss') {
+              e.x += Math.cos(pushAng) * 42;
+              e.y += Math.sin(pushAng) * 42;
+            }
+            e.takeDamage(cleaveDmg, true);
+            lightningBolts.push({ x1: this.x, y1: this.y, x2: e.x, y2: e.y, color: '#ff0077', life: 10 });
+          }
+        }
+
+        if (deflected > 0) {
+          sound.parryDeflect();
+          score += deflected * 150 * combo;
+          this.overdrive = Math.min(100, this.overdrive + deflected * 7);
+          this.hp = Math.min(this.maxHp, this.hp + deflected * 4);
+          spawnFloatingText(this.x, this.y - 28, `⚔️ ${deflected}x PARRY REFLECT! +${deflected * 150}`, '#ffe600', 1.3);
+          if (typeof recordContractAction === 'function') {
+            recordContractAction('parry', deflected);
+          }
+        }
+        if (cleaved > 0 && typeof recordContractAction === 'function') {
+          recordContractAction('parry', cleaved);
+        }
+
+        // Instant 55% cooldown refund on successful multi-parry or cleave!
+        if (deflected >= 2 || cleaved >= 2) {
+          this.katanaCooldown = Math.floor(this.katanaCooldown * 0.45);
+        }
+
+        for (let i = 0; i < 16; i++) {
+          const a = this.angle + ((i / 15) - 0.5) * 2.4;
+          const sp = 6 + Math.random() * 6;
+          spawnParticle(this.x + Math.cos(a) * 24, this.y + Math.sin(a) * 24, Math.cos(a) * sp, Math.sin(a) * sp, i % 2 === 0 ? '#ff0077' : '#ffe600', 16, 3.6);
+        }
+      }
+
+      // SKILL [R]: OMEGA ION LASER CANNON (Continuous sweeping hyper-beam that vaporizes bullets & melts armor!)
+      tryIonBeam() {
+        if (this.ionBeamTimer > 0) return;
+        if (this.ionBeamCooldown > 0 && this.overdriveActive <= 0 && this.frenzyTimer <= 0) return;
+
+        this.ionBeamMaxTimer = 135 + this.ionBeamLevel * 28;
+        this.ionBeamTimer = this.ionBeamMaxTimer;
+        const maxCd = Math.max(220, this.ionBeamMaxCooldown - this.ionBeamLevel * 55);
+        this.ionBeamCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 140 : maxCd;
+        this.invulnTimer = Math.max(this.invulnTimer, 30);
+
+        sound.ionBeam();
+        screenShake = Math.max(screenShake, 16);
+        chromaticFlash = 10;
+        addGridRipple(this.x, this.y, 440, 36, '#00f0ff');
+        spawnFloatingText(this.x, this.y - 28, '⚡ OMEGA ION BEAM ONLINE! ⚡', '#00f0ff', 1.35);
+        announce('⚡ OMEGA ION CANNON ENGAGED — SWEEP CURSOR TO INCINERATE HOSTILES! ⚡', '#00f0ff');
+      }
+
+      // SKILL [F]: CHRONO-STASIS SINGULARITY DOME (Deploys time-freeze dome at cursor; press [F] again to shatter!)
+      tryChronoField() {
+        // If an active Chrono-Dome exists, pressing [F] again immediately shatters time!
+        if (typeof chronoFields !== 'undefined' && chronoFields.length > 0) {
+          for (let i = 0; i < chronoFields.length; i++) {
+            if (chronoFields[i].active) chronoFields[i].detonate();
+          }
+          return;
+        }
+        if (this.chronoCooldown > 0 && this.overdriveActive <= 0 && this.frenzyTimer <= 0) return;
+
+        const maxCd = Math.max(240, this.chronoMaxCooldown - this.chronoLevel * 60);
+        this.chronoCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 150 : maxCd;
+
+        // Deploy at cursor (clamped within 420px of player)
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.min(420, Math.hypot(dx, dy));
+        const ang = Math.atan2(dy, dx);
+        const cx = Math.max(120, Math.min(WORLD_W - 120, this.x + Math.cos(ang) * dist));
+        const cy = Math.max(120, Math.min(WORLD_H - 120, this.y + Math.sin(ang) * dist));
+
+        const domeR = 230 + this.chronoLevel * 40;
+        const domeLife = 270 + this.chronoLevel * 45;
+        chronoFields.push(new ChronoField(cx, cy, domeR, domeLife));
+
+        sound.chronoField(false);
+        screenShake = Math.max(screenShake, 12);
+        addGridRipple(cx, cy, domeR * 1.4, -30, '#d946ef');
+        spawnFloatingText(cx, cy - 24, '⏳ CHRONO-STASIS DOME! (+50% DMG)', '#f0abfc', 1.3);
+        announce('⏳ CHRONO-STASIS SINGULARITY DEPLOYED — PRESS [F] AGAIN TO SHATTER TIME! ⏳', '#f0abfc');
+      }
+
+      // SKILL [X]: PHANTOM DECOY CLONE & 12-MISSILE MACROSS SWARM SALVO
+      tryPhantomBarrage() {
+        if (this.phantomCooldown > 0 && this.overdriveActive <= 0 && this.frenzyTimer <= 0) return;
+
+        const maxCd = Math.max(220, this.phantomMaxCooldown - this.phantomLevel * 55);
+        this.phantomCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 130 : maxCd;
+        this.invulnTimer = Math.max(this.invulnTimer, 45);
+        this.boostTimer = Math.max(this.boostTimer, 95);
+
+        sound.phantomSalvo();
+        screenShake = Math.max(screenShake, 14);
+        addGridRipple(this.x, this.y, 340, 30, '#ffe600');
+
+        // 1. Spawn Holographic Phantom Decoy Clone that taunts enemies & fires 360° laser volleys!
+        phantomDecoys.push(new PhantomDecoy(this.x, this.y, this.angle, 360 + this.phantomLevel * 60));
+
+        // 2. Launch 12+ Macross Micro-Missile Swarm in a 360° spiral!
+        const salvoCount = 12 + this.phantomLevel * 4;
+        for (let i = 0; i < salvoCount; i++) {
+          const mAng = this.angle + (i * Math.PI * 2) / salvoCount;
+          const m = new HomingMissile(
+            this.x + Math.cos(mAng) * 18,
+            this.y + Math.sin(mAng) * 18,
+            mAng
+          );
+          m.damage = 64 + this.level * 8 + this.phantomLevel * 18;
+          m.speed = 11.2;
+          missiles.push(m);
+        }
+
+        spawnFloatingText(this.x, this.y - 28, `🔥 PHANTOM CLONE + ${salvoCount}x MISSILE SALVO!`, '#ffe600', 1.35);
+        announce(`🔥 PHANTOM HOLO-DECOY & ${salvoCount}-MISSILE MACROSS SALVO UNLEASHED! 🔥`, '#ffe600');
+      }
+
       tryDash() {
-        if (this.dashCooldown <= 0 || this.overdriveActive > 0) {
+        if (this.dashCooldown <= 0 || this.overdriveActive > 0 || this.frenzyTimer > 0) {
           this.isDashing = true;
           this.dashDuration = 13;
           this.invulnTimer = 20;
-          this.dashCooldown = this.overdriveActive > 0 ? 18 : this.dashMaxCooldown;
+          this.dashCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 16 : this.dashMaxCooldown;
           sound.dash();
           screenShake = 9;
           addGridRipple(this.x, this.y, 240, 22, '#00f0ff');
@@ -2712,8 +4045,11 @@
             afterimages.push({ x: this.x, y: this.y, angle: this.angle, life: 9, maxLife: 9 });
           }
         }
+        if (this.frenzyTimer > 0) {
+          this.frenzyTimer--;
+        }
 
-        const speedMult = (this.overdriveActive > 0 ? 1.35 : 1.0) * (this.boostTimer > 0 ? 1.5 : 1.0);
+        const speedMult = (this.overdriveActive > 0 ? 1.35 : 1.0) * (this.boostTimer > 0 ? 1.5 : 1.0) * (this.frenzyTimer > 0 ? 1.25 : 1.0);
 
         if (this.isDashing) {
           const dashDirX = (dx !== 0 || dy !== 0) ? dx : Math.cos(this.angle);
@@ -2756,6 +4092,77 @@
 
         if (this.invulnTimer > 0) this.invulnTimer--;
         if (this.overdriveActive > 0) this.overdriveActive--;
+        if (this.katanaCooldown > 0) this.katanaCooldown--;
+        if (this.katanaSlashTimer > 0) this.katanaSlashTimer--;
+        if (this.ionBeamCooldown > 0) this.ionBeamCooldown--;
+        if (this.chronoCooldown > 0) this.chronoCooldown--;
+        if (this.phantomCooldown > 0) this.phantomCooldown--;
+
+        // Active Omega Ion Laser Beam [R]: Continuous raycast incineration & bullet vaporization!
+        if (this.ionBeamTimer > 0) {
+          this.ionBeamTimer--;
+          const cosA = Math.cos(this.angle);
+          const sinA = Math.sin(this.angle);
+          const beamLen = 1150;
+          const beamHalfW = 30 + this.ionBeamLevel * 9;
+          screenShake = Math.max(screenShake, 4.2);
+
+          // Vaporize all enemy projectiles caught inside the Ion Beam corridor!
+          for (let i = 0; i < enemyProjectiles.length; i++) {
+            const ep = enemyProjectiles[i];
+            if (!ep.active) continue;
+            const relX = ep.x - this.x;
+            const relY = ep.y - this.y;
+            const proj = relX * cosA + relY * sinA;
+            if (proj > 0 && proj < beamLen) {
+              const perp = Math.abs(-relX * sinA + relY * cosA);
+              if (perp <= beamHalfW + 14) {
+                ep.active = false;
+                spawnParticle(ep.x, ep.y, (Math.random() - 0.5) * 5, (Math.random() - 0.5) * 5, '#00f0ff', 10, 3);
+                if (typeof recordContractAction === 'function') {
+                  recordContractAction('parry', 0.5);
+                }
+              }
+            }
+          }
+
+          // Deal high-frequency plasma melt ticks every 4 frames to enemies & destructible vaults in beam!
+          if (this.ionBeamTimer % 4 === 0) {
+            const tickDmg = (34 + this.level * 5.5) * (1 + this.ionBeamLevel * 0.3);
+            for (let i = 0; i < enemies.length; i++) {
+              const e = enemies[i];
+              if (!e.active) continue;
+              const relX = e.x - this.x;
+              const relY = e.y - this.y;
+              const proj = relX * cosA + relY * sinA;
+              if (proj > -15 && proj < beamLen) {
+                const perp = Math.abs(-relX * sinA + relY * cosA);
+                if (perp <= beamHalfW + e.radius) {
+                  e.takeDamage(tickDmg, true);
+                  if (e.type !== 'boss') {
+                    e.x += cosA * 7;
+                    e.y += sinA * 7;
+                  }
+                  spawnParticle(e.x, e.y, cosA * 6 + (Math.random() - 0.5) * 4, sinA * 6 + (Math.random() - 0.5) * 4, '#ffe600', 12, 3.4);
+                }
+              }
+            }
+            for (let w = 0; w < worldProps.length; w++) {
+              const wp = worldProps[w];
+              if (!wp.active || (wp.type !== 'cache' && wp.type !== 'emp_pylon')) continue;
+              const relX = wp.x - this.x;
+              const relY = wp.y - this.y;
+              const proj = relX * cosA + relY * sinA;
+              if (proj > 0 && proj < beamLen && Math.abs(-relX * sinA + relY * cosA) <= beamHalfW + wp.radius) {
+                wp.takeDamage(tickDmg);
+              }
+            }
+          }
+
+          if (this.ionBeamTimer % 10 === 0) {
+            addGridRipple(this.x + cosA * 340, this.y + sinA * 340, 260, 22, '#00f0ff');
+          }
+        }
 
         // Shield recharge
         if (this.shieldMax > 0 && this.shieldCharges < this.shieldMax) {
@@ -2772,7 +4179,7 @@
         if (frameCount % 2 === 0 && (thrustMag > 0.5 || Math.random() < 0.4)) {
           const rearX = this.x - Math.cos(this.angle) * 15;
           const rearY = this.y - Math.sin(this.angle) * 15;
-          const pColor = this.overdriveActive > 0 ? '#ffe600' : '#00f0ff';
+          const pColor = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? '#ffe600' : '#00f0ff';
           spawnParticle(
             rearX + (Math.random() - 0.5) * 6,
             rearY + (Math.random() - 0.5) * 6,
@@ -2784,7 +4191,8 @@
 
         // Primary Firing
         this.lastShot++;
-        const effectiveInterval = this.overdriveActive > 0 ? Math.max(3, Math.floor(this.fireInterval * 0.45)) : this.fireInterval;
+        const isHyper = this.overdriveActive > 0 || this.frenzyTimer > 0;
+        const effectiveInterval = isHyper ? Math.max(3, Math.floor(this.fireInterval * 0.45)) : this.fireInterval;
         if ((mouse.down || autoFire) && this.lastShot >= effectiveInterval) {
           this.shoot();
           this.lastShot = 0;
@@ -2839,7 +4247,8 @@
         sound.laser(isRailShot);
         screenShake = Math.max(screenShake, isRailShot ? 5 : 2.2);
 
-        const totalShots = this.overdriveActive > 0 ? this.multishot + 2 : this.multishot;
+        const isOver = this.overdriveActive > 0 || this.frenzyTimer > 0;
+        const totalShots = isOver ? this.multishot + 2 : this.multishot;
         const spreadStep = 0.11;
         const startOffset = -((totalShots - 1) / 2) * spreadStep;
 
@@ -2849,7 +4258,6 @@
 
         for (let i = 0; i < totalShots; i++) {
           const shotAngle = this.angle + startOffset + (i * spreadStep);
-          const isOver = this.overdriveActive > 0;
           const color = isOver
             ? (i % 2 === 0 ? '#ffe600' : '#ff0077')
             : (isRailShot ? '#ff0077' : '#00f0ff');
@@ -2908,6 +4316,84 @@
       }
 
       draw() {
+        // Draw Omega Ion Laser Cannon [R] when active!
+        if (this.ionBeamTimer > 0) {
+          const beamLen = 1150;
+          const beamW = (44 + this.ionBeamLevel * 12) + Math.sin(frameCount * 0.7) * 8;
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.angle);
+
+          // Muzzle focusing lens flare
+          ctx.drawImage(getGlowSprite('#00f0ff'), -32, -56, 112, 112);
+          ctx.drawImage(getGlowSprite('#ff0077'), -12, -38, 76, 76);
+
+          // Outer magenta/cyan plasma sheath
+          ctx.strokeStyle = 'rgba(255, 0, 119, 0.34)';
+          ctx.lineWidth = beamW * 1.35;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(22, 0);
+          ctx.lineTo(beamLen, 0);
+          ctx.stroke();
+
+          // Mid-layer high-voltage cyan beam
+          ctx.strokeStyle = 'rgba(0, 240, 255, 0.78)';
+          ctx.lineWidth = beamW * 0.72;
+          ctx.beginPath();
+          ctx.moveTo(22, 0);
+          ctx.lineTo(beamLen, 0);
+          ctx.stroke();
+
+          // Inner blinding white-gold core
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = beamW * 0.28;
+          ctx.beginPath();
+          ctx.moveTo(20, 0);
+          ctx.lineTo(beamLen, 0);
+          ctx.stroke();
+
+          // Helical shockwave rings traveling down the beam
+          ctx.strokeStyle = '#ffe600';
+          ctx.lineWidth = 2.2;
+          const ringOffset = (frameCount * 22) % 110;
+          for (let rx = 45 + ringOffset; rx < beamLen - 60; rx += 110) {
+            ctx.beginPath();
+            ctx.ellipse(rx, 0, 8, beamW * 0.58, 0, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+          ctx.restore();
+        }
+
+        // Draw Cyber-Katana Crescent Slash Arc when active
+        if (this.katanaSlashTimer > 0) {
+          const prog = 1 - this.katanaSlashTimer / 14;
+          const slashR = (118 + this.katanaLevel * 24) * (0.75 + prog * 0.35);
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.katanaSlashAngle);
+          ctx.globalAlpha = Math.min(1, (this.katanaSlashTimer / 14) * 1.35);
+
+          // Outer neon magenta/gold crescent blade sweep
+          ctx.beginPath();
+          ctx.arc(0, 0, slashR, -1.35, 1.35, false);
+          ctx.arc(-18, 0, slashR * 0.78, 1.25, -1.25, true);
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(255, 0, 119, 0.38)';
+          ctx.fill();
+          ctx.strokeStyle = '#ffe600';
+          ctx.lineWidth = 3;
+          ctx.stroke();
+
+          // Inner white-hot katana edge
+          ctx.beginPath();
+          ctx.arc(0, 0, slashR - 4, -1.15, 1.15);
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 2.2;
+          ctx.stroke();
+          ctx.restore();
+        }
+
         // Draw Orbital Drones (Mini Cyber-Interceptors)
         const droneGlow = getGlowSprite('#00ff88');
         for (let d = 0; d < this.droneCount; d++) {
@@ -2963,7 +4449,7 @@
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
-        const isOver = this.overdriveActive > 0;
+        const isOver = this.overdriveActive > 0 || this.frenzyTimer > 0;
         const glowColor = isOver ? '#ffe600' : (this.isDashing ? '#ff0077' : '#00f0ff');
         const gR = isOver ? 48 : 36;
         ctx.drawImage(getGlowSprite(glowColor), -gR, -gR, gR * 2, gR * 2);
@@ -3061,7 +4547,7 @@
         this.prevY = this.y;
         this.x += this.vx;
         this.y += this.vy;
-        this.distTraveled += this.speed;
+        this.distTraveled += Math.hypot(this.vx, this.vy);
         this.spin += 0.22;
 
         // Wall bounce if ricochet perk is unlocked (bounces off viewport edges or world borders)
@@ -3513,6 +4999,419 @@
       }
     }
 
+    // ★★★ SKILL [F]: CHRONO-STASIS SINGULARITY DOME ★★★
+    class ChronoField {
+      constructor(x, y, radius = 235, maxLife = 270) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.life = maxLife;
+        this.maxLife = maxLife;
+        this.active = true;
+        this.rot = 0;
+      }
+
+      update() {
+        this.life--;
+        this.rot += 0.025;
+        const dmgTick = frameCount % 12 === 0;
+        const dmgMult = 1 + (player.level - 1) * 0.12;
+        const tickDmg = (16 + player.chronoLevel * 6) * dmgMult;
+
+        // Freeze & pull enemies inside the temporal dome + apply +50% damage vulnerability
+        for (let i = 0; i < enemies.length; i++) {
+          const e = enemies[i];
+          if (!e.active) continue;
+          const dx = this.x - e.x;
+          const dy = this.y - e.y;
+          const d = Math.hypot(dx, dy);
+          if (d < this.radius + e.radius) {
+            e.chronoSlowTimer = 4;
+            const pullStrength = e.type === 'boss' ? 0.35 : 1.15;
+            if (d > 14) {
+              e.x += (dx / d) * pullStrength;
+              e.y += (dy / d) * pullStrength;
+            }
+            if (dmgTick) {
+              e.takeDamage(tickDmg, false);
+            }
+          }
+        }
+
+        // Suspend & decelerate all hostile projectiles entering the Chrono-Stasis matrix
+        for (let i = 0; i < enemyProjectiles.length; i++) {
+          const ep = enemyProjectiles[i];
+          if (!ep.active) continue;
+          const d = Math.hypot(ep.x - this.x, ep.y - this.y);
+          if (d < this.radius) {
+            ep.vx *= 0.84;
+            ep.vy *= 0.84;
+            ep.color = '#d946ef';
+          }
+        }
+
+        // Ambient temporal clockwork particles
+        if (frameCount % 3 === 0) {
+          const a = Math.random() * Math.PI * 2;
+          const r = this.radius * (0.4 + Math.random() * 0.6);
+          spawnParticle(
+            this.x + Math.cos(a) * r,
+            this.y + Math.sin(a) * r,
+            -Math.sin(a) * 1.4,
+            Math.cos(a) * 1.4,
+            Math.random() < 0.5 ? '#d946ef' : '#00f0ff',
+            18,
+            2.4
+          );
+        }
+
+        if (this.life <= 0 && this.active) {
+          this.detonate();
+        }
+      }
+
+      detonate() {
+        if (!this.active) return;
+        this.active = false;
+        const dmgMult = 1 + (player.level - 1) * 0.12;
+        sound.chronoField(true);
+        screenShake = Math.max(screenShake, 22);
+        chromaticFlash = Math.max(chromaticFlash, 14);
+        hitStopFrames = Math.max(hitStopFrames, 4);
+        addGridRipple(this.x, this.y, this.radius * 2.1, 42, '#d946ef');
+        addGridRipple(this.x, this.y, this.radius * 1.4, 28, '#00f0ff');
+
+        // Convert every frozen enemy projectile in the dome into a high-velocity friendly plasma bolt!
+        let convertedShots = 0;
+        for (let i = 0; i < enemyProjectiles.length; i++) {
+          const ep = enemyProjectiles[i];
+          if (!ep.active) continue;
+          const d = Math.hypot(ep.x - this.x, ep.y - this.y);
+          if (d <= this.radius + 35) {
+            ep.active = false;
+            convertedShots++;
+            let targetAng = Math.atan2(ep.y - this.y, ep.x - this.x);
+            let bestD = Infinity;
+            for (let j = 0; j < enemies.length; j++) {
+              const e = enemies[j];
+              if (!e.active) continue;
+              const ed = Math.hypot(e.x - ep.x, e.y - ep.y);
+              if (ed < bestD) {
+                bestD = ed;
+                targetAng = Math.atan2(e.y - ep.y, e.x - ep.x);
+              }
+            }
+            projectiles.push(
+              new Projectile(ep.x, ep.y, targetAng, '#00f0ff', 18.5, 65 * dmgMult, 1, true, 'overdrive')
+            );
+          }
+        }
+        if (convertedShots > 0 && typeof recordContractAction === 'function') {
+          recordContractAction('parry', convertedShots);
+        }
+
+        // Massive Temporal Shatter Supernova across the entire dome radius
+        const shatterDmg = (210 + player.chronoLevel * 75 + convertedShots * 12) * dmgMult;
+        let hitCount = 0;
+        for (let i = 0; i < enemies.length; i++) {
+          const e = enemies[i];
+          if (!e.active) continue;
+          const d = Math.hypot(e.x - this.x, e.y - this.y);
+          if (d <= this.radius * 1.25 + e.radius) {
+            e.takeDamage(shatterDmg, true);
+            hitCount++;
+            lightningBolts.push({ x1: this.x, y1: this.y, x2: e.x, y2: e.y, color: '#00f0ff', life: 14 });
+          }
+        }
+        for (let i = 0; i < worldProps.length; i++) {
+          const wp = worldProps[i];
+          if (!wp.active || (wp.type !== 'cache' && wp.type !== 'emp_pylon')) continue;
+          if (Math.hypot(wp.x - this.x, wp.y - this.y) <= this.radius * 1.25 + wp.radius) {
+            wp.takeDamage(165 * dmgMult);
+          }
+        }
+
+        // Radial glass-shatter particle burst
+        for (let i = 0; i < 36; i++) {
+          const a = (i * Math.PI * 2) / 36;
+          const sp = 5 + Math.random() * 9;
+          spawnParticle(
+            this.x + Math.cos(a) * 18,
+            this.y + Math.sin(a) * 18,
+            Math.cos(a) * sp,
+            Math.sin(a) * sp,
+            i % 2 === 0 ? '#d946ef' : '#00f0ff',
+            26,
+            3.6
+          );
+        }
+
+        if (hitCount > 0 || convertedShots > 0) {
+          spawnFloatingText(
+            this.x,
+            this.y - 28,
+            `⏳ TEMPORAL SHATTER! (${hitCount} HIT${convertedShots > 0 ? ' + ' + convertedShots + ' REVERSED' : ''})`,
+            '#00f0ff',
+            1.35
+          );
+        }
+      }
+
+      draw() {
+        const lifeRatio = Math.max(0, this.life / this.maxLife);
+        const pulse = 1 + Math.sin(frameCount * 0.15) * 0.025;
+        const r = this.radius * pulse;
+
+        ctx.save();
+        ctx.translate(this.x, this.y);
+
+        // Soft pre-baked glow aura
+        ctx.globalAlpha = 0.32;
+        ctx.drawImage(getGlowSprite('#d946ef'), -r * 1.15, -r * 1.15, r * 2.3, r * 2.3);
+        ctx.globalAlpha = 1;
+
+        // Translucent stasis field dome fill
+        const grad = ctx.createRadialGradient(0, 0, r * 0.1, 0, 0, r);
+        grad.addColorStop(0, 'rgba(0, 240, 255, 0.14)');
+        grad.addColorStop(0.65, 'rgba(217, 70, 239, 0.11)');
+        grad.addColorStop(1, 'rgba(217, 70, 239, 0.28)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Outer containment perimeter + life progress arc
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(217, 70, 239, 0.65)';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, r + 5, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * lifeRatio);
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // 12 Cyber-Chronometer dial ticks around the perimeter
+        ctx.save();
+        ctx.rotate(this.rot * 0.4);
+        for (let i = 0; i < 12; i++) {
+          const a = (i * Math.PI) / 6;
+          const inner = i % 3 === 0 ? r - 18 : r - 10;
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(a) * inner, Math.sin(a) * inner);
+          ctx.lineTo(Math.cos(a) * (r - 2), Math.sin(a) * (r - 2));
+          ctx.strokeStyle = i % 3 === 0 ? '#00f0ff' : 'rgba(217, 70, 239, 0.7)';
+          ctx.lineWidth = i % 3 === 0 ? 2.5 : 1.4;
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // Rotating Chronometer Clock Hands in the center
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(0, 0, 28, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(0, 240, 255, 0.45)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5, 5]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Fast minute hand
+        const minAng = frameCount * 0.14;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(Math.cos(minAng) * 42, Math.sin(minAng) * 42);
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // Slow hour hand
+        const hrAng = frameCount * 0.025;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(Math.cos(hrAng) * 26, Math.sin(hrAng) * 26);
+        ctx.strokeStyle = '#d946ef';
+        ctx.lineWidth = 3.2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Tactical HUD tag on top of dome
+        ctx.font = '700 10px Orbitron, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#f0abfc';
+        ctx.fillText('CHRONO-STASIS // +50% DMG // [F] SHATTER', 0, -r - 12);
+
+        ctx.restore();
+      }
+    }
+
+    // ★★★ SKILL [X]: PHANTOM HOLO-DECOY CLONE ★★★
+    class PhantomDecoy {
+      constructor(x, y, angle, maxLife = 360) {
+        this.x = x;
+        this.y = y;
+        this.angle = angle;
+        this.life = maxLife;
+        this.maxLife = maxLife;
+        this.radius = 48;
+        this.active = true;
+        this.fireTimer = 18;
+      }
+
+      update() {
+        this.life--;
+        this.angle += 0.08;
+        this.fireTimer--;
+        const dmgMult = 1 + (player.level - 1) * 0.12;
+
+        // Gently drift toward the nearest enemy cluster to hold aggro
+        let nearest = null;
+        let bestD = Infinity;
+        for (let i = 0; i < enemies.length; i++) {
+          const e = enemies[i];
+          if (!e.active) continue;
+          const d = Math.hypot(e.x - this.x, e.y - this.y);
+          if (d < bestD) {
+            bestD = d;
+            nearest = e;
+          }
+        }
+        if (nearest && bestD > 110) {
+          const dir = Math.atan2(nearest.y - this.y, nearest.x - this.x);
+          this.x += Math.cos(dir) * 2.1;
+          this.y += Math.sin(dir) * 2.1;
+        }
+
+        // Absorb & reflect enemy bullets that hit the decoy's 48px holographic barrier!
+        for (let i = 0; i < enemyProjectiles.length; i++) {
+          const ep = enemyProjectiles[i];
+          if (!ep.active) continue;
+          if (Math.hypot(ep.x - this.x, ep.y - this.y) <= this.radius) {
+            ep.active = false;
+            const aimAng = nearest
+              ? Math.atan2(nearest.y - this.y, nearest.x - this.x)
+              : Math.atan2(this.y - ep.y, this.x - ep.x) + Math.PI;
+            projectiles.push(
+              new Projectile(this.x, this.y, aimAng, '#00f0ff', 17.5, 44 * dmgMult, 1, true, 'overdrive')
+            );
+            spawnParticle(ep.x, ep.y, (Math.random() - 0.5) * 5, (Math.random() - 0.5) * 5, '#00f0ff', 12, 2.5);
+          }
+        }
+
+        // Periodic 8-way Holo-Laser Pulse + Twin Homing Micro-Missiles
+        if (this.fireTimer <= 0) {
+          this.fireTimer = 30;
+          sound.shoot();
+          for (let k = 0; k < 8; k++) {
+            const a = this.angle + (k * Math.PI) / 4;
+            projectiles.push(
+              new Projectile(this.x, this.y, a, k % 2 === 0 ? '#00f0ff' : '#ff0077', 14.5, 28 * dmgMult, 0, false, 'plasma')
+            );
+          }
+          if (missiles.length < 36) {
+            missiles.push(new HomingMissile(this.x, this.y, this.angle - 0.5));
+            missiles.push(new HomingMissile(this.x, this.y, this.angle + 0.5));
+          }
+          addGridRipple(this.x, this.y, 130, 14, '#00f0ff');
+        }
+
+        // Detonate in a final Holographic Plasma Shatter when duration expires
+        if (this.life <= 0) {
+          this.active = false;
+          sound.explosion(false);
+          screenShake = Math.max(screenShake, 14);
+          addGridRipple(this.x, this.y, 240, 32, '#00f0ff');
+          const blastDmg = (165 + player.phantomLevel * 55) * dmgMult;
+          for (let i = 0; i < enemies.length; i++) {
+            const e = enemies[i];
+            if (!e.active) continue;
+            if (Math.hypot(e.x - this.x, e.y - this.y) <= 210 + e.radius) {
+              e.takeDamage(blastDmg, true);
+            }
+          }
+          for (let k = 0; k < 16; k++) {
+            const a = (k * Math.PI * 2) / 16;
+            projectiles.push(new Projectile(this.x, this.y, a, '#ffe600', 15, 38 * dmgMult, 1, true, 'overdrive'));
+          }
+          spawnFloatingText(this.x, this.y - 20, '💥 PHANTOM CLONE NOVA! 💥', '#00f0ff', 1.25);
+        }
+      }
+
+      draw() {
+        const lifeRatio = Math.max(0, this.life / this.maxLife);
+        ctx.save();
+        ctx.translate(this.x, this.y);
+
+        // Pre-baked holographic glow
+        ctx.drawImage(getGlowSprite('#00f0ff'), -72, -72, 144, 144);
+        ctx.drawImage(getGlowSprite('#ff0077'), -48, -48, 96, 96);
+
+        // Taunt aggro wave ring
+        const waveR = ((frameCount * 2.4) % 110) + 20;
+        ctx.beginPath();
+        ctx.arc(0, 0, waveR, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(0, 240, 255, ${(1 - waveR / 130) * 0.38})`;
+        ctx.lineWidth = 1.6;
+        ctx.stroke();
+
+        // 48px Hexagonal Bullet-Conversion Barrier
+        ctx.save();
+        ctx.rotate(-frameCount * 0.04);
+        ctx.beginPath();
+        for (let i = 0; i < 6; i++) {
+          const a = (i * Math.PI) / 3;
+          const hx = Math.cos(a) * this.radius;
+          const hy = Math.sin(a) * this.radius;
+          if (i === 0) ctx.moveTo(hx, hy);
+          else ctx.lineTo(hx, hy);
+        }
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(0, 240, 255, 0.09)';
+        ctx.fill();
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.restore();
+
+        // Holographic Glitch-Clone Ship Silhouette
+        ctx.save();
+        ctx.rotate(this.angle);
+        ctx.fillStyle = 'rgba(0, 240, 255, 0.85)';
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(22, 0);
+        ctx.lineTo(-14, -15);
+        ctx.lineTo(-8, 0);
+        ctx.lineTo(-14, 15);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+        // Remaining duration arc & label
+        ctx.beginPath();
+        ctx.arc(0, 0, this.radius + 6, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * lifeRatio);
+        ctx.strokeStyle = '#ffe600';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        ctx.font = '700 9px Orbitron, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#00f0ff';
+        ctx.fillText('PHANTOM DECOY // TAUNTING', 0, -this.radius - 12);
+
+        ctx.restore();
+      }
+    }
+
     class DataShard {
       constructor(x, y, val, type = 'xp') {
         this.x = x;
@@ -3603,157 +5502,179 @@
         this.recoil = 0;
         this.tier = 1;
         this.isElite = false;
+        this.chronoSlowTimer = 0;
 
-        const waveScale = 1 + (wave - 1) * 0.14;
+        const threatCfg = getThreatConfig();
+        const waveScale = (1 + (wave - 1) * 0.22) * threatCfg.hpMult;
+        const spdScale = threatCfg.speedMult;
+        this.fireScale = threatCfg.fireMult;
+        this.dmgScale = threatCfg.dmgMult;
 
-        // TIER 1: NORMAL ENEMIES
+        // TIER 1: HARDENED VANGUARD ENEMIES (Stronger & armed right from Sector 1!)
         if (type === 'drone_bit') {
-          this.hp = 20 * waveScale;
+          this.hp = 42 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 3.1;
+          this.speed = (3.55 + Math.min(1.1, wave * 0.06)) * spdScale;
           this.radius = 12;
           this.color = '#38bdf8';
-          this.scoreVal = 70;
-          this.xpVal = 14;
+          this.scoreVal = 95;
+          this.xpVal = 16;
+          this.shotCooldown = Math.floor((75 + Math.random() * 35) / this.fireScale);
           this.tier = 1;
         } else if (type === 'scout') {
-          this.hp = 28 * waveScale;
+          this.hp = 60 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 3.85 + Math.min(1.4, wave * 0.07);
+          this.speed = (4.25 + Math.min(1.5, wave * 0.08)) * spdScale;
           this.radius = 14;
           this.color = '#ff0077';
-          this.scoreVal = 100;
-          this.xpVal = 18;
+          this.scoreVal = 135;
+          this.xpVal = 20;
+          this.lungeCooldown = 70 + Math.floor(Math.random() * 35);
+          this.lunging = 0;
           this.tier = 1;
         } else if (type === 'mini') {
-          this.hp = 18 * waveScale;
+          this.hp = 34 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 4.9;
+          this.speed = 5.35 * spdScale;
           this.radius = 10;
           this.color = '#00ff88';
-          this.scoreVal = 65;
-          this.xpVal = 10;
+          this.scoreVal = 80;
+          this.xpVal = 12;
           this.tier = 1;
         }
-        // TIER 2: A LITTLE HARDER ENEMIES
+        // TIER 2: ASSAULT SKIRMISHERS
         else if (type === 'striker') {
-          this.hp = 46 * waveScale;
+          this.hp = 92 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 2.75;
+          this.speed = 3.15 * spdScale;
           this.radius = 16;
           this.color = '#ff7b00';
-          this.scoreVal = 175;
-          this.xpVal = 26;
-          this.shotCooldown = 85 + Math.floor(Math.random() * 35);
+          this.scoreVal = 210;
+          this.xpVal = 28;
+          this.shotCooldown = Math.floor((62 + Math.random() * 28) / this.fireScale);
           this.tier = 2;
         } else if (type === 'splitter') {
-          this.hp = 76 * waveScale;
+          this.hp = 140 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 2.5;
+          this.speed = 2.85 * spdScale;
           this.radius = 22;
           this.color = '#00ff88';
-          this.scoreVal = 260;
-          this.xpVal = 32;
+          this.scoreVal = 310;
+          this.xpVal = 36;
+          this.shotCooldown = Math.floor((78 + Math.random() * 30) / this.fireScale);
           this.tier = 2;
         }
-        // TIER 3: MORE HARDER ENEMIES
+        // TIER 3: HEAVY ARMORED FLEET
         else if (type === 'cruiser') {
-          this.hp = 115 * waveScale;
+          this.hp = 200 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 1.95;
+          this.speed = 2.3 * spdScale;
           this.radius = 24;
           this.color = '#ffe600';
-          this.scoreVal = 300;
-          this.xpVal = 42;
-          this.shotCooldown = 75 + Math.floor(Math.random() * 40);
+          this.scoreVal = 380;
+          this.xpVal = 46;
+          this.shotCooldown = Math.floor((60 + Math.random() * 30) / this.fireScale);
           this.tier = 3;
         } else if (type === 'aegis') {
-          this.hp = 135 * waveScale;
+          this.hp = 235 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 1.85;
+          this.speed = 2.15 * spdScale;
           this.radius = 23;
           this.color = '#00f0ff';
-          this.scoreVal = 360;
-          this.xpVal = 48;
-          this.shotCooldown = 100;
+          this.scoreVal = 440;
+          this.xpVal = 52;
+          this.shotCooldown = Math.floor(78 / this.fireScale);
           this.tier = 3;
         }
-        // TIER 4: HARD ENEMIES
+        // TIER 4: SPEC-OPS HUNTERS
         else if (type === 'sniper') {
-          this.hp = 68 * waveScale;
+          this.hp = 128 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 2.4;
+          this.speed = 2.75 * spdScale;
           this.radius = 17;
           this.color = '#00f0ff';
-          this.scoreVal = 380;
-          this.xpVal = 48;
-          this.shotCooldown = 110;
+          this.scoreVal = 460;
+          this.xpVal = 54;
+          this.shotCooldown = Math.floor(88 / this.fireScale);
           this.aimAngle = 0;
           this.tier = 4;
         } else if (type === 'phantom') {
-          this.hp = 105 * waveScale;
+          this.hp = 175 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 3.15;
+          this.speed = 3.55 * spdScale;
           this.radius = 18;
           this.color = '#a855f7';
-          this.scoreVal = 450;
-          this.xpVal = 56;
-          this.shotCooldown = 95;
-          this.blinkCooldown = 135;
+          this.scoreVal = 520;
+          this.xpVal = 62;
+          this.shotCooldown = Math.floor(75 / this.fireScale);
+          this.blinkCooldown = Math.floor(105 / this.fireScale);
           this.tier = 4;
         }
-        // TIER 5: VERY HARD / APEX ENEMIES
+        // TIER 5: APEX WAR-MACHINES & VIP NEMESIS
         else if (type === 'weaver') {
-          this.hp = 120 * waveScale;
+          this.hp = 210 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 2.25;
+          this.speed = 2.6 * spdScale;
           this.radius = 21;
           this.color = '#d946ef';
-          this.scoreVal = 480;
-          this.xpVal = 60;
-          this.shotCooldown = 85;
+          this.scoreVal = 580;
+          this.xpVal = 68;
+          this.shotCooldown = Math.floor(68 / this.fireScale);
           this.tier = 5;
         } else if (type === 'juggernaut') {
-          this.hp = 295 * waveScale;
+          this.hp = 460 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 1.5;
+          this.speed = 1.85 * spdScale;
           this.radius = 31;
           this.color = '#ff2a55';
-          this.scoreVal = 800;
-          this.xpVal = 100;
-          this.shotCooldown = 105;
-          this.chargeCooldown = 190;
+          this.scoreVal = 950;
+          this.xpVal = 115;
+          this.shotCooldown = Math.floor(84 / this.fireScale);
+          this.chargeCooldown = 145;
           this.charging = 0;
           this.tier = 5;
-        } else if (type === 'boss') {
-          this.hp = 1500 * waveScale;
+        } else if (type === 'nemesis') {
+          this.hp = 420 * waveScale;
           this.maxHp = this.hp;
-          this.speed = 1.35;
+          this.speed = 3.45 * spdScale;
+          this.radius = 25;
+          this.color = '#ffe600';
+          this.scoreVal = 2200;
+          this.xpVal = 165;
+          this.shotCooldown = Math.floor(52 / this.fireScale);
+          this.dashTimer = 95;
+          this.isElite = true;
+          this.tier = 5;
+        } else if (type === 'boss') {
+          this.hp = 2400 * waveScale;
+          this.maxHp = this.hp;
+          this.speed = 1.65 * spdScale;
           this.radius = 56;
           this.color = '#9d4edd';
-          this.scoreVal = 5000;
-          this.xpVal = 350;
-          this.shotCooldown = 45;
+          this.scoreVal = 6000;
+          this.xpVal = 400;
+          this.shotCooldown = Math.floor(36 / this.fireScale);
           this.patternStep = 0;
           this.tier = 6;
         }
 
-        // Overclocked Elite Variant Promotion (Sector 3+ or forced Elite)
+        // Overclocked Elite Variant Promotion (Active right from Sector 1!)
         const distFromCenter = Math.hypot(this.x - WORLD_W / 2, this.y - WORLD_H / 2);
-        const outerBiomeBonus = distFromCenter > 1100 ? 0.08 : 0;
+        const outerBiomeBonus = distFromCenter > 1100 ? 0.10 : 0;
+        const eliteChance = Math.min(0.55, threatCfg.eliteBonus + (wave - 1) * 0.045 + outerBiomeBonus);
         if (
           type !== 'boss' &&
+          type !== 'nemesis' &&
           type !== 'mini' &&
-          type !== 'drone_bit' &&
-          (forceElite || (wave >= 3 && Math.random() < Math.min(0.28, (wave - 2) * 0.045 + outerBiomeBonus)))
+          (forceElite || Math.random() < eliteChance)
         ) {
           this.isElite = true;
-          this.hp *= 1.65;
+          this.hp *= 1.75;
           this.maxHp = this.hp;
-          this.radius = Math.round(this.radius * 1.15);
-          this.speed *= 1.08;
-          this.scoreVal = Math.round(this.scoreVal * 2.2);
-          this.xpVal = Math.round(this.xpVal * 2.0);
+          this.radius = Math.round(this.radius * 1.16);
+          this.speed *= 1.12;
+          this.scoreVal = Math.round(this.scoreVal * 2.3);
+          this.xpVal = Math.round(this.xpVal * 2.1);
         }
       }
 
@@ -3762,9 +5683,14 @@
         const critRoll = isCrit || Math.random() < 0.15;
         let finalDmg = critRoll ? amount * 1.5 : amount;
 
-        // Aegis Phalanx Guardian front energy barrier absorbs 45% of non-crit damage
+        // Chrono-Stasis Singularity Dome amplifies all damage taken by +50%!
+        if (this.chronoSlowTimer > 0) {
+          finalDmg *= 1.5;
+        }
+
+        // Aegis Phalanx Guardian front energy barrier absorbs 55% of non-crit damage
         if (this.type === 'aegis' && !isCrit) {
-          finalDmg *= 0.55;
+          finalDmg *= 0.45;
           spawnParticle(
             this.x + Math.cos(this.angle) * (this.radius + 6),
             this.y + Math.sin(this.angle) * (this.radius + 6),
@@ -3783,7 +5709,7 @@
           this.x + (Math.random() - 0.5) * 16,
           this.y - this.radius,
           Math.round(finalDmg) + (critRoll ? '!' : ''),
-          critRoll ? '#ffe600' : (this.type === 'aegis' && !isCrit ? '#00f0ff' : '#ffffff'),
+          critRoll ? '#ffe600' : (this.chronoSlowTimer > 0 ? '#f0abfc' : (this.type === 'aegis' && !isCrit ? '#00f0ff' : '#ffffff')),
           critRoll ? 1.2 : 0.9
         );
 
@@ -3799,27 +5725,39 @@
       die() {
         this.active = false;
         totalKills++;
+        if (typeof recordContractAction === 'function') {
+          recordContractAction('kill', 1, this.type);
+        }
+
         const isBoss = this.type === 'boss';
-        const isHeavy = isBoss || this.type === 'juggernaut' || this.isElite;
-        sound.explosion(isBoss);
-        screenShake = Math.max(screenShake, isBoss ? 28 : (isHeavy ? 13 : 7));
+        const isNemesis = this.type === 'nemesis';
+        const isHeavy = isBoss || isNemesis || this.type === 'juggernaut' || this.isElite;
+        sound.explosion(isBoss || isNemesis);
+        screenShake = Math.max(screenShake, isBoss ? 28 : (isNemesis ? 22 : (isHeavy ? 13 : 7)));
         if (isBoss) {
           hitStopFrames = 6;
           chromaticFlash = 16;
           announce('💥 OMEGA DREADNOUGHT OBLITERATED 💥', '#ffe600');
+        } else if (isNemesis) {
+          hitStopFrames = 4;
+          chromaticFlash = 12;
+          player.frenzyTimer = Math.max(player.frenzyTimer, 420);
+          shards.push(new DataShard(this.x, this.y, 0, 'heal'));
+          shards.push(new DataShard(this.x, this.y, 0, 'overdrive'));
+          announce('🎯 CRIMSON NEMESIS VIP TERMINATED — 7s HYPER-FRENZY! 🎯', '#ffe600');
         } else if (this.type === 'juggernaut') {
           announce('🔥 COLOSSUS JUGGERNAUT DESTROYED! 🔥', '#ff2a55');
         }
 
         if (isHeavy || gridRipples.length < 3) {
-          addGridRipple(this.x, this.y, isBoss ? 480 : (isHeavy ? 220 : 130), isBoss ? 45 : 16, this.color);
+          addGridRipple(this.x, this.y, isBoss ? 480 : (isHeavy ? 240 : 130), isBoss ? 45 : 18, this.color);
         }
 
         score += this.scoreVal * combo;
-        player.overdrive = Math.min(100, player.overdrive + (isBoss ? 40 : (this.isElite ? 9 : 4.5)));
+        player.overdrive = Math.min(100, player.overdrive + (isBoss ? 40 : (isNemesis ? 35 : (this.isElite ? 9 : 4.5))));
 
         // Spawn collectible XP Data Shards (merge if too many shards on screen)
-        const shardCount = isBoss ? 10 : (this.type === 'juggernaut' ? 4 : (this.isElite ? 2 : 1));
+        const shardCount = isBoss ? 10 : (isNemesis ? 7 : (this.type === 'juggernaut' ? 4 : (this.isElite ? 2 : 1)));
         for (let s = 0; s < shardCount; s++) {
           if (shards.length >= 65) {
             const existing = shards.find(sh => sh.active && sh.type === 'xp');
@@ -3842,10 +5780,11 @@
           shards.push(new DataShard(this.x, this.y, 0, 'magnet'));
         }
 
-        // Splitter spawns 3 mini drones on death
+        // Splitter spawns 4 mini drones on death (5 if Elite!)
         if (this.type === 'splitter') {
-          for (let m = 0; m < 3; m++) {
-            const ang = this.hullRot + (m * Math.PI * 2) / 3;
+          const miniCnt = this.isElite ? 5 : 4;
+          for (let m = 0; m < miniCnt; m++) {
+            const ang = this.hullRot + (m * Math.PI * 2) / miniCnt;
             enemies.push(new Enemy('mini', this.x + Math.cos(ang) * 18, this.y + Math.sin(ang) * 18));
           }
         }
@@ -3866,6 +5805,8 @@
         comboCounter++;
         combo = Math.min(12, 1 + Math.floor(comboCounter / 4));
         comboTimer = 210;
+        if (combo > maxComboReached) maxComboReached = combo;
+        if (comboCounter > maxStreakReached) maxStreakReached = comboCounter;
 
         if (comboCounter === 10) announce('🔥 10x KILLSTREAK - RAMPAGE!', '#00f0ff');
         else if (comboCounter === 25) announce('⚡ 25x KILLSTREAK - CYBER GOD!', '#ff0077');
@@ -3873,105 +5814,182 @@
       }
 
       update() {
-        const timeScale = player.overdriveActive > 0 ? 0.65 : 1.0;
+        const chronoMult = this.chronoSlowTimer > 0 ? 0.18 : 1.0;
+        if (this.chronoSlowTimer > 0) this.chronoSlowTimer--;
+        const timeScale = (player.overdriveActive > 0 ? 0.65 : 1.0) * chronoMult;
+        const cdTick = chronoMult;
+
+        // Phantom Decoy Clone Taunt: non-boss enemies within 460px target the holographic clone!
+        let targetX = player.x;
+        let targetY = player.y;
+        if (typeof phantomDecoys !== 'undefined' && phantomDecoys.length > 0 && this.type !== 'boss') {
+          for (let d = 0; d < phantomDecoys.length; d++) {
+            const dec = phantomDecoys[d];
+            if (dec.active && Math.hypot(dec.x - this.x, dec.y - this.y) < 460) {
+              targetX = dec.x;
+              targetY = dec.y;
+              break;
+            }
+          }
+        }
+
+        const dxT = targetX - this.x;
+        const dyT = targetY - this.y;
+        const distToTarget = Math.hypot(dxT, dyT);
         const dxP = player.x - this.x;
         const dyP = player.y - this.y;
-        this.angle = Math.atan2(dyP, dxP);
-        this.hullRot += 0.025 * timeScale;
+        this.angle = Math.atan2(dyT, dxT);
+        this.hullRot += 0.028 * timeScale;
         if (this.recoil > 0) this.recoil *= 0.82;
         const distToPlayer = Math.hypot(dxP, dyP);
 
         if (this.type === 'drone_bit') {
-          // Gentle sine-wave swarm approach (Normal Tier 1)
-          const weave = this.angle + Math.sin(frameCount * 0.07 + this.id) * 0.32;
+          // Aggressive sine-wave swarm + plasma micro-pulse fire
+          const weave = this.angle + Math.sin(frameCount * 0.08 + this.id) * 0.36;
           this.x += Math.cos(weave) * this.speed * timeScale;
           this.y += Math.sin(weave) * this.speed * timeScale;
+          this.shotCooldown -= cdTick;
+          if (this.shotCooldown <= 0 && distToTarget < 470) {
+            this.shotCooldown = Math.floor(88 / this.fireScale);
+            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#38bdf8', 6.4, 11 * this.dmgScale));
+          }
+        } else if (this.type === 'scout') {
+          // Predator Interceptor: bursts into a high-speed afterburner lunge + razor dart!
+          this.lungeCooldown -= cdTick;
+          if (this.lungeCooldown <= 0 && distToTarget < 310) {
+            this.lungeCooldown = Math.floor(85 / this.fireScale);
+            this.lunging = 18;
+            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ff0077', 7.8, 12 * this.dmgScale));
+          }
+          const lungeMult = this.lunging > 0 ? 1.95 : 1.0;
+          if (this.lunging > 0) this.lunging--;
+          this.x += Math.cos(this.angle) * this.speed * lungeMult * timeScale;
+          this.y += Math.sin(this.angle) * this.speed * lungeMult * timeScale;
         } else if (this.type === 'striker') {
-          // Light Skirmisher (Tier 2): approaches to midrange, strafes slightly, fires single orange bolt
-          const moveAng = distToPlayer < 240 ? this.angle + Math.PI * 0.38 : this.angle;
+          // Assault Skirmisher: strafes at midrange & fires twin angled plasma bolts (3-way if Elite)
+          const moveAng = distToTarget < 250 ? this.angle + Math.PI * 0.4 : this.angle;
           this.x += Math.cos(moveAng) * this.speed * timeScale;
           this.y += Math.sin(moveAng) * this.speed * timeScale;
-          this.shotCooldown--;
+          this.shotCooldown -= cdTick;
           if (this.shotCooldown <= 0) {
-            this.shotCooldown = 105;
-            this.recoil = 4;
-            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ff7b00', 5.6, 10));
+            this.shotCooldown = Math.floor(72 / this.fireScale);
+            this.recoil = 4.5;
+            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - 0.11, '#ff7b00', 7.2, 13 * this.dmgScale));
+            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + 0.11, '#ff7b00', 7.2, 13 * this.dmgScale));
+            if (this.isElite) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ffe600', 7.8, 14 * this.dmgScale));
+            }
+          }
+        } else if (this.type === 'splitter') {
+          // Hydra Carrier: advances steadily while lobbing bio-plasma orbs
+          this.x += Math.cos(this.angle) * this.speed * timeScale;
+          this.y += Math.sin(this.angle) * this.speed * timeScale;
+          this.shotCooldown -= cdTick;
+          if (this.shotCooldown <= 0 && distToTarget < 520) {
+            this.shotCooldown = Math.floor(82 / this.fireScale);
+            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#00ff88', 6.4, 13 * this.dmgScale));
           }
         } else if (this.type === 'aegis') {
-          // Shielded Guardian (Tier 3): steady advance + twin cyan pulse orbs
+          // Shielded Phalanx Guardian: steady advance + 3-bolt cyan phalanx arc
           this.x += Math.cos(this.angle) * this.speed * timeScale;
           this.y += Math.sin(this.angle) * this.speed * timeScale;
-          this.shotCooldown--;
+          this.shotCooldown -= cdTick;
           if (this.shotCooldown <= 0) {
-            this.shotCooldown = 110;
-            this.recoil = 4;
-            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - 0.14, '#00f0ff', 5.4, 12));
-            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + 0.14, '#00f0ff', 5.4, 12));
+            this.shotCooldown = Math.floor(82 / this.fireScale);
+            this.recoil = 4.5;
+            for (let k = -1; k <= 1; k++) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + k * 0.16, '#00f0ff', 6.8, 14 * this.dmgScale));
+            }
           }
         } else if (this.type === 'sniper') {
-          // Keep distance and telegraph laser shot (Tier 4)
-          if (distToPlayer > 350) {
+          // Keep distance and telegraph high-velocity rail shot
+          if (distToTarget > 360) {
             this.x += Math.cos(this.angle) * this.speed * timeScale;
             this.y += Math.sin(this.angle) * this.speed * timeScale;
-          } else if (distToPlayer < 230) {
-            this.x -= Math.cos(this.angle) * this.speed * 0.8 * timeScale;
-            this.y -= Math.sin(this.angle) * this.speed * 0.8 * timeScale;
+          } else if (distToTarget < 240) {
+            this.x -= Math.cos(this.angle) * this.speed * 0.85 * timeScale;
+            this.y -= Math.sin(this.angle) * this.speed * 0.85 * timeScale;
           }
-          this.shotCooldown--;
-          if (this.shotCooldown > 25) {
+          this.shotCooldown -= cdTick;
+          if (this.shotCooldown > 22) {
             this.aimAngle = this.angle;
           } else if (this.shotCooldown <= 0) {
-            this.shotCooldown = 125;
+            this.shotCooldown = Math.floor(92 / this.fireScale);
             this.recoil = 6;
-            enemyProjectiles.push(new Projectile(this.x + Math.cos(this.aimAngle) * 20, this.y + Math.sin(this.aimAngle) * 20, this.aimAngle, '#ff0055', 13.5, 18));
+            enemyProjectiles.push(new Projectile(this.x + Math.cos(this.aimAngle) * 20, this.y + Math.sin(this.aimAngle) * 20, this.aimAngle, '#ff0055', 16.0, 22 * this.dmgScale));
+            if (this.isElite) {
+              enemyProjectiles.push(new Projectile(this.x + Math.cos(this.aimAngle) * 20, this.y + Math.sin(this.aimAngle) * 20, this.aimAngle - 0.12, '#ff0055', 15.0, 18 * this.dmgScale));
+              enemyProjectiles.push(new Projectile(this.x + Math.cos(this.aimAngle) * 20, this.y + Math.sin(this.aimAngle) * 20, this.aimAngle + 0.12, '#ff0055', 15.0, 18 * this.dmgScale));
+            }
           }
         } else if (this.type === 'phantom') {
-          // Phase-Stalker (Tier 4): phase-blinks toward player flank & fires 4-way cross shurikens
+          // Phase-Stalker: phase-blinks toward player flank & fires 8-way shuriken ring
           this.x += Math.cos(this.angle) * this.speed * timeScale;
           this.y += Math.sin(this.angle) * this.speed * timeScale;
-          this.blinkCooldown--;
-          if (this.blinkCooldown <= 0 && distToPlayer > 160 && distToPlayer < 560) {
-            this.blinkCooldown = 145;
+          this.blinkCooldown -= cdTick;
+          if (this.blinkCooldown <= 0 && distToTarget > 140 && distToTarget < 600) {
+            this.blinkCooldown = Math.floor(105 / this.fireScale);
             const oldX = this.x;
             const oldY = this.y;
-            const blinkAng = this.angle + (Math.random() < 0.5 ? 0.55 : -0.55);
-            this.x = Math.max(60, Math.min(WORLD_W - 60, this.x + Math.cos(blinkAng) * 135));
-            this.y = Math.max(60, Math.min(WORLD_H - 60, this.y + Math.sin(blinkAng) * 135));
+            const blinkAng = this.angle + (Math.random() < 0.5 ? 0.52 : -0.52);
+            this.x = Math.max(60, Math.min(WORLD_W - 60, this.x + Math.cos(blinkAng) * 145));
+            this.y = Math.max(60, Math.min(WORLD_H - 60, this.y + Math.sin(blinkAng) * 145));
             lightningBolts.push({ x1: oldX, y1: oldY, x2: this.x, y2: this.y, color: '#a855f7', life: 10 });
-            for (let k = 0; k < 4; k++) {
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + (k * Math.PI) / 2, '#a855f7', 6.0, 13));
+            for (let k = 0; k < 8; k++) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + (k * Math.PI) / 4, '#a855f7', 7.0, 15 * this.dmgScale));
             }
           }
         } else if (this.type === 'weaver') {
-          // Orbiting strafe movement + tri-vortex shots (Tier 5)
-          const strafeAngle = this.angle + (distToPlayer < 260 ? Math.PI * 0.42 : Math.PI * 0.18);
+          // Orbiting strafe movement + 5-way psionic crescent waves
+          const strafeAngle = this.angle + (distToTarget < 270 ? Math.PI * 0.44 : Math.PI * 0.2);
           this.x += Math.cos(strafeAngle) * this.speed * timeScale;
           this.y += Math.sin(strafeAngle) * this.speed * timeScale;
-          this.shotCooldown--;
+          this.shotCooldown -= cdTick;
           if (this.shotCooldown <= 0) {
-            this.shotCooldown = 90;
-            for (let k = -1; k <= 1; k++) {
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + k * 0.28, '#d946ef', 5.8, 13));
+            this.shotCooldown = Math.floor(68 / this.fireScale);
+            for (let k = -2; k <= 2; k++) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + k * 0.2, '#d946ef', 7.0, 16 * this.dmgScale));
             }
           }
         } else if (this.type === 'juggernaut') {
-          // Colossus Siege Juggernaut (Tier 5): thruster charge + 8-way magma nova
-          this.chargeCooldown--;
-          if (this.chargeCooldown <= 0 && distToPlayer < 480) {
-            this.chargeCooldown = 210;
-            this.charging = 28;
+          // Colossus Siege Juggernaut: ferocious thruster charge + 12-way magma nova
+          this.chargeCooldown -= cdTick;
+          if (this.chargeCooldown <= 0 && distToTarget < 520) {
+            this.chargeCooldown = 145;
+            this.charging = 32;
           }
-          const mult = this.charging > 0 ? 2.6 : 1.0;
+          const mult = this.charging > 0 ? 2.9 : 1.0;
           if (this.charging > 0) this.charging--;
           this.x += Math.cos(this.angle) * this.speed * mult * timeScale;
           this.y += Math.sin(this.angle) * this.speed * mult * timeScale;
 
-          this.shotCooldown--;
+          this.shotCooldown -= cdTick;
           if (this.shotCooldown <= 0) {
-            this.shotCooldown = 115;
+            this.shotCooldown = Math.floor(84 / this.fireScale);
             this.recoil = 6;
-            for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
-              enemyProjectiles.push(new Projectile(this.x, this.y, a + this.hullRot, '#ff2a55', 5.2, 15));
+            for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, a + this.hullRot, '#ff2a55', 6.4, 18 * this.dmgScale));
+            }
+          }
+        } else if (this.type === 'nemesis') {
+          // VIP Crimson Nemesis Gunship: high-speed orbit + lateral phase-dash + 5-way golden salvo
+          const orbitAng = this.angle + (distToTarget < 280 ? Math.PI * 0.52 : Math.PI * 0.26);
+          this.x += Math.cos(orbitAng) * this.speed * timeScale;
+          this.y += Math.sin(orbitAng) * this.speed * timeScale;
+          this.dashTimer -= cdTick;
+          if (this.dashTimer <= 0) {
+            this.dashTimer = 85;
+            const sideAng = this.angle + (Math.random() < 0.5 ? Math.PI / 2 : -Math.PI / 2);
+            this.x = Math.max(80, Math.min(WORLD_W - 80, this.x + Math.cos(sideAng) * 110));
+            this.y = Math.max(80, Math.min(WORLD_H - 80, this.y + Math.sin(sideAng) * 110));
+            addGridRipple(this.x, this.y, 180, 18, '#ffe600');
+          }
+          this.shotCooldown -= cdTick;
+          if (this.shotCooldown <= 0) {
+            this.shotCooldown = Math.floor(52 / this.fireScale);
+            this.recoil = 5;
+            for (let k = -2; k <= 2; k++) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + k * 0.15, k % 2 === 0 ? '#ffe600' : '#ff0055', 8.2, 16 * this.dmgScale));
             }
           }
         } else {
@@ -4001,28 +6019,34 @@
 
         // Cruiser & Boss firing patterns
         if (this.type === 'cruiser' || this.type === 'boss') {
-          this.shotCooldown--;
+          this.shotCooldown -= cdTick;
           if (this.shotCooldown <= 0) {
             this.recoil = 5;
             if (this.type === 'boss') {
-              const enraged = this.hp < this.maxHp * 0.5;
-              this.shotCooldown = enraged ? 30 : 42;
+              const enraged = this.hp < this.maxHp * 0.55;
+              this.shotCooldown = Math.floor((enraged ? 24 : 34) / this.fireScale);
               this.patternStep++;
               if (this.patternStep % 3 === 0) {
-                // Nova ring
-                for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
-                  enemyProjectiles.push(new Projectile(this.x, this.y, a + this.patternStep * 0.15, '#ff0077', 5.4, 14));
+                // 16-way Spiral Nova Ring
+                for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
+                  enemyProjectiles.push(new Projectile(this.x, this.y, a + this.patternStep * 0.18, '#ff0077', 6.6, 17 * this.dmgScale));
+                }
+              } else if (this.patternStep % 3 === 1) {
+                // 7-way Aimed Dreadnought Fan
+                for (let a = -0.54; a <= 0.54; a += 0.18) {
+                  enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + a, '#9d4edd', 8.0, 18 * this.dmgScale));
                 }
               } else {
-                // Aimed fan
-                for (let a = -0.45; a <= 0.45; a += 0.18) {
-                  enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + a, '#9d4edd', 6.8, 15));
-                }
+                // Twin High-Velocity Rail Lances
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - 0.08, '#ff0055', 14.0, 22 * this.dmgScale));
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + 0.08, '#ff0055', 14.0, 22 * this.dmgScale));
               }
             } else {
-              this.shotCooldown = 95;
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - 0.1, '#ffe600', 6.2, 12));
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + 0.1, '#ffe600', 6.2, 12));
+              this.shotCooldown = Math.floor(68 / this.fireScale);
+              const spreadCount = this.isElite ? 2 : 1;
+              for (let s = -spreadCount; s <= spreadCount; s++) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + s * 0.13, '#ffe600', 7.2, 15 * this.dmgScale));
+              }
             }
           }
         }
@@ -4031,11 +6055,12 @@
 
         // Collision with player
         if (distToPlayer < this.radius + player.radius) {
-          player.takeDamage(this.type === 'boss' ? 28 : (this.type === 'juggernaut' ? 22 : 14));
-          if (this.type !== 'boss' && this.type !== 'juggernaut') {
+          const baseContact = this.type === 'boss' ? 34 : (this.type === 'juggernaut' || this.type === 'nemesis' ? 26 : 18);
+          player.takeDamage(baseContact * this.dmgScale);
+          if (this.type !== 'boss' && this.type !== 'juggernaut' && this.type !== 'nemesis') {
             this.takeDamage(999);
           }
-        } else if (this.type !== 'boss' && distToPlayer > 1250) {
+        } else if (this.type !== 'boss' && this.type !== 'nemesis' && distToPlayer > 1250) {
           const pt = randomEdgePoint();
           this.x = pt.x;
           this.y = pt.y;
@@ -4110,6 +6135,20 @@
           ctx.setLineDash([8, 6]);
           ctx.beginPath();
           ctx.arc(0, 0, this.radius + 7, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.restore();
+        }
+
+        // ★ CHRONO-STASIS TIME-LOCK RING (+50% VULNERABILITY INDICATOR)
+        if (this.chronoSlowTimer > 0) {
+          ctx.save();
+          ctx.rotate(frameCount * 0.03);
+          ctx.strokeStyle = '#d946ef';
+          ctx.lineWidth = 2;
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath();
+          ctx.arc(0, 0, this.radius + 11, 0, Math.PI * 2);
           ctx.stroke();
           ctx.setLineDash([]);
           ctx.restore();
@@ -4657,6 +6696,39 @@
         }
 
         /* -------------------------------------------------------------------
+           TIER 5C: NEMESIS -> "CRIMSON NEMESIS VIP BOUNTY" (Golden High-Speed Ace)
+           ------------------------------------------------------------------- */
+        else if (this.type === 'nemesis') {
+          ctx.rotate(this.angle);
+          ctx.fillStyle = isHit ? '#ffffff' : '#2b0518';
+          ctx.strokeStyle = '#ffe600';
+          ctx.lineWidth = 2.6;
+          ctx.beginPath();
+          ctx.moveTo(26, 0);
+          ctx.lineTo(6, -9);
+          ctx.lineTo(-10, -24);
+          ctx.lineTo(-22, -16);
+          ctx.lineTo(-12, -5);
+          ctx.lineTo(-20, 0);
+          ctx.lineTo(-12, 5);
+          ctx.lineTo(-22, 16);
+          ctx.lineTo(-10, 24);
+          ctx.lineTo(6, 9);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#ff0055';
+          ctx.beginPath();
+          ctx.arc(2, 0, 6.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.arc(4, 0, 2.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        /* -------------------------------------------------------------------
            TIER 6: BOSS -> "OMEGA SERAPHIM DREADNOUGHT" (Multi-Tiered War-Mech)
            ------------------------------------------------------------------- */
         else if (this.type === 'boss') {
@@ -4747,13 +6819,18 @@
         ctx.restore();
 
         // HP bar & Elite Badge above regular enemies (drawn in unrotated camera-world space)
-        if (this.type !== 'boss' && (this.hp < this.maxHp || this.isElite || this.type === 'juggernaut')) {
+        if (this.type !== 'boss' && (this.hp < this.maxHp || this.isElite || this.type === 'juggernaut' || this.type === 'nemesis')) {
           const w = this.radius * 2.1;
           ctx.fillStyle = 'rgba(10, 15, 30, 0.8)';
           ctx.fillRect(-w / 2, -this.radius - 14, w, 4.5);
-          ctx.fillStyle = this.isElite ? '#ffe600' : this.color;
+          ctx.fillStyle = this.type === 'nemesis' ? '#ff0055' : (this.isElite ? '#ffe600' : this.color);
           ctx.fillRect(-w / 2, -this.radius - 14, Math.max(0, (this.hp / this.maxHp) * w), 4.5);
-          if (this.isElite) {
+          if (this.type === 'nemesis') {
+            ctx.font = "900 10px 'Segoe UI', sans-serif";
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#ffe600';
+            ctx.fillText('🎯 VIP NEMESIS BOUNTY', 0, -this.radius - 18);
+          } else if (this.isElite) {
             ctx.font = "900 9px 'Segoe UI', sans-serif";
             ctx.textAlign = 'center';
             ctx.fillStyle = '#ffe600';
@@ -4877,6 +6954,11 @@
           this.radius = 58;
           this.color = '#d946ef';
           this.label = 'DIMENSIONAL WARP GATE';
+        } else if (type === 'slot_obelisk') {
+          this.radius = 36;
+          this.color = '#ff0077';
+          this.spinsLeft = 2;
+          this.label = 'NEON JACKPOT OBELISK';
         }
       }
 
@@ -4972,14 +7054,14 @@
             if (closest) {
               this.angle = Math.atan2(closest.y - this.y, closest.x - this.x);
               if (this.cooldown <= 0) {
-                this.cooldown = 16;
+                this.cooldown = 14;
                 projectiles.push(new Projectile(
                   this.x + Math.cos(this.angle) * 20,
                   this.y + Math.sin(this.angle) * 20,
                   this.angle,
                   '#00ff88',
-                  16,
-                  22 + wave * 3,
+                  17,
+                  26 + wave * 4,
                   0,
                   false,
                   'drone'
@@ -5012,6 +7094,58 @@
             }
           } else if (this.charge > 0) {
             this.charge = Math.max(0, this.charge - 0.6);
+          }
+        }
+
+        // 5. NEON JACKPOT OBELISK (Fly near to spin the Cyber-Roulette for Wingmen, Frenzy, or Loot!)
+        else if (this.type === 'slot_obelisk') {
+          if (this.cooldown <= 0 && dist < this.radius + player.radius + 14) {
+            this.cooldown = 320;
+            this.spinsLeft--;
+            if (this.spinsLeft <= 0) this.active = false;
+            screenShake = Math.max(screenShake, 14);
+            addGridRipple(this.x, this.y, 340, 30, '#ff0077');
+
+            const roll = Math.random();
+            if (roll < 0.30) {
+              // Outcome 1: Deploy Autonomous Allied Valkyrie Wingman!
+              sound.levelUp();
+              wingmen.push(new AlliedWingman(this.x, this.y));
+              score += 650 * combo;
+              spawnFloatingText(this.x, this.y - 26, '🎰 777 JACKPOT: VALKYRIE WINGMAN DEPLOYED!', '#00ff88', 1.35);
+              announce('🎰 777 JACKPOT! AUTONOMOUS VALKYRIE WINGMAN DEPLOYED FOR 45s!', '#00ff88');
+            } else if (roll < 0.60) {
+              // Outcome 2: 7 Seconds of Hyper-Frenzy (2x Fire Rate + Infinite Dash + Katana Reset)
+              sound.overdrive();
+              player.frenzyTimer = Math.max(player.frenzyTimer, 420);
+              player.katanaCooldown = 0;
+              player.overdrive = Math.min(100, player.overdrive + 40);
+              score += 500 * combo;
+              spawnFloatingText(this.x, this.y - 26, '🎰 HYPER-FRENZY SURGE! 2X FIRE & INFINITE DASH!', '#ffe600', 1.35);
+              announce('🔥 JACKPOT OVERCLOCK: 7s HYPER-FRENZY (2X FIRE RATE & ZERO DASH COOLDOWN)!', '#ffe600');
+            } else if (roll < 0.86) {
+              // Outcome 3: Mega Loot Piñata Eruption
+              sound.ringPass(4);
+              score += 600 * combo;
+              for (let i = 0; i < 10; i++) {
+                shards.push(new DataShard(this.x + (Math.random() - 0.5) * 45, this.y + (Math.random() - 0.5) * 45, 24, 'xp'));
+              }
+              shards.push(new DataShard(this.x - 16, this.y, 0, 'heal'));
+              shards.push(new DataShard(this.x + 16, this.y, 0, 'overdrive'));
+              spawnFloatingText(this.x, this.y - 26, '🎰 LOOT PIÑATA JACKPOT! +600 PTS', '#00f0ff', 1.35);
+            } else {
+              // Outcome 4: High-Stakes Elite Ambush + Instant Overdrive Charge!
+              sound.parryDeflect();
+              player.overdrive = Math.min(100, player.overdrive + 60);
+              player.katanaCooldown = 0;
+              for (let i = 0; i < 2; i++) {
+                const a = Math.random() * Math.PI * 2;
+                enemies.push(new Enemy('striker', this.x + Math.cos(a) * 180, this.y + Math.sin(a) * 180, true));
+              }
+              shards.push(new DataShard(this.x, this.y, 0, 'overdrive'));
+              spawnFloatingText(this.x, this.y - 26, '🎰 HIGH-STAKES AMBUSH! +60% OVERDRIVE!', '#ff0077', 1.3);
+              announce('⚡ OBELISK SECURITY TRIGGERED: ELITE HUNTERS + +60% OVERDRIVE SURGE!', '#ff0077');
+            }
           }
         }
       }
@@ -5247,6 +7381,49 @@
           ctx.fillText(this.charge > 0 ? `WARP CHARGING ${Math.floor(this.charge)}%` : '🌀 DIMENSIONAL WARP GATE', 0, -this.radius - 14);
         }
 
+        // 7. NEON JACKPOT OBELISK (Interactive Cyber-Roulette Shrine)
+        else if (this.type === 'slot_obelisk') {
+          const ready = this.cooldown <= 0;
+          const gCol = ready ? '#ff0077' : '#64748b';
+          if (ready) {
+            ctx.drawImage(getGlowSprite('#ff0077'), -64, -64, 128, 128);
+            ctx.drawImage(getGlowSprite('#ffe600'), -38, -38, 76, 76);
+          }
+
+          ctx.save();
+          ctx.rotate(frameCount * (ready ? 0.04 : 0.01));
+          ctx.strokeStyle = ready ? '#ffe600' : '#475569';
+          ctx.lineWidth = 2.4;
+          ctx.setLineDash([10, 6]);
+          ctx.beginPath();
+          ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.restore();
+
+          ctx.save();
+          ctx.rotate(-frameCount * 0.035);
+          ctx.fillStyle = ready ? 'rgba(255, 0, 119, 0.25)' : 'rgba(30, 41, 59, 0.5)';
+          ctx.strokeStyle = gCol;
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.moveTo(0, -22);
+          ctx.lineTo(22, 0);
+          ctx.lineTo(0, 22);
+          ctx.lineTo(-22, 0);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+          ctx.restore();
+
+          ctx.font = "900 10px 'Segoe UI', sans-serif";
+          ctx.textAlign = 'center';
+          ctx.fillStyle = ready ? '#ffe600' : '#94a3b8';
+          ctx.fillText('777', 0, 4);
+          ctx.fillStyle = ready ? '#ff66b2' : '#64748b';
+          ctx.fillText(ready ? `🎰 JACKPOT OBELISK (${this.spinsLeft} SPINS)` : `RECHARGING ${Math.ceil(this.cooldown / 60)}s`, 0, -this.radius - 11);
+        }
+
         ctx.restore();
       }
     }
@@ -5272,7 +7449,18 @@
       worldProps.push(new WorldProp('warp_gate', 2100, 420));
       worldProps.push(new WorldProp('warp_gate', 2100, 3780));
 
-      // 3. Spawn 6 Hackable Allied Ion Turrets
+      // 3. Spawn 4 Neon Jackpot Spin Obelisks around the Central Nexus crossroads
+      const slotSpots = [
+        { x: 1760, y: 2100 },
+        { x: 2440, y: 2100 },
+        { x: 2100, y: 1740 },
+        { x: 2100, y: 2460 }
+      ];
+      slotSpots.forEach(pt => {
+        worldProps.push(new WorldProp('slot_obelisk', pt.x + (Math.random() - 0.5) * 80, pt.y + (Math.random() - 0.5) * 80));
+      });
+
+      // 4. Spawn 6 Hackable Allied Ion Turrets
       const turretSpots = [
         { x: 1650, y: 1750 },
         { x: 2550, y: 1750 },
@@ -5285,7 +7473,7 @@
         worldProps.push(new WorldProp('turret', pt.x + (Math.random() - 0.5) * 120, pt.y + (Math.random() - 0.5) * 120));
       });
 
-      // 4. Spawn 8 Hyper-Slipstream Boost Gates along highways between biomes
+      // 5. Spawn 8 Hyper-Slipstream Boost Gates along highways between biomes
       for (let i = 0; i < 8; i++) {
         const ang = (i * Math.PI) / 4;
         const dist = 560 + (i % 2) * 520;
@@ -5294,7 +7482,7 @@
         worldProps.push(new WorldProp('boost_ring', bx, by, ang));
       }
 
-      // 5. Spawn 14 Quantum Data Vaults & 10 Volatile EMP Pylons across the world
+      // 6. Spawn 14 Quantum Data Vaults & 10 Volatile EMP Pylons across the world
       for (let i = 0; i < 14; i++) {
         const x = 280 + Math.random() * (WORLD_W - 560);
         const y = 280 + Math.random() * (WORLD_H - 560);
@@ -5307,6 +7495,481 @@
         const y = 300 + Math.random() * (WORLD_H - 600);
         if (Math.hypot(x - WORLD_W / 2, y - WORLD_H / 2) > 240) {
           worldProps.push(new WorldProp('emp_pylon', x, y));
+        }
+      }
+    }
+
+    // Autonomous Allied Valkyrie Wingman (Summoned via Jackpot Obelisks & Cyber-Contracts!)
+    class AlliedWingman {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.vx = 0;
+        this.vy = 0;
+        this.angle = 0;
+        this.life = 2700; // 45 seconds of autonomous air support
+        this.maxLife = 2700;
+        this.fireTimer = 0;
+        this.active = true;
+        this.orbitOffset = Math.random() * Math.PI * 2;
+      }
+
+      update() {
+        this.life--;
+        if (this.life <= 0) {
+          this.active = false;
+          spawnFloatingText(this.x, this.y, 'VALKYRIE RTB', '#00ff88', 1.0);
+          return;
+        }
+
+        // Orbit smoothly in wingman formation near player
+        this.orbitOffset += 0.025;
+        const targetX = player.x + Math.cos(this.orbitOffset) * 88;
+        const targetY = player.y + Math.sin(this.orbitOffset) * 88;
+        this.vx += (targetX - this.x) * 0.045;
+        this.vy += (targetY - this.y) * 0.045;
+        this.vx *= 0.84;
+        this.vy *= 0.84;
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Acquire nearest hostile target
+        let closest = null;
+        let minD = 560;
+        for (let i = 0; i < enemies.length; i++) {
+          const e = enemies[i];
+          if (!e.active) continue;
+          const d = Math.hypot(e.x - this.x, e.y - this.y);
+          if (d < minD) {
+            minD = d;
+            closest = e;
+          }
+        }
+
+        if (closest) {
+          this.angle = Math.atan2(closest.y - this.y, closest.x - this.x);
+          this.fireTimer--;
+          if (this.fireTimer <= 0) {
+            this.fireTimer = 11;
+            const dmg = 20 + wave * 3.5;
+            projectiles.push(new Projectile(
+              this.x + Math.cos(this.angle + 0.25) * 14,
+              this.y + Math.sin(this.angle + 0.25) * 14,
+              this.angle,
+              '#00ff88',
+              19,
+              dmg,
+              0,
+              false,
+              'drone'
+            ));
+            projectiles.push(new Projectile(
+              this.x + Math.cos(this.angle - 0.25) * 14,
+              this.y + Math.sin(this.angle - 0.25) * 14,
+              this.angle,
+              '#00f0ff',
+              19,
+              dmg,
+              0,
+              false,
+              'drone'
+            ));
+          }
+        } else {
+          this.angle = Math.atan2(this.vy, this.vx);
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.drawImage(getGlowSprite('#00ff88'), -34, -34, 68, 68);
+
+        ctx.save();
+        ctx.rotate(this.angle);
+        ctx.fillStyle = '#052e16';
+        ctx.strokeStyle = '#00ff88';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(16, 0);
+        ctx.lineTo(-10, -12);
+        ctx.lineTo(-6, 0);
+        ctx.lineTo(-10, 12);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(3, 0, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Remaining wingman duration bar
+        const pct = Math.max(0, this.life / this.maxLife);
+        ctx.fillStyle = 'rgba(6, 20, 14, 0.8)';
+        ctx.fillRect(-16, -20, 32, 3.5);
+        ctx.fillStyle = '#00ff88';
+        ctx.fillRect(-16, -20, 32 * pct, 3.5);
+        ctx.restore();
+      }
+    }
+
+    let wingmen = [];
+
+    // =========================================================
+    // LIVE INTERACTIVE CYBER-CONTRACTS SYSTEM ([C] OR AUTO)
+    // =========================================================
+    let activeContract = null;
+    let contractCooldownTimer = 180; // Auto-triggers first fun activity 3s into Sector 1!
+    let lastContractType = '';
+
+    function triggerLiveContract(manual = false) {
+      if (gameState !== 'PLAYING') return;
+      if (activeContract && !manual) return;
+
+      // Clean up any existing VIP bounty enemy if manually cycling contract
+      if (activeContract && activeContract.type === 'bounty' && activeContract.vipEnemy) {
+        activeContract.vipEnemy.active = false;
+      }
+
+      const pool = ['slalom', 'heist', 'bounty', 'parry_blitz'].filter(t => t !== lastContractType);
+      const type = pool[Math.floor(Math.random() * pool.length)] || 'slalom';
+      lastContractType = type;
+
+      if (type === 'slalom') {
+        // 1. NEON DRIFT SLALOM: 5 curving Golden Holo-Gates ahead of the player
+        const gates = [];
+        let gx = player.x;
+        let gy = player.y;
+        let baseAng = Math.atan2(mouse.y - player.y, mouse.x - player.x);
+        if (isNaN(baseAng)) baseAng = 0;
+
+        for (let i = 0; i < 5; i++) {
+          baseAng += (Math.random() - 0.5) * 0.85;
+          const stepDist = 250 + i * 25;
+          gx = Math.max(240, Math.min(WORLD_W - 240, gx + Math.cos(baseAng) * stepDist));
+          gy = Math.max(240, Math.min(WORLD_H - 240, gy + Math.sin(baseAng) * stepDist));
+          gates.push({ x: gx, y: gy, r: 54, angle: baseAng, cleared: false });
+        }
+
+        activeContract = {
+          type: 'slalom',
+          title: '🏎️ NEON DRIFT SLALOM [C]',
+          desc: 'Dash/Fly through all 5 Golden Holo-Gates in sequence!',
+          timer: 24 * 60,
+          maxTimer: 24 * 60,
+          progress: 0,
+          target: 5,
+          gates
+        };
+        sound.ringPass(0);
+        announce('🏎️ LIVE CONTRACT: NEON DRIFT SLALOM — FLY THROUGH 5 GOLDEN HOLO-GATES!', '#ffe600');
+      } else if (type === 'heist') {
+        // 2. ORBITAL PAYLOAD HEIST: Tether to the Orbital Data Core while fending off Elite Ambushers
+        const ang = Math.random() * Math.PI * 2;
+        const hx = Math.max(320, Math.min(WORLD_W - 320, player.x + Math.cos(ang) * 380));
+        const hy = Math.max(320, Math.min(WORLD_H - 320, player.y + Math.sin(ang) * 380));
+
+        activeContract = {
+          type: 'heist',
+          title: '🛰️ ORBITAL PAYLOAD HEIST [C]',
+          desc: 'Stay inside the Orbital Data Core ring to hack 100%!',
+          timer: 26 * 60,
+          maxTimer: 26 * 60,
+          progress: 0,
+          target: 100,
+          x: hx,
+          y: hy,
+          radius: 195,
+          ambush1: false,
+          ambush2: false
+        };
+        sound.pickup(8);
+        addGridRipple(hx, hy, 360, 30, '#00f0ff');
+        announce('🛰️ LIVE CONTRACT: ORBITAL PAYLOAD HEIST — HOLD INSIDE THE DATA CORE RING!', '#00f0ff');
+      } else if (type === 'bounty') {
+        // 3. CRIMSON NEMESIS VIP BOUNTY: Hunt down the high-speed VIP Dread-Cruiser
+        const ang = Math.random() * Math.PI * 2;
+        const bx = Math.max(260, Math.min(WORLD_W - 260, player.x + Math.cos(ang) * 460));
+        const by = Math.max(260, Math.min(WORLD_H - 260, player.y + Math.sin(ang) * 460));
+        const vip = new Enemy('nemesis', bx, by, true);
+        enemies.push(vip);
+
+        activeContract = {
+          type: 'bounty',
+          title: '🎯 VIP NEMESIS BOUNTY [C]',
+          desc: 'Hunt down & destroy the Crimson Nemesis VIP Gunship!',
+          timer: 28 * 60,
+          maxTimer: 28 * 60,
+          progress: 0,
+          target: 1,
+          vipEnemy: vip
+        };
+        sound.parryDeflect();
+        announce('🎯 LIVE CONTRACT: CRIMSON NEMESIS VIP GUNSHIP DETECTED — ELIMINATE FOR AUGMENT!', '#ff0077');
+      } else {
+        // 4. CYBER-KATANA BLITZ TRIAL: Deflect bullets / cleave enemies with [Q] Katana or rapid kills!
+        activeContract = {
+          type: 'parry_blitz',
+          title: '⚔️ CYBER-KATANA BLITZ [C]',
+          desc: 'Press [Q] to Parry Bullets / Cleave Hostiles (or score Kills)!',
+          timer: 22 * 60,
+          maxTimer: 22 * 60,
+          progress: 0,
+          target: 6
+        };
+        player.katanaCooldown = 0;
+        sound.katanaSlash();
+        announce('⚔️ LIVE CONTRACT: CYBER-KATANA BLITZ — PARRY SHOTS OR CLEAVE HOSTILES WITH [Q]!', '#00ff88');
+      }
+    }
+
+    function completeLiveContract() {
+      if (!activeContract) return;
+      const c = activeContract;
+      activeContract = null;
+      contractCooldownTimer = 660; // Next auto-contract in 11s
+      totalContractsDone++;
+
+      sound.levelUp();
+      screenShake = Math.max(screenShake, 18);
+      chromaticFlash = 14;
+      addGridRipple(player.x, player.y, 480, 42, '#ffe600');
+
+      const rewardPts = (1500 + wave * 250) * combo;
+      score += rewardPts;
+      player.hp = Math.min(player.maxHp, player.hp + 35);
+      player.overdrive = Math.min(100, player.overdrive + 50);
+      player.katanaCooldown = 0;
+
+      if (c.type === 'slalom' || c.type === 'bounty') {
+        player.frenzyTimer = Math.max(player.frenzyTimer, 360);
+        spawnFloatingText(player.x, player.y - 30, `★ CONTRACT COMPLETE! +${rewardPts.toLocaleString()} & FREE AUGMENT! ★`, '#ffe600', 1.4);
+        announce(`★ CONTRACT COMPLETED (+${rewardPts.toLocaleString()} PTS) — SELECT BONUS AUGMENTATION! ★`, '#ffe600');
+        showUpgradeMenu();
+      } else {
+        wingmen.push(new AlliedWingman(player.x + 40, player.y - 40));
+        player.frenzyTimer = Math.max(player.frenzyTimer, 420);
+        for (let i = 0; i < 10; i++) {
+          shards.push(new DataShard(player.x + (Math.random() - 0.5) * 60, player.y + (Math.random() - 0.5) * 60, 25, 'xp'));
+        }
+        shards.push(new DataShard(player.x, player.y, 0, 'overdrive'));
+        spawnFloatingText(player.x, player.y - 30, `★ CONTRACT COMPLETE! VALKYRIE ALLY + FRENZY! ★`, '#00ff88', 1.4);
+        announce(`★ CONTRACT COMPLETED (+${rewardPts.toLocaleString()} PTS) — VALKYRIE WINGMAN & HYPER-FRENZY! ★`, '#00ff88');
+      }
+    }
+
+    function recordContractAction(actionType, amount = 1) {
+      if (actionType === 'parry') {
+        totalParries += Math.max(1, Math.round(amount));
+      }
+      if (!activeContract) return;
+      if (activeContract.type === 'bounty' && actionType === 'nemesis_kill') {
+        activeContract.progress = 1;
+        completeLiveContract();
+      } else if (activeContract.type === 'parry_blitz') {
+        if (actionType === 'parry') {
+          activeContract.progress = Math.min(activeContract.target, activeContract.progress + amount * 1.5);
+        } else if (actionType === 'katana_hit' || actionType === 'kill') {
+          activeContract.progress = Math.min(activeContract.target, activeContract.progress + amount);
+        }
+        if (activeContract.progress >= activeContract.target) {
+          completeLiveContract();
+        }
+      }
+    }
+
+    function updateLiveContract() {
+      if (gameState !== 'PLAYING') return;
+
+      if (!activeContract) {
+        if (contractCooldownTimer > 0) {
+          contractCooldownTimer--;
+          if (contractCooldownTimer <= 0) {
+            triggerLiveContract(false);
+          }
+        }
+        return;
+      }
+
+      activeContract.timer--;
+      if (activeContract.timer <= 0) {
+        if (activeContract.type === 'bounty' && activeContract.vipEnemy) {
+          activeContract.vipEnemy.active = false;
+        }
+        spawnFloatingText(player.x, player.y - 24, 'CONTRACT EXPIRED — PRESS [C] FOR NEW CONTRACT', '#94a3b8', 1.1);
+        activeContract = null;
+        contractCooldownTimer = 540;
+        return;
+      }
+
+      if (activeContract.type === 'slalom') {
+        const nextGate = activeContract.gates[activeContract.progress];
+        if (nextGate && !nextGate.cleared) {
+          const d = Math.hypot(player.x - nextGate.x, player.y - nextGate.y);
+          if (d < nextGate.r + player.radius + 10) {
+            nextGate.cleared = true;
+            activeContract.progress++;
+            sound.ringPass(activeContract.progress);
+            player.boostTimer = Math.max(player.boostTimer, 80);
+            player.overdrive = Math.min(100, player.overdrive + 15);
+            score += 250 * combo;
+            addGridRipple(nextGate.x, nextGate.y, 260, 24, '#ffe600');
+            spawnFloatingText(nextGate.x, nextGate.y - 20, `GATE ${activeContract.progress}/5 CLEARED! +BOOST`, '#ffe600', 1.25);
+            if (activeContract.progress >= activeContract.target) {
+              completeLiveContract();
+            }
+          }
+        }
+      } else if (activeContract.type === 'heist') {
+        const d = Math.hypot(player.x - activeContract.x, player.y - activeContract.y);
+        if (d <= activeContract.radius) {
+          activeContract.progress = Math.min(100, activeContract.progress + 0.24);
+          if (frameCount % 6 === 0) {
+            spawnParticle(
+              activeContract.x + (Math.random() - 0.5) * 30,
+              activeContract.y + (Math.random() - 0.5) * 30,
+              (player.x - activeContract.x) * 0.04,
+              (player.y - activeContract.y) * 0.04,
+              '#00f0ff',
+              16,
+              3
+            );
+          }
+          if (!activeContract.ambush1 && activeContract.progress >= 32) {
+            activeContract.ambush1 = true;
+            const a = Math.random() * Math.PI * 2;
+            enemies.push(new Enemy('striker', activeContract.x + Math.cos(a) * 260, activeContract.y + Math.sin(a) * 260, true));
+            spawnFloatingText(activeContract.x, activeContract.y - 36, '⚠️ SECURITY AMBUSH INBOUND!', '#ff0077', 1.2);
+          }
+          if (!activeContract.ambush2 && activeContract.progress >= 72) {
+            activeContract.ambush2 = true;
+            const a = Math.random() * Math.PI * 2;
+            enemies.push(new Enemy('cruiser', activeContract.x + Math.cos(a) * 270, activeContract.y + Math.sin(a) * 270, true));
+          }
+          if (activeContract.progress >= 100) {
+            completeLiveContract();
+          }
+        }
+      } else if (activeContract.type === 'bounty') {
+        if (!activeContract.vipEnemy || !activeContract.vipEnemy.active) {
+          activeContract.progress = 1;
+          completeLiveContract();
+        } else {
+          // Progress bar reflects damage dealt to the VIP Nemesis
+          const dealtPct = Math.max(0, 1 - activeContract.vipEnemy.hp / activeContract.vipEnemy.maxHp);
+          activeContract.progress = dealtPct;
+        }
+      }
+    }
+
+    function drawLiveContract() {
+      if (!activeContract) return;
+
+      if (activeContract.type === 'slalom') {
+        const gates = activeContract.gates;
+        // Draw connecting holo-path between remaining gates
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255, 230, 0, 0.28)';
+        ctx.lineWidth = 2.5;
+        ctx.setLineDash([12, 10]);
+        ctx.beginPath();
+        let started = false;
+        for (let i = activeContract.progress; i < gates.length; i++) {
+          if (!started) {
+            ctx.moveTo(player.x, player.y);
+            ctx.lineTo(gates[i].x, gates[i].y);
+            started = true;
+          } else {
+            ctx.lineTo(gates[i].x, gates[i].y);
+          }
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+
+        for (let i = 0; i < gates.length; i++) {
+          const g = gates[i];
+          if (g.cleared) continue;
+          const isCurrent = i === activeContract.progress;
+          ctx.save();
+          ctx.translate(g.x, g.y);
+          if (isCurrent) {
+            ctx.drawImage(getGlowSprite('#ffe600'), -72, -72, 144, 144);
+          }
+          ctx.rotate(frameCount * (isCurrent ? 0.04 : 0.015));
+          ctx.strokeStyle = isCurrent ? '#ffe600' : 'rgba(255, 230, 0, 0.35)';
+          ctx.lineWidth = isCurrent ? 3.5 : 2;
+          ctx.beginPath();
+          ctx.arc(0, 0, g.r, 0, Math.PI * 2);
+          ctx.stroke();
+
+          ctx.rotate(-frameCount * (isCurrent ? 0.04 : 0.015));
+          ctx.font = "900 12px 'Segoe UI', sans-serif";
+          ctx.textAlign = 'center';
+          ctx.fillStyle = isCurrent ? '#ffffff' : 'rgba(255, 230, 0, 0.6)';
+          ctx.fillText(isCurrent ? `★ GATE ${i + 1}/5 ★` : `GATE ${i + 1}`, 0, -g.r - 10);
+          ctx.restore();
+        }
+      } else if (activeContract.type === 'heist') {
+        const hx = activeContract.x;
+        const hy = activeContract.y;
+        const r = activeContract.radius;
+        const inside = Math.hypot(player.x - hx, player.y - hy) <= r;
+
+        ctx.save();
+        ctx.translate(hx, hy);
+        ctx.drawImage(getGlowSprite(inside ? '#00f0ff' : '#ffe600'), -85, -85, 170, 170);
+
+        // Outer hacking perimeter ring
+        ctx.strokeStyle = inside ? 'rgba(0, 240, 255, 0.75)' : 'rgba(255, 230, 0, 0.45)';
+        ctx.lineWidth = inside ? 3 : 2;
+        ctx.setLineDash([16, 10]);
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Progress arc around the core
+        ctx.beginPath();
+        ctx.arc(0, 0, 44, -Math.PI / 2, -Math.PI / 2 + (Math.PI * 2 * activeContract.progress) / 100);
+        ctx.strokeStyle = '#ffe600';
+        ctx.lineWidth = 5;
+        ctx.stroke();
+
+        // Central Orbital Data Core octagon
+        ctx.save();
+        ctx.rotate(frameCount * 0.03);
+        ctx.fillStyle = '#062032';
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 2.5;
+        ctx.strokeRect(-22, -22, 44, 44);
+        ctx.rotate(Math.PI / 4);
+        ctx.fillRect(-22, -22, 44, 44);
+        ctx.strokeRect(-22, -22, 44, 44);
+        ctx.restore();
+
+        ctx.font = "900 11px 'Segoe UI', sans-serif";
+        ctx.textAlign = 'center';
+        ctx.fillStyle = inside ? '#00ff88' : '#ffe600';
+        ctx.fillText(
+          inside ? `🛰️ HACKING PAYLOAD ${Math.floor(activeContract.progress)}%` : '🛰️ ENTER RING TO HACK PAYLOAD',
+          0,
+          -54
+        );
+        ctx.restore();
+
+        // Draw Neural Tether Beam from Core to Player when inside!
+        if (inside) {
+          ctx.save();
+          ctx.strokeStyle = '#00f0ff';
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(hx, hy);
+          ctx.lineTo(player.x, player.y);
+          ctx.stroke();
+          ctx.restore();
         }
       }
     }
@@ -5324,6 +7987,8 @@
 
       enemyProjectiles = [];
       enemies = [];
+      chronoFields = [];
+      phantomDecoys = [];
       waveSpawnQueue = [];
       chromaticFlash = 22;
       screenShake = 24;
@@ -5340,16 +8005,19 @@
     let enemyProjectiles = [];
     let missiles = [];
     let blackHoles = [];
+    let chronoFields = [];
+    let phantomDecoys = [];
     let shards = [];
     let enemies = [];
     let waveSpawnQueue = [];
-    const MAX_ACTIVE_ENEMIES = 16;
+    const MAX_ACTIVE_ENEMIES = 22;
     let particles = [];
     let lightningBolts = [];
     let afterimages = [];
     generateWorldProps();
 
     let frameCount = 0;
+    let runPlayFrames = 0;
     let wave = 1;
     let score = 0;
     let highScore = Number(localStorage.getItem('neon_protocol_best') || 0);
@@ -5357,6 +8025,11 @@
     let combo = 1;
     let comboCounter = 0;
     let comboTimer = 0;
+    let maxComboReached = 1;
+    let maxStreakReached = 0;
+    let totalParries = 0;
+    let totalContractsDone = 0;
+    let gameOverTimestamp = 0;
     let gameState = 'START';
 
     function startNewGame() {
@@ -5365,9 +8038,14 @@
       enemyProjectiles = [];
       missiles = [];
       blackHoles = [];
+      chronoFields = [];
+      phantomDecoys = [];
       shards = [];
       enemies = [];
       waveSpawnQueue = [];
+      wingmen = [];
+      activeContract = null;
+      contractCooldownTimer = 180;
       particles = [];
       lightningBolts = [];
       afterimages = [];
@@ -5377,9 +8055,14 @@
 
       score = 0;
       totalKills = 0;
+      runPlayFrames = 0;
       wave = 1;
       combo = 1;
       comboCounter = 0;
+      maxComboReached = 1;
+      maxStreakReached = 0;
+      totalParries = 0;
+      totalContractsDone = 0;
       gameState = 'PLAYING';
 
       document.getElementById('startScreen').classList.add('hidden');
@@ -5422,96 +8105,94 @@
     }
 
     function spawnWave() {
+      const threatCfg = getThreatConfig();
       const threatLabels = [
-        'TIER I: NORMAL',
-        'TIER II: ELEVATED',
-        'TIER III: HARDENED',
-        'TIER IV: HARD',
-        'TIER V: SEVERE',
-        'TIER VI: APEX OVERDRIVE'
+        'TIER I: OVERCLOCKED VANGUARD',
+        'TIER II: ASSAULT ARMADA',
+        'TIER III: HEAVY STRIKE FORCE',
+        'TIER IV: RELENTLESS SWARM',
+        'TIER V: NIGHTMARE LEGION',
+        'TIER VI: APEX GODSLAYER'
       ];
       const shortTiers = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6 APEX'];
       const tierIdx = Math.min(threatLabels.length - 1, wave - 1);
       document.getElementById('waveDisplay').textContent = `SEC ${wave} • ${shortTiers[tierIdx]}`;
 
-      const isBossWave = wave === 4 || (wave >= 6 && wave % 3 === 0);
+      const isBossWave = wave === 3 || (wave >= 5 && wave % 2 === 1);
       waveSpawnQueue = [];
 
       if (isBossWave) {
-        announce(`⚠️ SECTOR ${wave}: OMEGA SERAPHIM DREADNOUGHT DETECTED ⚠️`, '#ff0077');
+        announce(`⚠️ SECTOR ${wave}: OMEGA SERAPHIM DREADNOUGHT & ESCORT FLEET DETECTED ⚠️`, '#ff0077');
         const bossY = Math.max(120, player.y - 460);
         enemies.push(new Enemy('boss', player.x, bossY));
       } else if (wave === 1) {
-        announce(`SECTOR 1 — NORMAL PATROL DRONES & SCOUTS INBOUND`, '#38bdf8');
+        announce(`🔥 SECTOR 1 (${threatCfg.name}) — ARMED VANGUARD, STRIKERS & ELITE HUNTERS INBOUND!`, '#ff2a55');
       } else if (wave === 2) {
-        announce(`⚡ SECTOR 2 — NEW THREAT: VIPER STRIKERS & HYDRA SPLITTERS`, '#ff7b00');
-      } else if (wave === 3) {
-        announce(`🛡️ SECTOR 3 — NEW THREAT: AEGIS SHIELD GUARDIANS & CRUISERS`, '#00f0ff');
-      } else if (wave === 5) {
-        announce(`🔥 SECTOR 5 — NEW THREAT: CHRONO-WEAVERS & SIEGE JUGGERNAUT`, '#ff2a55');
+        announce(`⚡ SECTOR 2 — AEGIS GUARDIANS, RAIL SNIPERS & PHANTOM ASSASSINS INBOUND!`, '#ff7b00');
+      } else if (wave === 4) {
+        announce(`🔥 SECTOR 4 — CHRONO-WEAVERS & SIEGE JUGGERNAUTS UNLEASHED!`, '#ff2a55');
       } else {
         announce(`SECTOR ${wave} — ${threatLabels[tierIdx]} HOSTILES INBOUND`, '#ffe600');
       }
 
-      // Build progressive sub-stages within the wave:
-      // Stage 1 (Normal) -> Stage 2 (A Little Harder) -> Stage 3 (More Harder) -> Stage 4 (Hard) -> Stage 5 (Very Hard / Elite)
-      const stage1 = []; // Tier 1: 'drone_bit', 'scout'
-      const stage2 = []; // Tier 2: 'striker', 'splitter'
-      const stage3 = []; // Tier 3: 'cruiser', 'aegis'
-      const stage4 = []; // Tier 4: 'sniper', 'phantom'
-      const stage5 = []; // Tier 5: 'weaver', 'juggernaut', Elites
+      // Build aggressive, multi-stage combat waves right from Sector 1!
+      const sMult = threatCfg.spawnMult || 1.25;
+      const stage1 = []; // Fast armed vanguard: 'drone_bit', 'scout', 'striker'
+      const stage2 = []; // Mid-wave pressure: 'striker', 'splitter', 'cruiser'
+      const stage3 = []; // Heavy & tactical: 'cruiser', 'aegis', 'sniper'
+      const stage4 = []; // Assassin flankers: 'sniper', 'phantom', 'weaver'
+      const stage5 = []; // Climax Elite Strike Force & Juggernauts
 
-      // Tier 1: Normal Enemies (always open the wave)
-      const droneCount = Math.max(3, 7 - Math.floor(wave / 3));
-      const scoutCount = 4 + wave;
+      // Stage 1: Armed Drones, Lunging Scouts, and Twin-Blaster Strikers right from Sector 1
+      const droneCount = Math.round(Math.max(4, 7 - Math.floor(wave / 3)) * sMult);
+      const scoutCount = Math.round((5 + wave) * sMult);
       for (let i = 0; i < droneCount; i++) stage1.push({ type: 'drone_bit', elite: false });
-      for (let i = 0; i < scoutCount; i++) stage1.push({ type: 'scout', elite: false });
+      for (let i = 0; i < scoutCount; i++) stage1.push({ type: 'scout', elite: i === 0 });
+      stage1.push({ type: 'striker', elite: false });
+      stage1.push({ type: 'striker', elite: false });
 
-      // Tier 2: A Little Harder Enemies (Sector 1 gets 1 Striker at the very end; Sector 2+ gets full squads)
+      // Stage 2: Strikers, Hydra Splitters & Heavy Cruiser support right in Sector 1!
+      const strikerCount = Math.round((3 + Math.floor(wave * 0.9)) * sMult);
+      const splitterCount = Math.round((2 + Math.floor(wave * 0.65)) * sMult);
+      for (let i = 0; i < strikerCount; i++) stage2.push({ type: 'striker', elite: i === 0 && wave >= 2 });
+      for (let i = 0; i < splitterCount; i++) stage2.push({ type: 'splitter', elite: false });
+      stage2.push({ type: 'cruiser', elite: false });
+
+      // Stage 3: Cruisers, Aegis Shield Guardians & Rail Snipers (Sector 1 gets Cruiser + Aegis + Sniper!)
+      const cruiserCount = Math.round((1 + Math.floor(wave * 0.65)) * sMult);
+      const aegisCount = Math.round((1 + Math.floor(wave * 0.55)) * sMult);
+      for (let i = 0; i < cruiserCount; i++) stage3.push({ type: 'cruiser', elite: false });
+      for (let i = 0; i < aegisCount; i++) stage3.push({ type: 'aegis', elite: false });
+      stage3.push({ type: 'sniper', elite: false });
+
+      // Stage 4: Snipers & Blinking Phantoms (Sector 1 climax gets an Elite Striker + Phantom!)
       if (wave === 1) {
-        stage2.push({ type: 'striker', elite: false });
-      } else if (wave >= 2) {
-        const strikerCount = 2 + Math.floor(wave * 0.8);
-        const splitterCount = 1 + Math.floor(wave * 0.6);
-        for (let i = 0; i < strikerCount; i++) stage2.push({ type: 'striker', elite: false });
-        for (let i = 0; i < splitterCount; i++) stage2.push({ type: 'splitter', elite: false });
-      }
-
-      // Tier 3: More Harder Enemies (Unlocked in Sector 3+, with 1 preview Cruiser at end of Sector 2)
-      if (wave === 2) {
-        stage3.push({ type: 'cruiser', elite: false });
-      } else if (wave >= 3) {
-        const cruiserCount = 1 + Math.floor((wave - 1) * 0.6);
-        const aegisCount = 1 + Math.floor((wave - 1) * 0.5);
-        for (let i = 0; i < cruiserCount; i++) stage3.push({ type: 'cruiser', elite: false });
-        for (let i = 0; i < aegisCount; i++) stage3.push({ type: 'aegis', elite: false });
-      }
-
-      // Tier 4: Hard Enemies (Unlocked in Sector 4+, with 1 preview Phantom at end of Sector 3)
-      if (wave === 3) {
         stage4.push({ type: 'phantom', elite: false });
-      } else if (wave >= 4) {
-        const sniperCount = 1 + Math.floor((wave - 2) * 0.5);
-        const phantomCount = 1 + Math.floor((wave - 2) * 0.55);
-        for (let i = 0; i < sniperCount; i++) stage4.push({ type: 'sniper', elite: false });
+        stage4.push({ type: 'striker', elite: true });
+      } else {
+        const sniperCount = Math.round((1 + Math.floor((wave - 1) * 0.55)) * sMult);
+        const phantomCount = Math.round((1 + Math.floor((wave - 1) * 0.6)) * sMult);
+        for (let i = 0; i < sniperCount; i++) stage4.push({ type: 'sniper', elite: i === 0 && wave >= 3 });
         for (let i = 0; i < phantomCount; i++) stage4.push({ type: 'phantom', elite: false });
       }
 
-      // Tier 5: Very Hard & Elite Enemies (Unlocked in Sector 5+, with 1 preview Weaver in Sector 4)
-      if (wave === 4) {
+      // Stage 5: Wave Climax — Elite Commanders, Chrono-Weavers & Juggernauts
+      if (wave === 1) {
+        stage5.push({ type: 'cruiser', elite: true });
+        stage5.push({ type: 'aegis', elite: true });
+      } else if (wave === 2) {
         stage5.push({ type: 'weaver', elite: false });
-      } else if (wave >= 5) {
-        const weaverCount = 1 + Math.floor((wave - 3) * 0.5);
-        const juggCount = 1 + Math.floor((wave - 5) / 2);
-        for (let i = 0; i < weaverCount; i++) stage5.push({ type: 'weaver', elite: false });
-        for (let i = 0; i < juggCount; i++) stage5.push({ type: 'juggernaut', elite: wave >= 7 });
-        // Guaranteed Overclocked Elite vanguard at wave climax
+        stage5.push({ type: 'juggernaut', elite: false });
+        stage5.push({ type: 'phantom', elite: true });
+      } else {
+        const weaverCount = Math.round((1 + Math.floor((wave - 2) * 0.55)) * sMult);
+        const juggCount = 1 + Math.floor((wave - 2) / 2);
+        for (let i = 0; i < weaverCount; i++) stage5.push({ type: 'weaver', elite: i === 0 && wave >= 4 });
+        for (let i = 0; i < juggCount; i++) stage5.push({ type: 'juggernaut', elite: wave >= 5 });
         stage5.push({ type: 'phantom', elite: true });
         stage5.push({ type: 'aegis', elite: true });
       }
 
-      // Lightly shuffle within each stage, then concatenate Stage 1 -> 2 -> 3 -> 4 -> 5
-      // so every wave smoothly escalates from Normal -> Little Harder -> More Harder -> Hard -> Very Hard!
       [stage1, stage2, stage3, stage4, stage5].forEach(st => {
         st.sort(() => Math.random() - 0.5);
         waveSpawnQueue.push(...st);
@@ -5667,6 +8348,21 @@
           player.dashMaxCooldown = Math.max(38, player.dashMaxCooldown - 14);
         }
         if (id === 'emp') player.empLevel++;
+        if (id === 'katana') {
+          player.katanaLevel++;
+          player.katanaMaxCooldown = Math.max(22, player.katanaMaxCooldown - 8);
+          player.katanaCooldown = 0;
+        }
+        if (id === 'ion_beam') {
+          player.ionBeamLevel++;
+          player.ionBeamCooldown = 0;
+        }
+        if (id === 'chrono_phantom') {
+          player.chronoLevel++;
+          player.phantomLevel++;
+          player.chronoCooldown = 0;
+          player.phantomCooldown = 0;
+        }
         if (id === 'shield') {
           player.shieldMax++;
           player.shieldCharges = player.shieldMax;
@@ -5691,14 +8387,132 @@
 
     function gameOver() {
       gameState = 'GAMEOVER';
+      gameOverTimestamp = performance.now();
+
+      const isNewRecord = score > highScore && score > 0;
       if (score > highScore) {
         highScore = score;
         localStorage.setItem('neon_protocol_best', String(highScore));
       }
+
+      // 1. Header New Record Badge & Active Threat Tag
+      const recBadge = document.getElementById('goRecordBadge');
+      if (recBadge) recBadge.classList.toggle('hidden', !isNewRecord);
+
+      const threatCfg = getThreatConfig();
+      const threatTag = document.getElementById('goThreatTag');
+      if (threatTag && threatCfg) {
+        threatTag.textContent = `THREAT: ${threatCfg.name}`;
+        threatTag.style.color = threatCfg.color;
+        threatTag.style.borderColor = threatCfg.color;
+      }
+
+      // 2. Tactical Combat Rank Calculation (S+, S, A, B, C)
+      const rankScore = score + wave * 3500 + totalKills * 120 + maxComboReached * 900 + totalContractsDone * 4000;
+      let rankClass = 'rank-c';
+      let rankLetter = 'C';
+      let rankTitle = 'CADET INITIATE';
+      let rankSub = 'CORE INTEGRITY LOST EARLY';
+      if (rankScore >= 110000 || wave >= 8) {
+        rankClass = 'rank-sp';
+        rankLetter = 'S+';
+        rankTitle = 'OMEGA GODSLAYER';
+        rankSub = 'TRANSCENDENT NEURAL OVERCLOCK';
+      } else if (rankScore >= 60000 || wave >= 6) {
+        rankClass = 'rank-s';
+        rankLetter = 'S';
+        rankTitle = 'APEX VALKYRIE';
+        rankSub = 'SUPREME SECTOR DOMINANCE';
+      } else if (rankScore >= 28000 || wave >= 4) {
+        rankClass = 'rank-a';
+        rankLetter = 'A';
+        rankTitle = 'PHANTOM VANGUARD';
+        rankSub = 'HIGH-LETHALITY COMBAT EXECUTION';
+      } else if (rankScore >= 10000 || wave >= 2) {
+        rankClass = 'rank-b';
+        rankLetter = 'B';
+        rankTitle = 'STRIKE OPERATIVE';
+        rankSub = 'SOLID TACTICAL INTERDICTION';
+      }
+
+      const rankCard = document.getElementById('goRankCard');
+      if (rankCard) rankCard.className = `go-rank-card ${rankClass}`;
+      const rankLetterEl = document.getElementById('goRankLetter');
+      if (rankLetterEl) rankLetterEl.textContent = rankLetter;
+      const rankTitleEl = document.getElementById('goRankTitle');
+      if (rankTitleEl) rankTitleEl.textContent = rankTitle;
+      const rankSubEl = document.getElementById('goRankSub');
+      if (rankSubEl) rankSubEl.textContent = rankSub;
+
+      // 3. Score & Record Sync Progress Bar
       document.getElementById('finalScore').textContent = score.toLocaleString();
       document.getElementById('bestScore').textContent = highScore.toLocaleString();
+      const recPct = highScore > 0 ? Math.min(100, Math.round((score / highScore) * 100)) : 100;
+      const recBar = document.getElementById('goRecordBar');
+      if (recBar) recBar.style.width = `${recPct}%`;
+      const recPctText = document.getElementById('goRecordPctText');
+      if (recPctText) {
+        recPctText.textContent = isNewRecord ? '100% (NEW RECORD!)' : `${recPct}%`;
+        recPctText.style.color = isNewRecord ? '#ffe600' : '#00f0ff';
+      }
+
+      // 4. 6-Card Tactical Telemetry Grid
       document.getElementById('finalWave').textContent = wave;
-      document.getElementById('finalKills').textContent = totalKills;
+      const curBiome = getActiveBiome(player.x, player.y);
+      const biomeEl = document.getElementById('finalBiome');
+      if (biomeEl && curBiome) {
+        biomeEl.textContent = curBiome.shortName || curBiome.name;
+        biomeEl.style.color = curBiome.color;
+      }
+
+      const playSec = Math.max(1, Math.round(runPlayFrames / 60));
+      const kpm = ((totalKills / playSec) * 60).toFixed(1);
+      document.getElementById('finalKills').textContent = totalKills.toLocaleString();
+      const kpmEl = document.getElementById('finalKpm');
+      if (kpmEl) kpmEl.textContent = `${kpm} KILLS / MIN`;
+
+      const maxComboEl = document.getElementById('finalMaxCombo');
+      if (maxComboEl) maxComboEl.textContent = `x${maxComboReached}`;
+      const maxStreakEl = document.getElementById('finalMaxStreak');
+      if (maxStreakEl) maxStreakEl.textContent = `MAX STREAK: ${maxStreakReached}`;
+
+      const finalLvlEl = document.getElementById('finalLevel');
+      if (finalLvlEl) finalLvlEl.textContent = `LVL ${player.level}`;
+      const totalAugs = Object.values(player.perks || {}).reduce((sum, v) => sum + v, 0);
+      const augCountEl = document.getElementById('finalAugCount');
+      if (augCountEl) augCountEl.textContent = `${totalAugs} AUGMENT${totalAugs === 1 ? '' : 'S'} INSTALLED`;
+
+      const parriesEl = document.getElementById('finalParries');
+      if (parriesEl) parriesEl.textContent = totalParries;
+      const contractsEl = document.getElementById('finalContracts');
+      if (contractsEl) contractsEl.textContent = `CONTRACTS: ${totalContractsDone}`;
+
+      const mins = String(Math.floor(playSec / 60)).padStart(2, '0');
+      const secs = String(playSec % 60).padStart(2, '0');
+      const timeEl = document.getElementById('finalTime');
+      if (timeEl) timeEl.textContent = `${mins}:${secs}`;
+
+      // 5. Installed Cyber-Augmentation Loadout Strip
+      const perksListEl = document.getElementById('finalPerksList');
+      if (perksListEl) {
+        const installedEntries = Object.entries(player.perks || {}).filter(([, lvl]) => lvl > 0);
+        if (installedEntries.length === 0) {
+          perksListEl.innerHTML = `<span class="go-no-perks">NO EXTERNAL AUGMENTATIONS INSTALLED — BASE CHASSIS RUN</span>`;
+        } else {
+          perksListEl.innerHTML = installedEntries.map(([id, lvl]) => {
+            const up = ALL_UPGRADES.find(u => u.id === id);
+            if (!up) return '';
+            return `
+              <div class="go-perk-chip" style="--chip-color: ${up.color}">
+                ${up.svg}
+                <span>${up.title}</span>
+                <span class="go-perk-lvl">LVL ${lvl}</span>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
       document.getElementById('gameOverScreen').classList.remove('hidden');
     }
 
@@ -5822,21 +8636,38 @@
     function drawOffscreenWaypoints() {
       const targets = [];
 
-      // Add active Bosses
+      // Add active Bosses & VIP Nemesis Bounties
       for (let i = 0; i < enemies.length; i++) {
         const e = enemies[i];
-        if (e.active && e.type === 'boss') {
+        if (!e.active) continue;
+        if (e.type === 'boss') {
           targets.push({ x: e.x, y: e.y, color: '#ff0055', label: 'BOSS' });
+        } else if (e.type === 'nemesis') {
+          targets.push({ x: e.x, y: e.y, color: '#ffe600', label: '🎯 VIP' });
         }
       }
 
-      // Add nearest Shrine, Warp Gate, and Data Vault (within 1650px so distant clutter is hidden)
+      // Add active Cyber-Contract Waypoints (Slalom Gate or Orbital Heist Core)
+      if (activeContract) {
+        if (activeContract.type === 'slalom') {
+          const g = activeContract.gates[activeContract.progress];
+          if (g && !g.cleared) {
+            targets.push({ x: g.x, y: g.y, color: '#ffe600', label: `GATE ${activeContract.progress + 1}` });
+          }
+        } else if (activeContract.type === 'heist') {
+          targets.push({ x: activeContract.x, y: activeContract.y, color: '#00f0ff', label: '🛰️ HEIST' });
+        }
+      }
+
+      // Add nearest Shrine, Warp Gate, Jackpot Obelisk, and Data Vault
       let nearestShrine = null;
       let nearestShrineDist = 1650;
       let nearestGate = null;
       let nearestGateDist = 1650;
       let nearestCache = null;
       let nearestCacheDist = 1450;
+      let nearestSlot = null;
+      let nearestSlotDist = 1450;
 
       for (let i = 0; i < worldProps.length; i++) {
         const wp = worldProps[i];
@@ -5851,11 +8682,15 @@
         } else if (wp.type === 'cache' && d < nearestCacheDist) {
           nearestCacheDist = d;
           nearestCache = wp;
+        } else if (wp.type === 'slot_obelisk' && wp.cooldown <= 0 && d < nearestSlotDist) {
+          nearestSlotDist = d;
+          nearestSlot = wp;
         }
       }
 
       if (nearestShrine) targets.push({ x: nearestShrine.x, y: nearestShrine.y, color: '#ffe600', label: 'SHRINE' });
       if (nearestGate) targets.push({ x: nearestGate.x, y: nearestGate.y, color: '#d946ef', label: 'WARP' });
+      if (nearestSlot) targets.push({ x: nearestSlot.x, y: nearestSlot.y, color: '#ff0077', label: '🎰 777' });
       if (nearestCache) targets.push({ x: nearestCache.x, y: nearestCache.y, color: '#00f0ff', label: 'VAULT' });
 
       const cx = canvas.width / 2;
@@ -5954,17 +8789,33 @@
         rCtx.stroke();
       }
 
-      // World Props (Shrines, Vaults, Turrets, Warp Gates)
+      // World Props (Shrines, Vaults, Turrets, Warp Gates, Jackpot Obelisks)
       for (let i = 0; i < worldProps.length; i++) {
         const wp = worldProps[i];
         if (!wp.active || wp.type === 'boost_ring' || wp.type === 'emp_pylon') continue;
         rCtx.fillStyle = wp.color;
         const px = wp.x * scaleX;
         const py = wp.y * scaleY;
-        if (wp.type === 'shrine' || wp.type === 'warp_gate') {
+        if (wp.type === 'shrine' || wp.type === 'warp_gate' || wp.type === 'slot_obelisk') {
           rCtx.fillRect(px - 2.5, py - 2.5, 5, 5);
         } else {
           rCtx.fillRect(px - 1.5, py - 1.5, 3, 3);
+        }
+      }
+
+      // Active Cyber-Contract Radar Blip
+      if (activeContract) {
+        if (activeContract.type === 'slalom') {
+          const g = activeContract.gates[activeContract.progress];
+          if (g) {
+            rCtx.fillStyle = '#ffe600';
+            rCtx.fillRect(g.x * scaleX - 3, g.y * scaleY - 3, 6, 6);
+          }
+        } else if (activeContract.type === 'heist') {
+          rCtx.strokeStyle = '#00f0ff';
+          rCtx.beginPath();
+          rCtx.arc(activeContract.x * scaleX, activeContract.y * scaleY, 5, 0, Math.PI * 2);
+          rCtx.stroke();
         }
       }
 
@@ -5972,8 +8823,8 @@
       for (let i = 0; i < enemies.length; i++) {
         const e = enemies[i];
         if (!e.active) continue;
-        rCtx.fillStyle = e.type === 'boss' ? '#ffe600' : '#ff0055';
-        const s = e.type === 'boss' ? 5 : 2.2;
+        rCtx.fillStyle = (e.type === 'boss' || e.type === 'nemesis') ? '#ffe600' : '#ff0055';
+        const s = (e.type === 'boss' || e.type === 'nemesis') ? 5 : 2.2;
         rCtx.fillRect(e.x * scaleX - s / 2, e.y * scaleY - s / 2, s, s);
       }
 
@@ -6038,6 +8889,8 @@
       hpBar: document.getElementById('hpBar'),
       dashText: document.getElementById('dashText'),
       dashBar: document.getElementById('dashBar'),
+      katanaText: document.getElementById('katanaText'),
+      katanaBar: document.getElementById('katanaBar'),
       odText: document.getElementById('overdriveText'),
       odBar: document.getElementById('overdriveBar'),
       xpText: document.getElementById('xpText'),
@@ -6047,9 +8900,30 @@
       bossHud: document.getElementById('bossHud'),
       bossBar: document.getElementById('bossHpBar'),
       bossText: document.getElementById('bossHpText'),
+      contractTracker: document.getElementById('contractTracker'),
+      contractTitle: document.getElementById('contractTitle'),
+      contractTimer: document.getElementById('contractTimer'),
+      contractDesc: document.getElementById('contractDesc'),
+      contractProgText: document.getElementById('contractProgText'),
+      contractBar: document.getElementById('contractBar'),
       combo: document.getElementById('comboDisplay'),
       zoneDisplay: document.getElementById('zoneDisplay'),
-      radarCoords: document.getElementById('radarCoords')
+      radarCoords: document.getElementById('radarCoords'),
+      skillSlotQ: document.getElementById('skillSlotQ'),
+      skillTextQ: document.getElementById('skillTextQ'),
+      skillBarQ: document.getElementById('skillBarQ'),
+      skillSlotR: document.getElementById('skillSlotR'),
+      skillTextR: document.getElementById('skillTextR'),
+      skillBarR: document.getElementById('skillBarR'),
+      skillSlotF: document.getElementById('skillSlotF'),
+      skillTextF: document.getElementById('skillTextF'),
+      skillBarF: document.getElementById('skillBarF'),
+      skillSlotX: document.getElementById('skillSlotX'),
+      skillTextX: document.getElementById('skillTextX'),
+      skillBarX: document.getElementById('skillBarX'),
+      skillSlotE: document.getElementById('skillSlotE'),
+      skillTextE: document.getElementById('skillTextE'),
+      skillBarE: document.getElementById('skillBarE')
     };
     const hudCache = {};
     function setHudText(key, text) {
@@ -6065,6 +8939,20 @@
         hudEls[key].style.width = `${rounded}%`;
       }
     }
+    function setSlotState(slotKey, isReady, isActive) {
+      const el = hudEls[slotKey];
+      if (!el) return;
+      const rKey = slotKey + '_r';
+      const aKey = slotKey + '_a';
+      if (hudCache[rKey] !== isReady) {
+        hudCache[rKey] = isReady;
+        el.classList.toggle('skill-ready', isReady);
+      }
+      if (hudCache[aKey] !== isActive) {
+        hudCache[aKey] = isActive;
+        el.classList.toggle('skill-active', isActive);
+      }
+    }
 
     // Main Loop
     function loop() {
@@ -6078,7 +8966,28 @@
       }
 
       if (gameState === 'PLAYING') {
+        runPlayFrames++;
         player.update();
+
+        // Update Autonomous Allied Valkyrie Wingmen
+        for (let i = 0; i < wingmen.length; i++) {
+          wingmen[i].update();
+        }
+        wingmen = wingmen.filter(w => w.active);
+
+        // Update Active Chrono-Stasis Singularity Domes [F] & Phantom Holo-Decoy Clones [X]
+        for (let i = 0; i < chronoFields.length; i++) {
+          chronoFields[i].update();
+        }
+        chronoFields = chronoFields.filter(cf => cf.active);
+
+        for (let i = 0; i < phantomDecoys.length; i++) {
+          phantomDecoys[i].update();
+        }
+        phantomDecoys = phantomDecoys.filter(pd => pd.active);
+
+        // Update Live Cyber-Contracts ([C] or auto-triggered)
+        updateLiveContract();
 
         // Update Interactive Open-World Structures
         for (let i = 0; i < worldProps.length; i++) {
@@ -6260,12 +9169,17 @@
       // Warping Cyber-Grid & Biome Borders
       drawCyberGrid();
 
-      // Render Interactive Open-World Structures (Shrines, Vaults, Turrets, Boost Gates, Warp Gates)
+      // Render Interactive Open-World Structures (Shrines, Vaults, Turrets, Boost Gates, Warp Gates, Jackpot Obelisks)
       for (let i = 0; i < worldProps.length; i++) worldProps[i].draw();
 
-      // Render Black Holes & Shards
+      // Render Live Cyber-Contract Objectives (Slalom Gates, Orbital Payload Core & Neural Tether)
+      drawLiveContract();
+
+      // Render Chrono-Stasis Singularity Domes [F] & Black Holes & Shards
+      for (let i = 0; i < chronoFields.length; i++) chronoFields[i].draw();
       for (let i = 0; i < blackHoles.length; i++) blackHoles[i].draw();
       for (let i = 0; i < shards.length; i++) shards[i].draw();
+      for (let i = 0; i < phantomDecoys.length; i++) phantomDecoys[i].draw();
 
       // Render Dash Afterimages
       for (let i = afterimages.length - 1; i >= 0; i--) {
@@ -6329,6 +9243,7 @@
       for (let i = 0; i < missiles.length; i++) missiles[i].draw();
       for (let i = 0; i < enemyProjectiles.length; i++) enemyProjectiles[i].draw();
       for (let i = 0; i < enemies.length; i++) enemies[i].draw();
+      for (let i = 0; i < wingmen.length; i++) wingmen[i].draw();
 
       if (gameState === 'PLAYING' || gameState === 'UPGRADE') {
         player.draw();
@@ -6433,6 +9348,15 @@
         hudEls.dashText.style.color = isDashReady ? '#00f0ff' : '#94a3b8';
       }
 
+      const katanaPct = Math.max(0, 1 - (player.katanaCooldown / player.katanaMaxCooldown)) * 100;
+      setHudWidth('katanaBar', katanaPct);
+      const isKatanaReady = player.katanaCooldown <= 0;
+      setHudText('katanaText', isKatanaReady ? 'READY [Q]' : `${Math.floor(katanaPct)}%`);
+      if (hudCache.katanaReady !== isKatanaReady && hudEls.katanaText) {
+        hudCache.katanaReady = isKatanaReady;
+        hudEls.katanaText.style.color = isKatanaReady ? '#00ff88' : '#94a3b8';
+      }
+
       const odPct = player.overdriveActive > 0 ? (player.overdriveActive / 360) * 100 : player.overdrive;
       setHudWidth('odBar', odPct);
       const odReady = player.overdrive >= 100 || player.overdriveActive > 0;
@@ -6443,6 +9367,50 @@
         hudCache.odReady = odReady;
         hudEls.odText.classList.toggle('ready-glow', odReady);
       }
+
+      // ★★★ UPDATE 5-SLOT TACTICAL SKILL HOTBAR (#skillHotbar) ★★★
+      // 1. [Q] Cyber-Katana Parry
+      setHudWidth('skillBarQ', katanaPct);
+      setHudText('skillTextQ', isKatanaReady ? 'READY' : `${(player.katanaCooldown / 60).toFixed(1)}s`);
+      setSlotState('skillSlotQ', isKatanaReady, player.katanaSlashTimer > 0);
+
+      // 2. [R] Omega Ion Laser Beam
+      const ionActive = player.ionBeamTimer > 0;
+      const ionMaxCd = Math.max(220, player.ionBeamMaxCooldown - player.ionBeamLevel * 55);
+      const ionPct = ionActive
+        ? (player.ionBeamTimer / player.ionBeamMaxTimer) * 100
+        : Math.max(0, 1 - (player.ionBeamCooldown / ionMaxCd)) * 100;
+      const ionReady = player.ionBeamCooldown <= 0 && !ionActive;
+      setHudWidth('skillBarR', ionPct);
+      setHudText('skillTextR', ionActive ? 'FIRING!' : (ionReady ? 'READY' : `${(player.ionBeamCooldown / 60).toFixed(1)}s`));
+      setSlotState('skillSlotR', ionReady, ionActive);
+
+      // 3. [F] Chrono-Stasis Singularity Dome
+      const activeDome = chronoFields.length > 0 ? chronoFields[0] : null;
+      const chronoMaxCd = Math.max(240, player.chronoMaxCooldown - player.chronoLevel * 60);
+      const chronoPct = activeDome
+        ? (activeDome.life / activeDome.maxLife) * 100
+        : Math.max(0, 1 - (player.chronoCooldown / chronoMaxCd)) * 100;
+      const chronoReady = player.chronoCooldown <= 0 && !activeDome;
+      setHudWidth('skillBarF', chronoPct);
+      setHudText('skillTextF', activeDome ? 'SHATTER [F]' : (chronoReady ? 'READY' : `${(player.chronoCooldown / 60).toFixed(1)}s`));
+      setSlotState('skillSlotF', chronoReady, !!activeDome);
+
+      // 4. [X] Phantom Decoy & Missile Salvo
+      const activeDecoy = phantomDecoys.length > 0 ? phantomDecoys[0] : null;
+      const phantomMaxCd = Math.max(220, player.phantomMaxCooldown - player.phantomLevel * 55);
+      const phantomPct = activeDecoy
+        ? (activeDecoy.life / activeDecoy.maxLife) * 100
+        : Math.max(0, 1 - (player.phantomCooldown / phantomMaxCd)) * 100;
+      const phantomReady = player.phantomCooldown <= 0 && !activeDecoy;
+      setHudWidth('skillBarX', phantomPct);
+      setHudText('skillTextX', activeDecoy ? 'CLONE ON' : (phantomReady ? 'READY' : `${(player.phantomCooldown / 60).toFixed(1)}s`));
+      setSlotState('skillSlotX', phantomReady, !!activeDecoy);
+
+      // 5. [E] Overdrive Supernova
+      setHudWidth('skillBarE', odPct);
+      setHudText('skillTextE', player.overdriveActive > 0 ? 'ACTIVE' : (player.overdrive >= 100 ? 'READY' : `${Math.floor(player.overdrive)}%`));
+      setSlotState('skillSlotE', player.overdrive >= 100 && player.overdriveActive <= 0, player.overdriveActive > 0);
 
       const xpPct = (player.xp / player.xpNext) * 100;
       setHudWidth('xpBar', xpPct);
@@ -6461,6 +9429,27 @@
         const bPct = Math.max(0, (activeBoss.hp / activeBoss.maxHp) * 100);
         setHudWidth('bossBar', bPct);
         setHudText('bossText', `${Math.ceil(bPct)}%`);
+      }
+
+      // Live Cyber-Contract Tracker HUD
+      const hasContract = !!activeContract;
+      if (hudCache.hasContract !== hasContract && hudEls.contractTracker) {
+        hudCache.hasContract = hasContract;
+        hudEls.contractTracker.classList.toggle('hidden', !hasContract);
+      }
+      if (activeContract) {
+        setHudText('contractTitle', activeContract.title);
+        setHudText('contractDesc', activeContract.desc);
+        setHudText('contractTimer', `${Math.ceil(activeContract.timer / 60)}s`);
+        const cPct = Math.max(0, Math.min(100, (activeContract.progress / activeContract.target) * 100));
+        setHudWidth('contractBar', cPct);
+        if (activeContract.type === 'slalom') {
+          setHudText('contractProgText', `${activeContract.progress}/${activeContract.target} GATES`);
+        } else if (activeContract.type === 'parry_blitz') {
+          setHudText('contractProgText', `${Math.floor(activeContract.progress)}/${activeContract.target} HITS`);
+        } else {
+          setHudText('contractProgText', `${Math.floor(cPct)}%`);
+        }
       }
 
       const showCombo = combo > 1;
@@ -6483,6 +9472,43 @@
       sound.init();
       startNewGame();
     };
+
+    const homeBtnEl = document.getElementById('homeBtn');
+    if (homeBtnEl) {
+      homeBtnEl.onclick = () => {
+        sound.dash();
+        document.getElementById('gameOverScreen').classList.add('hidden');
+        document.getElementById('startScreen').classList.remove('hidden');
+        gameState = 'START';
+      };
+    }
+
+    document.querySelectorAll('.threat-mode-btn').forEach(btn => {
+      btn.onclick = () => {
+        setThreatMode(Number(btn.dataset.threat || 0), true);
+      };
+    });
+
+    const threatBadgeEl = document.getElementById('threatBadge');
+    if (threatBadgeEl) {
+      threatBadgeEl.onclick = () => {
+        setThreatMode(threatModeIdx + 1, true);
+      };
+    }
+
+    const contractTrackerEl = document.getElementById('contractTracker');
+    if (contractTrackerEl) {
+      contractTrackerEl.onclick = () => {
+        triggerLiveContract(true);
+      };
+    }
+
+    // Clickable Tactical Skill Hotbar Slots
+    if (hudEls.skillSlotQ) hudEls.skillSlotQ.onclick = () => { if (gameState === 'PLAYING') player.tryKatana(); };
+    if (hudEls.skillSlotR) hudEls.skillSlotR.onclick = () => { if (gameState === 'PLAYING') player.tryIonBeam(); };
+    if (hudEls.skillSlotF) hudEls.skillSlotF.onclick = () => { if (gameState === 'PLAYING') player.tryChronoField(); };
+    if (hudEls.skillSlotX) hudEls.skillSlotX.onclick = () => { if (gameState === 'PLAYING') player.tryPhantomBarrage(); };
+    if (hudEls.skillSlotE) hudEls.skillSlotE.onclick = () => { if (gameState === 'PLAYING') player.tryOverdrive(); };
 
     document.getElementById('audioBtn').onclick = () => {
       const active = sound.toggle();

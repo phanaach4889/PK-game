@@ -3,49 +3,44 @@
 
   ### ⚡ OPEN-WORLD CYBER-ARENA SYNTH-ROGUE // MK-IV INTERCEPTOR ⚡
 
-  **[🎮 Play Live (`index.html`)](./index.html)** · **[📐 Master Vector Logo (`neon_protocol_logo.svg`)](./neon_protocol_logo.svg)**
+  [![Deploy to GitHub Pages](https://github.com/phanaach4889/PK-game/actions/workflows/deploy.yml/badge.svg)](https://github.com/phanaach4889/PK-game/actions/workflows/deploy.yml)
+
+  **[🚀 Play Live on GitHub Pages (`phanaach4889.github.io/PK-game`)](https://phanaach4889.github.io/PK-game/)** · **[🎮 Local Entry (`index.html`)](./index.html)** · **[📐 Master Vector Logo (`neon_protocol_logo.svg`)](./neon_protocol_logo.svg)**
 </div>
 
 ---
 
 ## // SYSTEM OVERVIEW
 
-**NEON PROTOCOL // OVERDRIVE** is a zero-dependency, 60 FPS HTML5 Canvas & WebAudio open-world cyber-arena action game built in a single self-contained file. Pilot the **Valkyrie Mk-IV Interceptor** across a **4,200 × 4,200** multi-sector cyber-grid, harness a procedural **132 BPM D-Minor Synthwave/Cyberpunk WebAudio Engine**, and survive an escalating 6-tier enemy threat protocol.
+**NEON PROTOCOL // OVERDRIVE** is a zero-dependency, 60 FPS HTML5 Canvas & WebAudio open-world cyber-arena action game built in a single self-contained file. Pilot the **Valkyrie Mk-IV Interceptor** across a **4,200 × 4,200** multi-sector cyber-grid, harness a procedural **4-Track Multi-BPM Synthwave/Cyberpunk WebAudio Engine**, unleash **5 Active Tactical Skills**, complete **Live Cyber-Contracts**, and survive an escalating 6-tier enemy threat protocol.
 
 ---
 
 ## // KEY FEATURES
 
-### 🌌 5 Open-World Cyber-Sectors (`4200 × 4200` World Grid)
-Explore five distinct biomes tracked in real time on your top-right **Sector Radar Minimap** with dynamic off-screen HUD waypoints:
-- **NEXUS CORE** *(Center)* — High-visibility cyan command nexus (`#00f3ff`).
-- **CRIMSON FOUNDRY** *(North-West)* — Industrial plasma forge (`#ff0055`).
-- **QUANTUM VAULT** *(North-East)* — High-tech data sanctuary (`#ffe600`).
-- **ION NEBULA** *(South-West)* — Deep-field emerald conduit (`#00ffaa`).
-- **VOID SINGULARITY** *(South-East)* — Abyssal purple anomaly zone (`#b54cff`).
+### ⚔️ 5-Slot Active Tactical Skill Arsenal (`[Q]` `[R]` `[F]` `[X]` `[E]`)
+- **`[Q]` / `Right Click` — Cyber-Katana Parry**: 150° melee plasma arc that vaporizes swarmers and **reflects enemy projectiles back at `2.6×` speed & `4×` damage**.
+- **`[R]` — Omega Ion Laser Beam**: Sweeping `1,150px` continuous orbital plasma beam that melts through all enemies in your cursor's path, vapourises enemy bullets, and fires periodic shock-rings.
+- **`[F]` — Chrono-Stasis Singularity Dome**: Deploys a `265px` time-freeze matrix at your cursor (`82%` slow + `+35%` vulnerability). Press **`[F]` again early** to trigger a **Temporal Shatter Nova**!
+- **`[X]` — Phantom Holo-Decoy & 16-Missile Salvo**: Spawns a holographic twin that **taunts nearby enemies & fires twin plasma bolts**, while launching **16 homing micro-missiles** and granting `0.6s` phase-cloak.
+- **`[E]` — Overdrive Supernova**: Unleashes a screen-clearing electromagnetic shockwave and 6 seconds of hyper-overclocked fire rate & speed.
 
-### 🏗️ 6 Interactive World Structures
-- **Overclock Shrines (`[E]`)** — Activates 15s **Hyper-Overdrive** (`+45% Fire Rate`, `+25% Speed`, Hull Repair).
-- **Supply Caches** — Break open for instant Hull Repair, Plasma Shards, and XP bursts.
-- **Defense Turrets (`[E]`)** — Hack neutral twin-linked auto-turrets to fight alongside you for 35s.
-- **Accelerator Boost Rings** — Fly through for a `2.2×` velocity catapult and shield recharge.
-- **EMP Pylons (`[E]`)** — Discharge a `650px` electromagnetic shockwave that stuns and damages hostiles.
-- **Sector Warp Gates (`[E]`)** — Instant wormhole teleportation across the 4 quadrants with departure/arrival shockwaves.
+### 🎯 Live Cyber-Contracts (`[C]`) & 7 Interactive World Structures
+- **4 Dynamic Mid-Combat Contracts (`[C]`)**:
+  1. **King of the Hill (`Signal Uplink`)** — Hold the moving orbital zone for massive XP & Overdrive.
+  2. **Hyper-Slalom (`5 Neon Gates`)** — Thread 5 sequential plasma gates before the timer expires.
+  3. **Payload Escort (`Neural Tether`)** — Escort an armored data core to its extraction beacon.
+  4. **Parry & Precision Blitz** — Score rapid Katana parries and close-range eliminations.
+- **7 Open-World Structures**: Overclock Shrines, Quantum Supply Vaults, Hackable Defense Turrets, Hyper-Boost Gates, EMP Pylons, Sector Warp Gates, and **High-Roller Jackpot Obelisks**.
 
-### 👾 6-Tier Progressive Enemy Escalation (`11` Hostile Archetypes + `★ ELITE` Overclocked Variants)
-Waves dynamically escalate from **Tier 1 (Normal)** to **Tier 6 (Apex Bosses)** both within each wave and across deeper sectors:
-1. **Tier 1 — Normal Scouts**: `Swarm Drone` & `Micro-Bit Drone`
-2. **Tier 2 — A Little Harder**: `Seeker Interceptor` & `Blade Striker`
-3. **Tier 3 — More Harder**: `Orbital Pulsar` & `Aegis Phalanx` *(Directional Energy Shield)*
-4. **Tier 4 — Hard**: `Voidstalker` & `Phase Phantom` *(Quantum Teleport Blink)*
-5. **Tier 5 — Very Hard**: `Goliath Tank` & `Doom Juggernaut` *(8-Way Siege Barrage)*
-6. **Tier 6 — Apex Boss**: `Dreadnought Carrier` & Overclocked **`★ ELITE`** variants (`1.85× HP`, golden hex-aura, `2.5×` rewards)
+### 🔥 3 Selectable Threat Protocols (`[T]`) & 6-Tier Enemy Escalation
+Switch threat levels on the fly with **`[T]`** or the HUD badge:
+- **`OVERCLOCK` (`1.25×` Threat)** — Aggressive armed Sector 1 vanguard, early Blade Strikers & ★ Elite Hunters.
+- **`NIGHTMARE` (`1.65×` Threat / `1.5×` Score)** — Relentless multi-directional assault waves and faster enemy fire.
+- **`GODSLAYER` (`2.20×` Threat / `2.25×` Score)** — Maximum bullet-hell density and apex boss fleets.
 
-### 🔫 4 Hot-Swappable Weapon Systems & 15 Roguelite Upgrades
-- **`[1]` Pulse Rifle** — Rapid twin-linked plasma bolts
-- **`[2]` Scattergun** — High-spread kinetic flechette blast
-- **`[3]` Rail-Beam** — Hyper-velocity armor-piercing laser lance
-- **`[4]` Seeker Swarm** — Autonomous lock-on micro-missiles
+### 📊 Black-Box Post-Mortem & Tactical Rank Dossier (`Game Over`)
+- Grades every run from **`C` (Cadet Initiate)** up to **`S+` (Omega Godslayer)** with a glowing holographic rank medallion, All-Time Record Sync progress bar, 6-Card Telemetry Grid (`KPM`, `Peak Combo`, `Katana Parries`, `Contracts`, `Flight Time`), and an **Installed Cyber-Augmentation Loadout Strip**.
 
 ---
 
@@ -54,23 +49,23 @@ Waves dynamically escalate from **Tier 1 (Normal)** to **Tier 6 (Apex Bosses)** 
 | Input | Action |
 | :--- | :--- |
 | **`W A S D` / `Arrow Keys`** | Directional Thrusters |
-| **`Mouse Cursor`** | 360° Turret Aiming |
-| **`Left Click` / `Hold`** | Fire Active Weapon System |
+| **`Mouse Cursor`** | 360° Turret & Ion Beam Aiming |
+| **`Left Click` / `[F]` Auto-Fire** | Fire Primary Weapon System |
 | **`Spacebar` / `Shift`** | **Phase Dash** *(Invulnerability Frames + Afterimage Trail)* |
-| **`Q` / `Right Click`** | **Supernova EMP** *(Screen-Clearing Shockwave + Bullet Purge)* |
-| **`E`** | **Interact** *(Hack Turrets, Activate Shrines, Trigger EMP Pylons, Use Warp Gates)* |
-| **`1` / `2` / `3` / `4`** | Hot-Swap Weapon Systems |
-| **`P` / `ESC`** | Tactical Pause & Diagnostics |
+| **`Q` / `Right Click`** | **Cyber-Katana Slash & Bullet Parry** |
+| **`R`** | **Omega Ion Laser Beam** *(Continuous Piercing Plasma Lance)* |
+| **`F`** | **Chrono-Stasis Dome** *(Press `[F]` again to Temporal Shatter!)* |
+| **`X`** | **Phantom Holo-Decoy Clone + 16-Missile Salvo** |
+| **`E`** | **Overdrive Supernova** *(At 100% Charge)* |
+| **`C` / `T`** | **Trigger Cyber-Contract (`[C]`)** / **Cycle Threat Mode (`[T]`)** |
 
 ---
 
-## // QUICK START
+## // CONTINUOUS DEPLOYMENT
 
-No build step or dependencies required—just open [`index.html`](./index.html) or [`neon_protocol_overdrive.html`](./neon_protocol_overdrive.html) in any modern browser:
+Every push to `main` automatically deploys to **GitHub Pages** via [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml).
+To sync local changes, commit, and push in one step:
 
-```bash
-git clone https://github.com/phanaach4889/PK-game.git
-cd PK-game
-# Open index.html in your browser
+```powershell
+.\deploy.ps1 -Message "feat: update gameplay"
 ```
-
