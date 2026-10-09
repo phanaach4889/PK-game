@@ -1,46 +1,56 @@
 <div align="center">
   <img src="./neon_protocol_logo.svg" alt="NEON PROTOCOL // OVERDRIVE Logo" width="820" />
 
-  ### ⚡ OPEN-WORLD CYBER-ARENA SYNTH-ROGUE // MK-IV INTERCEPTOR ⚡
+  ### // OPEN-WORLD CYBER-ARENA SYNTH-ROGUE // MK-IV INTERCEPTOR //
 
   [![Deploy to GitHub Pages](https://github.com/phanaach4889/PK-game/actions/workflows/deploy.yml/badge.svg)](https://github.com/phanaach4889/PK-game/actions/workflows/deploy.yml)
 
-  **[🚀 Play Live on GitHub Pages (`phanaach4889.github.io/PK-game`)](https://phanaach4889.github.io/PK-game/)** · **[🎮 Local Entry (`index.html`)](./index.html)** · **[📐 Master Vector Logo (`neon_protocol_logo.svg`)](./neon_protocol_logo.svg)**
+  **[Play Live on GitHub Pages (`phanaach4889.github.io/PK-game`)](https://phanaach4889.github.io/PK-game/)** · **[Local Entry (`index.html`)](./index.html)** · **[Master Vector Logo (`neon_protocol_logo.svg`)](./neon_protocol_logo.svg)**
 </div>
 
 ---
 
 ## // SYSTEM OVERVIEW
 
-**NEON PROTOCOL // OVERDRIVE** is a zero-dependency, 60 FPS HTML5 Canvas & WebAudio open-world cyber-arena action game built in a single self-contained file. Pilot the **Valkyrie Mk-IV Interceptor** across a **4,200 × 4,200** multi-sector cyber-grid, harness a procedural **4-Track Multi-BPM Synthwave/Cyberpunk WebAudio Engine**, unleash **5 Active Tactical Skills**, complete **Live Cyber-Contracts**, and survive an escalating 6-tier enemy threat protocol.
+**NEON PROTOCOL // OVERDRIVE** is a zero-dependency, 60 FPS HTML5 Canvas & WebAudio open-world cyber-arena action game built in a single self-contained file with **100% custom multi-layer vector SVG icons & canvas geometry (zero emojis)**. Pilot the **Valkyrie Mk-IV Interceptor** across a **4,200 × 4,200** multi-sector cyber-grid, harness a procedural **4-Track Multi-BPM Synthwave/Cyberpunk WebAudio Engine**, unleash **6 Overclocked Tactical Skills**, complete **Live Cyber-Contracts**, and survive an escalating 6-tier enemy threat protocol.
 
 ---
 
 ## // KEY FEATURES
 
-### ⚔️ 5-Slot Active Tactical Skill Arsenal (`[Q]` `[R]` `[F]` `[X]` `[E]`)
-- **`[Q]` / `Right Click` — Cyber-Katana Parry**: 150° melee plasma arc that vaporizes swarmers and **reflects enemy projectiles back at `2.6×` speed & `4×` damage**.
-- **`[R]` — Omega Ion Laser Beam**: Sweeping `1,150px` continuous orbital plasma beam that melts through all enemies in your cursor's path, vapourises enemy bullets, and fires periodic shock-rings.
-- **`[F]` — Chrono-Stasis Singularity Dome**: Deploys a `265px` time-freeze matrix at your cursor (`82%` slow + `+35%` vulnerability). Press **`[F]` again early** to trigger a **Temporal Shatter Nova**!
-- **`[X]` — Phantom Holo-Decoy & 16-Missile Salvo**: Spawns a holographic twin that **taunts nearby enemies & fires twin plasma bolts**, while launching **16 homing micro-missiles** and granting `0.6s` phase-cloak.
-- **`[E]` — Overdrive Supernova**: Unleashes a screen-clearing electromagnetic shockwave and 6 seconds of hyper-overclocked fire rate & speed.
+### // 6-Skill Active Tactical Arsenal (`[Q]` `[R]` `[F]` `[X]` `[E]` + `[SPACE]`)
+- **`[Q]` / `Right Click` — Dimension Rift Katana (3-Hit Combo & Riposte)**:
+  - **3-Step Combo System**: Every 3rd slash (or any slash during Overdrive/Frenzy) unleashes an **X-Cross Dimension Cut** with twin intersecting plasma arcs, spatial X-rift lightning across cleaved targets, and `+2` bonus crescent waves.
+  - **Hex-Parry Riposte**: Deflecting enemy projectiles reflects them at `2.6x` speed & `4.2x` damage and triggers a **Golden Hex-Parry Riposte Ring** that zaps nearby hostiles.
+- **`[R]` — Omega Ion Laser + Autonomous Fin-Funnel Bits**:
+  - Sweeping `1,150px` orbital plasma lance accompanied by **2+ Autonomous Floating Fin-Funnel Bits** that flank your interceptor and fire converging cyan sub-lasers into the main beam.
+  - Melts enemies, vaporizes enemy bullets, arcs chain-lightning to nearby targets, and ends with an **Omega Rail Finale** burst.
+- **`[F]` — Chrono-Stasis Singularity Dome (Orbital Bullet Capture & Chrono-Lances)**:
+  - Deploys a `265px+` time-freeze matrix at your cursor (`82%` slow + `+50%` damage vulnerability) with **Temporal Tether Chains** locked onto every trapped hostile.
+  - **Orbital Bullet Capture**: Enemy projectiles entering the dome are captured into a swirling tangential orbit around the perimeter instead of hitting you.
+  - **Chrono-Lance Shatter**: Press **`[F]` again early** (or let the dome expire) to detonate a **Temporal Shatter Nova** that fires **8+ piercing radial Chrono-Lance blades**.
+- **`[X]` — Phantom Squadron + Voltaic Laser Tether + Quantum Phase-Swap**:
+  - Spawns a holographic wingman clone that taunts enemies and fires rapid twin plasma bolts while launching a **16+ Homing Micro-Missile Salvo**.
+  - **Voltaic Laser Tether**: Projects a high-voltage plasma beam between your ship and the active clone that electrocutes any enemy crossing the line.
+  - **Quantum Phase-Swap**: Press **`[X]` while a clone is active** to instantaneously **swap positions** with your hologram, unleashing dual EMP shockwaves at both locations and 8 bonus homing missiles!
+- **`[E]` — Seraphim Overdrive Supernova**:
+  - Unfolds **6-Winged Seraphim Hard-Light Energy Pinions** behind your ship for 6 seconds (`2.5x` fire rate, `+45%` speed, zero heat), converts active enemy bullets on screen into allied homing missiles, and calls down **Orbital Judgment Laser Pillars** onto high-HP targets.
+- **`[SPACE]` / `Shift` — Phase-Rift Siphon Dash**:
+  - High-speed invulnerability dash that leaves a holographic afterimage trail and **siphons nearby enemy projectiles into `+6% Overdrive` charge per bullet**.
 
-### 🎯 Live Cyber-Contracts (`[C]`) & 7 Interactive World Structures
+### // Live Cyber-Contracts (`[C]`) & 7 Interactive World Structures
 - **4 Dynamic Mid-Combat Contracts (`[C]`)**:
-  1. **King of the Hill (`Signal Uplink`)** — Hold the moving orbital zone for massive XP & Overdrive.
-  2. **Hyper-Slalom (`5 Neon Gates`)** — Thread 5 sequential plasma gates before the timer expires.
-  3. **Payload Escort (`Neural Tether`)** — Escort an armored data core to its extraction beacon.
-  4. **Parry & Precision Blitz** — Score rapid Katana parries and close-range eliminations.
-- **7 Open-World Structures**: Overclock Shrines, Quantum Supply Vaults, Hackable Defense Turrets, Hyper-Boost Gates, EMP Pylons, Sector Warp Gates, and **High-Roller Jackpot Obelisks**.
+  1. **Neon Drift Slalom** — Thread 5 sequential golden holo-gates before the timer expires.
+  2. **Orbital Payload Heist** — Hold inside the Orbital Data Core ring while fending off security ambushes.
+  3. **VIP Nemesis Bounty** — Hunt down and eliminate the high-speed Crimson Nemesis VIP gunship.
+  4. **Dimension Katana Blitz** — Score rapid Katana parries and close-range cleaves.
+- **7 Open-World Structures**: Augmentation Shrines, Quantum Data Vaults, Allied Ion Turrets, Slipstream Boost Gates, Volatile EMP Pylons, Dimensional Warp Gates, and **Neon Jackpot Obelisks**.
 
-### 🔥 3 Selectable Threat Protocols (`[T]`) & 6-Tier Enemy Escalation
+### // 3 Selectable Threat Protocols (`[T]`) & 6-Tier Enemy Escalation
 Switch threat levels on the fly with **`[T]`** or the HUD badge:
-- **`OVERCLOCK` (`1.25×` Threat)** — Aggressive armed Sector 1 vanguard, early Blade Strikers & ★ Elite Hunters.
-- **`NIGHTMARE` (`1.65×` Threat / `1.5×` Score)** — Relentless multi-directional assault waves and faster enemy fire.
-- **`GODSLAYER` (`2.20×` Threat / `2.25×` Score)** — Maximum bullet-hell density and apex boss fleets.
-
-### 📊 Black-Box Post-Mortem & Tactical Rank Dossier (`Game Over`)
-- Grades every run from **`C` (Cadet Initiate)** up to **`S+` (Omega Godslayer)** with a glowing holographic rank medallion, All-Time Record Sync progress bar, 6-Card Telemetry Grid (`KPM`, `Peak Combo`, `Katana Parries`, `Contracts`, `Flight Time`), and an **Installed Cyber-Augmentation Loadout Strip**.
+- **`OVERCLOCK` (`1.25x` Threat)** — Aggressive armed Sector 1 vanguard, early Blade Strikers & `[ELITE]` Hunters.
+- **`NIGHTMARE` (`1.65x` Threat / `1.5x` Score)** — Relentless multi-directional assault waves and faster enemy fire.
+- **`GODSLAYER` (`2.20x` Threat / `2.25x` Score)** — Maximum bullet-hell density and apex boss fleets.
 
 ---
 
@@ -50,13 +60,13 @@ Switch threat levels on the fly with **`[T]`** or the HUD badge:
 | :--- | :--- |
 | **`W A S D` / `Arrow Keys`** | Directional Thrusters |
 | **`Mouse Cursor`** | 360° Turret & Ion Beam Aiming |
-| **`Left Click` / `[F]` Auto-Fire** | Fire Primary Weapon System |
-| **`Spacebar` / `Shift`** | **Phase Dash** *(Invulnerability Frames + Afterimage Trail)* |
-| **`Q` / `Right Click`** | **Cyber-Katana Slash & Bullet Parry** |
-| **`R`** | **Omega Ion Laser Beam** *(Continuous Piercing Plasma Lance)* |
-| **`F`** | **Chrono-Stasis Dome** *(Press `[F]` again to Temporal Shatter!)* |
-| **`X`** | **Phantom Holo-Decoy Clone + 16-Missile Salvo** |
-| **`E`** | **Overdrive Supernova** *(At 100% Charge)* |
+| **`Left Click`** | Fire Primary Weapon System |
+| **`Spacebar` / `Shift`** | **Phase-Rift Siphon Dash** *(I-Frames + Bullet-to-Overdrive Siphon)* |
+| **`Q` / `Right Click`** | **Dimension Rift Katana** *(3-Hit X-Slash Combo & Hex-Parry Riposte)* |
+| **`R`** | **Omega Ion Laser + Autonomous Fin-Funnel Bits** |
+| **`F`** | **Chrono-Stasis Dome** *(Press `[F]` again to Shatter + Chrono-Lances)* |
+| **`X`** | **Phantom Clone + Tether** *(Press `[X]` again to Quantum Phase-Swap)* |
+| **`E`** | **Seraphim 6-Winged Overdrive** *(At 100% Charge)* |
 | **`C` / `T`** | **Trigger Cyber-Contract (`[C]`)** / **Cycle Threat Mode (`[T]`)** |
 
 ---

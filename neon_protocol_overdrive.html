@@ -853,12 +853,12 @@
 
     .skill-slot {
       position: relative;
-      width: 96px;
-      padding: 5px 7px 4px;
-      background: rgba(12, 18, 36, 0.82);
+      width: 112px;
+      padding: 5px 8px 5px;
+      background: linear-gradient(160deg, rgba(14, 21, 42, 0.88) 0%, rgba(5, 8, 18, 0.94) 100%);
       border: 1px solid rgba(255, 255, 255, 0.16);
       border-top: 2px solid var(--slot-color, var(--cyan));
-      border-radius: 6px;
+      border-radius: 7px;
       display: flex;
       flex-direction: column;
       gap: 3px;
@@ -868,20 +868,20 @@
     }
 
     .skill-slot:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
       border-color: var(--slot-color, var(--cyan));
-      box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.32);
     }
 
     .skill-slot.skill-ready {
       border-color: var(--slot-color, var(--cyan));
-      box-shadow: 0 0 10px rgba(0, 240, 255, 0.16);
+      box-shadow: 0 0 12px color-mix(in oklch, var(--slot-color, var(--cyan)) 34%, transparent);
     }
 
     .skill-slot.skill-active {
-      background: rgba(255, 230, 0, 0.18);
+      background: linear-gradient(160deg, rgba(255, 230, 0, 0.24) 0%, rgba(255, 0, 119, 0.22) 100%);
       border-color: #ffe600;
-      box-shadow: 0 0 16px rgba(255, 230, 0, 0.45);
+      box-shadow: 0 0 20px rgba(255, 230, 0, 0.55);
     }
 
     .skill-top {
@@ -902,6 +902,18 @@
       letter-spacing: 0.04em;
     }
 
+    .skill-tier-pill {
+      font-family: 'Courier New', monospace;
+      font-size: 0.46rem;
+      font-weight: 900;
+      color: var(--slot-color, var(--cyan));
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0 4px;
+      border-radius: 3px;
+      letter-spacing: 0.04em;
+    }
+
     .skill-status-text {
       font-family: 'Courier New', monospace;
       font-size: 0.5rem;
@@ -913,7 +925,7 @@
     .skill-name-row {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       font-size: 0.54rem;
       font-weight: 900;
       letter-spacing: 0.06em;
@@ -923,10 +935,20 @@
     }
 
     .skill-name-row svg {
-      width: 12px;
-      height: 12px;
+      width: 17px;
+      height: 17px;
       flex-shrink: 0;
       stroke: var(--slot-color, var(--cyan));
+      filter: drop-shadow(0 0 4px var(--slot-color, var(--cyan)));
+    }
+
+    .ui-svg-icon {
+      width: 14px;
+      height: 14px;
+      vertical-align: -2.5px;
+      margin-right: 4px;
+      display: inline-block;
+      flex-shrink: 0;
     }
 
     .skill-cd-bar {
@@ -2111,12 +2133,18 @@
         <div class="center-top-ribbon">
           <div class="score-display" id="scoreDisplay">0</div>
           <div class="wave-badge" id="waveDisplay">SECTOR 1</div>
-          <div class="threat-badge" id="threatBadge" title="Click or press [T] to cycle Enemy Threat Level">💀 HARDENED 1.4x</div>
+          <div class="threat-badge" id="threatBadge" title="Click or press [T] to cycle Enemy Threat Level">
+            <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1.5L13.5 4.5V10.5L8 14.5L2.5 10.5V4.5L8 1.5Z"/><circle cx="6" cy="7.5" r="1.2" fill="currentColor"/><circle cx="10" cy="7.5" r="1.2" fill="currentColor"/><path d="M5.5 11H10.5"/></svg>
+            <span id="threatBadgeText">HARDENED 1.4x</span>
+          </div>
           <div class="zone-badge" id="zoneDisplay">NEXUS CORE</div>
         </div>
         <div class="contract-tracker" id="contractTracker" title="Click or press [C] to launch a new Live Cyber-Contract">
           <div class="contract-top-row">
-            <span id="contractTitle">🎯 LIVE CONTRACT // STANDBY</span>
+            <span style="display: inline-flex; align-items: center;">
+              <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="var(--yellow)" stroke-width="1.7"><circle cx="8" cy="8" r="5.5"/><circle cx="8" cy="8" r="1.8" fill="var(--cyan)" stroke="none"/><path d="M8 1V3.5M8 12.5V15M1 8H3.5M12.5 8H15"/></svg>
+              <span id="contractTitle">LIVE CONTRACT // STANDBY</span>
+            </span>
             <span class="contract-timer-pill" id="contractTimer">[C] START</span>
           </div>
           <div class="contract-sub-row">
@@ -2146,7 +2174,10 @@
           </div>
 
           <div class="deck-top">
-            <span class="track-title" id="trackNameDisplay">♫ 01. NEON OVERDRIVE</span>
+            <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="#00f0ff" stroke-width="1.7" stroke-linecap="round">
+              <path d="M2 10V6M5 12V4M8 14V2M11 11V5M14 9V7"/>
+            </svg>
+            <span class="track-title" id="trackNameDisplay">01. NEON OVERDRIVE</span>
           </div>
 
           <div class="visualizer-visor">
@@ -2209,7 +2240,10 @@
     <div class="hud-bottom">
       <div id="bossHud" class="hidden">
         <div class="boss-title">
-          <span id="bossName">⚠️ OMEGA DREADNOUGHT</span>
+          <span id="bossName" style="display:inline-flex;align-items:center;">
+            <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="#ff0077" stroke-width="1.8"><polygon points="8,1.5 15,14 1,14"/><line x1="8" y1="6" x2="8" y2="10" stroke="#ffe600"/><circle cx="8" cy="12" r="0.8" fill="#ffe600"/></svg>
+            OMEGA DREADNOUGHT
+          </span>
           <span id="bossHpText">100%</span>
         </div>
         <div class="boss-bar-bg">
@@ -2218,69 +2252,98 @@
       </div>
 
       <div class="skill-hotbar" id="skillHotbar">
-        <div class="skill-slot skill-ready" id="skillSlotQ" style="--slot-color: #00ff88;" title="[Q] or Middle-Click: Cyber-Katana Crescent Slash &amp; 3x Bullet Parry">
+        <div class="skill-slot skill-ready" id="skillSlotQ" style="--slot-color: #00ff88;" title="[Q] or Middle-Click: Dimension Katana Cleave, Spatial Rift &amp; 3.5x Bullet Parry">
           <div class="skill-top">
             <span class="skill-key-pill">[Q]</span>
+            <span class="skill-tier-pill" id="skillTierQ">MK-I</span>
             <span class="skill-status-text" id="skillTextQ">READY</span>
           </div>
           <div class="skill-name-row">
-            <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><path d="M2 14L14 2M9 2H14V7"/></svg>
-            <span>KATANA</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+              <path d="M4 20L20 4" stroke="#00ff88" stroke-width="2.4"/>
+              <path d="M8 3C16 3 21 8 21 16" stroke="#00f0ff" stroke-width="1.8"/>
+              <polygon points="21,3 15,5 19,9" fill="#ffe600" stroke="none"/>
+              <line x1="6" y1="14" x2="10" y2="18" stroke="#ff0077" stroke-width="2.2"/>
+            </svg>
+            <span>RIFT KATANA</span>
           </div>
           <div class="skill-cd-bar"><div class="skill-cd-fill" id="skillBarQ"></div></div>
         </div>
 
-        <div class="skill-slot skill-ready" id="skillSlotR" style="--slot-color: #00f0ff;" title="[R]: Omega Ion Cannon — Continuous Sweeping Hyper-Laser that vaporizes bullets &amp; melts armor">
+        <div class="skill-slot skill-ready" id="skillSlotR" style="--slot-color: #00f0ff;" title="[R]: Omega Ion Cannon + Twin Orbital Laser Funnels &amp; Final Rail-Burst">
           <div class="skill-top">
             <span class="skill-key-pill">[R]</span>
+            <span class="skill-tier-pill" id="skillTierR">MK-I</span>
             <span class="skill-status-text" id="skillTextR">READY</span>
           </div>
           <div class="skill-name-row">
-            <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><circle cx="4" cy="8" r="2.5"/><line x1="6.5" y1="8" x2="15" y2="8"/><line x1="8" y1="5" x2="15" y2="5" stroke-opacity="0.6"/><line x1="8" y1="11" x2="15" y2="11" stroke-opacity="0.6"/></svg>
-            <span>ION BEAM</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+              <polygon points="2,8 8,5 8,19 2,16" fill="rgba(0,240,255,0.28)" stroke="#00f0ff"/>
+              <circle cx="8" cy="12" r="3" fill="#ffe600" stroke="#ffffff" stroke-width="1.4"/>
+              <line x1="11" y1="12" x2="23" y2="12" stroke="#ffffff" stroke-width="3"/>
+              <line x1="10" y1="7" x2="22" y2="9.5" stroke="#00f0ff" stroke-width="1.6"/>
+              <line x1="10" y1="17" x2="22" y2="14.5" stroke="#ff0077" stroke-width="1.6"/>
+            </svg>
+            <span>OMEGA LASER</span>
           </div>
           <div class="skill-cd-bar"><div class="skill-cd-fill" id="skillBarR"></div></div>
         </div>
 
-        <div class="skill-slot skill-ready" id="skillSlotF" style="--slot-color: #d946ef;" title="[F]: Chrono-Stasis Dome — Freezes enemies/bullets &amp; +50% DMG! Press [F] again to detonate!">
+        <div class="skill-slot skill-ready" id="skillSlotF" style="--slot-color: #d946ef;" title="[F]: Chrono-Stasis Singularity — Captures bullets into orbit &amp; chains foes! Press [F] again to Shatter!">
           <div class="skill-top">
             <span class="skill-key-pill">[F]</span>
+            <span class="skill-tier-pill" id="skillTierF">MK-I</span>
             <span class="skill-status-text" id="skillTextF">READY</span>
           </div>
           <div class="skill-name-row">
-            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><circle cx="8" cy="8" r="6"/><polyline points="8,4.5 8,8 10.8,9.8"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round">
+              <circle cx="12" cy="12" r="9" stroke="#d946ef" stroke-dasharray="4 2"/>
+              <polygon points="12,4 19,12 12,20 5,12" stroke="#00f0ff" stroke-width="1.4" fill="rgba(217,70,239,0.18)"/>
+              <polyline points="12,7.5 12,12 15.5,14" stroke="#ffe600" stroke-width="2.2"/>
+              <circle cx="12" cy="12" r="2" fill="#ffffff" stroke="none"/>
+            </svg>
             <span>CHRONO DOME</span>
           </div>
           <div class="skill-cd-bar"><div class="skill-cd-fill" id="skillBarF"></div></div>
         </div>
 
-        <div class="skill-slot skill-ready" id="skillSlotX" style="--slot-color: #ffe600;" title="[X]: Phantom Decoy &amp; 12-Missile Macross Swarm Barrage">
+        <div class="skill-slot skill-ready" id="skillSlotX" style="--slot-color: #ffe600;" title="[X]: Phantom Squadron + Laser Tether + Macross Salvo! Press [X] again while active to Phase-Swap!">
           <div class="skill-top">
             <span class="skill-key-pill">[X]</span>
+            <span class="skill-tier-pill" id="skillTierX">MK-I</span>
             <span class="skill-status-text" id="skillTextX">READY</span>
           </div>
           <div class="skill-name-row">
-            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><polygon points="8,2 13,13 8,10.5 3,13"/><circle cx="8" cy="6" r="1.5"/></svg>
-            <span>PHANTOM SALVO</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linejoin="round">
+              <polygon points="12,2 19,18 12,14.5 5,18" fill="rgba(255,230,0,0.25)" stroke="#ffe600"/>
+              <polygon points="6,7 10,19 6,17 2,19" stroke="#00f0ff" stroke-width="1.4"/>
+              <polygon points="18,7 22,19 18,17 14,19" stroke="#ff0077" stroke-width="1.4"/>
+              <circle cx="12" cy="9" r="1.8" fill="#ffffff" stroke="none"/>
+            </svg>
+            <span>PHANTOM SWAP</span>
           </div>
           <div class="skill-cd-bar"><div class="skill-cd-fill" id="skillBarX"></div></div>
         </div>
 
-        <div class="skill-slot" id="skillSlotE" style="--slot-color: #ff0077;" title="[E] or Right-Click: Overdrive Supernova Ultimate (Requires 100% Charge)">
+        <div class="skill-slot" id="skillSlotE" style="--slot-color: #ff0077;" title="[E] or Right-Click: Seraphim Overdrive + Orbital Judgment Laser Pillars (Requires 100% Charge)">
           <div class="skill-top">
             <span class="skill-key-pill">[E]</span>
+            <span class="skill-tier-pill" id="skillTierE">ULT</span>
             <span class="skill-status-text" id="skillTextE">0%</span>
           </div>
           <div class="skill-name-row">
-            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8"><polygon points="9,1 3,9 8,9 7,15 13,7 8,7"/></svg>
-            <span>OVERDRIVE</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linejoin="round">
+              <path d="M12 3L4 8L8 12L3 16L12 14L21 16L16 12L20 8L12 3Z" fill="rgba(255,0,119,0.28)" stroke="#ff0077"/>
+              <polygon points="13,2 7,13 12,13 10,22 17,11 12,11" fill="#ffe600" stroke="#ffffff" stroke-width="1.2"/>
+            </svg>
+            <span>SERAPHIM NOVA</span>
           </div>
           <div class="skill-cd-bar"><div class="skill-cd-fill" id="skillBarE" style="width: 0%;"></div></div>
         </div>
       </div>
 
       <div class="quick-tips">
-        <span>[SPACE]</span> DASH &nbsp;•&nbsp; <span>[Q]</span> KATANA &nbsp;•&nbsp; <span>[R]</span> ION BEAM &nbsp;•&nbsp; <span>[F]</span> CHRONO DOME &nbsp;•&nbsp; <span>[X]</span> PHANTOM SALVO &nbsp;•&nbsp; <span>[E]</span> NOVA &nbsp;•&nbsp; <span>[C]</span> CONTRACT
+        <span>[SPACE]</span> PHASE-RIFT DASH &nbsp;•&nbsp; <span>[Q]</span> RIFT KATANA &nbsp;•&nbsp; <span>[R]</span> OMEGA FUNNELS &nbsp;•&nbsp; <span>[F]</span> CHRONO SHATTER &nbsp;•&nbsp; <span>[X]</span> PHANTOM SWAP &nbsp;•&nbsp; <span>[E]</span> SERAPHIM NOVA
       </div>
     </div>
   </div>
@@ -2470,12 +2533,20 @@
     </div>
 
     <div class="threat-selector-bar" id="threatSelectorBar">
-      <button class="threat-mode-btn selected" data-threat="0">💀 HARDENED FLEET (1.4x)</button>
-      <button class="threat-mode-btn" data-threat="1">🔥 OVERKILL SWARM (2.0x)</button>
-      <button class="threat-mode-btn" data-threat="2">👑 APEX GODSLAYER (2.8x)</button>
+      <button class="threat-mode-btn selected" data-threat="0">
+        <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1.5L13.5 4.5V10.5L8 14.5L2.5 10.5V4.5L8 1.5Z"/><circle cx="6" cy="7.5" r="1.1" fill="currentColor"/><circle cx="10" cy="7.5" r="1.1" fill="currentColor"/><path d="M5.5 11H10.5"/></svg>HARDENED FLEET (1.4x)
+      </button>
+      <button class="threat-mode-btn" data-threat="1">
+        <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1.5C11.5 5 13 7.5 13 10.2C13 12.9 10.8 14.8 8 14.8C5.2 14.8 3 12.9 3 10.2C3 8 4.5 6 6.2 4.2C6 6.2 7.2 7 8 5C8.3 3.8 8.2 2.6 8 1.5Z"/><circle cx="8" cy="11" r="1.8" fill="currentColor"/></svg>OVERKILL SWARM (2.0x)
+      </button>
+      <button class="threat-mode-btn" data-threat="2">
+        <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="1.5,12.5 3,5 6.3,8.5 8,3 9.7,8.5 13,5 14.5,12.5" fill="rgba(255,230,0,0.22)"/><line x1="2" y1="14.2" x2="14" y2="14.2"/></svg>APEX GODSLAYER (2.8x)
+      </button>
     </div>
 
-    <button class="btn-main" id="startBtn">⚡ INITIALIZE PROTOCOL &amp; DROP BEAT</button>
+    <button class="btn-main" id="startBtn">
+      <svg class="ui-svg-icon" style="width:18px;height:18px;vertical-align:-3px;" viewBox="0 0 16 16" fill="currentColor"><polygon points="9.5,1 3,9 8,9 6.5,15 13,7 8,7"/></svg>INITIALIZE PROTOCOL &amp; DROP BEAT
+    </button>
   </div>
 
   <!-- LEVEL UP SCREEN -->
@@ -2489,8 +2560,12 @@
     </div>
     <div class="upgrade-container" id="upgradeCards"></div>
     <div class="upgrade-utility-bar">
-      <button class="util-btn" id="rerollBtn">🎲 REROLL MATRIX [R] <span id="rerollCountText">(3 LEFT)</span></button>
-      <button class="util-btn" id="healSkipBtn">🔧 NANITE OVERCHARGE [H] (+50 HP &amp; +40% OVERDRIVE)</button>
+      <button class="util-btn" id="rerollBtn">
+        <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="8,1.5 14,5 14,11 8,14.5 2,11 2,5"/><polyline points="2,5 8,8.5 14,5"/><line x1="8" y1="8.5" x2="8" y2="14.5"/></svg>REROLL MATRIX [R] <span id="rerollCountText">(3 LEFT)</span>
+      </button>
+      <button class="util-btn" id="healSkipBtn">
+        <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2.5V13.5M2.5 8H13.5"/><rect x="4.5" y="4.5" width="7" height="7" rx="1.5" stroke-opacity="0.6"/></svg>NANITE OVERCHARGE [H] (+50 HP &amp; +40% OVERDRIVE)
+      </button>
     </div>
   </div>
 
@@ -2513,7 +2588,8 @@
           </svg>
           <div>
             <div class="go-alert-tag">
-              <span>⚠️ SYS.ERR // CRITICAL HULL BREACH</span>
+              <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="#ff0077" stroke-width="1.8"><polygon points="8,1.5 15,14 1,14"/><line x1="8" y1="6" x2="8" y2="10"/><circle cx="8" cy="12" r="0.8" fill="#ff0077"/></svg>
+              <span>SYS.ERR // CRITICAL HULL BREACH</span>
             </div>
             <h2 class="go-main-title">PROTOCOL TERMINATED</h2>
             <div class="go-sub-telemetry" id="goCauseText">BLACK-BOX FLIGHT RECORDER // VALKYRIE MK-IV TELEMETRY ARCHIVED</div>
@@ -2522,7 +2598,7 @@
 
         <div class="go-record-pill">
           <div class="go-record-badge" id="goRecordBadge">// BLACK-BOX ARCHIVED //</div>
-          <div class="go-sub-telemetry" id="goThreatTag">THREAT: 💀 HARDENED (1.4x)</div>
+          <div class="go-sub-telemetry" id="goThreatTag">THREAT: HARDENED (1.4x)</div>
         </div>
       </div>
 
@@ -2618,7 +2694,8 @@
       <!-- 4. Installed Cyber-Augmentation Loadout Strip -->
       <div class="go-loadout-panel">
         <div class="go-loadout-title">
-          <span>⚙️ INSTALLED CYBER-AUGMENTATIONS</span>
+          <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="var(--cyan)" stroke-width="1.7"><circle cx="8" cy="8" r="3"/><path d="M8 1V3M8 13V15M1 8H3M13 8H15M3 3L4.5 4.5M11.5 11.5L13 13M13 3L11.5 4.5M4.5 11.5L3 13"/></svg>
+          <span>INSTALLED CYBER-AUGMENTATIONS</span>
         </div>
         <div class="go-loadout-list" id="finalPerksList">
           <span style="font-size: 0.72rem; color: #64748b;">NO AUGMENTATIONS INSTALLED</span>
@@ -2628,14 +2705,24 @@
       <!-- 5. Footer Bar: Threat Level Selector + Reboot / Terminal Buttons -->
       <div class="go-footer-bar">
         <div class="threat-selector-bar" style="margin-bottom: 0;">
-          <button class="threat-mode-btn selected" data-threat="0">💀 HARDENED (1.4x)</button>
-          <button class="threat-mode-btn" data-threat="1">🔥 OVERKILL (2.0x)</button>
-          <button class="threat-mode-btn" data-threat="2">👑 GODSLAYER (2.8x)</button>
+          <button class="threat-mode-btn selected" data-threat="0">
+            <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1.5L13.5 4.5V10.5L8 14.5L2.5 10.5V4.5L8 1.5Z"/><circle cx="6" cy="7.5" r="1.1" fill="currentColor"/><circle cx="10" cy="7.5" r="1.1" fill="currentColor"/><path d="M5.5 11H10.5"/></svg>HARDENED (1.4x)
+          </button>
+          <button class="threat-mode-btn" data-threat="1">
+            <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1.5C11.5 5 13 7.5 13 10.2C13 12.9 10.8 14.8 8 14.8C5.2 14.8 3 12.9 3 10.2C3 8 4.5 6 6.2 4.2C6 6.2 7.2 7 8 5C8.3 3.8 8.2 2.6 8 1.5Z"/><circle cx="8" cy="11" r="1.8" fill="currentColor"/></svg>OVERKILL (2.0x)
+          </button>
+          <button class="threat-mode-btn" data-threat="2">
+            <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="1.5,12.5 3,5 6.3,8.5 8,3 9.7,8.5 13,5 14.5,12.5" fill="rgba(255,230,0,0.22)"/><line x1="2" y1="14.2" x2="14" y2="14.2"/></svg>GODSLAYER (2.8x)
+          </button>
         </div>
 
         <div class="go-actions-right">
-          <button class="btn-terminal-sec" id="homeBtn">🏠 MAIN TERMINAL</button>
-          <button class="btn-reboot-cyber" id="restartBtn">⚡ REBOOT SYSTEM [SPACE]</button>
+          <button class="btn-terminal-sec" id="homeBtn">
+            <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="1.5" y="2.5" width="13" height="11" rx="2"/><polyline points="4.5,6 7,8 4.5,10"/><line x1="8.5" y1="10" x2="11.5" y2="10"/></svg>MAIN TERMINAL
+          </button>
+          <button class="btn-reboot-cyber" id="restartBtn">
+            <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="currentColor"><polygon points="9.5,1 3,9 8,9 6.5,15 13,7 8,7"/></svg>REBOOT SYSTEM [SPACE]
+          </button>
         </div>
       </div>
     </div>
@@ -3349,11 +3436,44 @@
     let camX = WORLD_W / 2 - canvas.width / 2;
     let camY = WORLD_H / 2 - canvas.height / 2;
 
-    // Escalated Threat Protocol Tiers (Default HARDENED 1.4x makes enemies much stronger right from Sector 1!)
+    // Escalated Threat Protocol Tiers with Custom Vector SVG Icons (Zero Emojis)
     const THREAT_MODES = [
-      { id: 0, label: '💀 HARDENED 1.4x', name: 'HARDENED FLEET', hpMult: 1.4, speedMult: 1.15, fireMult: 1.28, dmgMult: 1.25, eliteBonus: 0.20, color: '#ff2a55' },
-      { id: 1, label: '🔥 OVERKILL 2.0x', name: 'OVERKILL SWARM', hpMult: 2.0, speedMult: 1.28, fireMult: 1.50, dmgMult: 1.45, eliteBonus: 0.34, color: '#ff7b00' },
-      { id: 2, label: '👑 GODSLAYER 2.8x', name: 'APEX GODSLAYER', hpMult: 2.8, speedMult: 1.42, fireMult: 1.75, dmgMult: 1.65, eliteBonus: 0.50, color: '#ffe600' }
+      {
+        id: 0,
+        label: 'HARDENED 1.4x',
+        name: 'HARDENED FLEET',
+        svg: `<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1.5L13.5 4.5V10.5L8 14.5L2.5 10.5V4.5L8 1.5Z"/><circle cx="6" cy="7.5" r="1.2" fill="currentColor"/><circle cx="10" cy="7.5" r="1.2" fill="currentColor"/><path d="M5.5 11H10.5"/></svg>`,
+        hpMult: 1.4,
+        speedMult: 1.15,
+        fireMult: 1.28,
+        dmgMult: 1.25,
+        eliteBonus: 0.20,
+        color: '#ff2a55'
+      },
+      {
+        id: 1,
+        label: 'OVERKILL 2.0x',
+        name: 'OVERKILL SWARM',
+        svg: `<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1.5C11.5 5 13 7.5 13 10.2C13 12.9 10.8 14.8 8 14.8C5.2 14.8 3 12.9 3 10.2C3 8 4.5 6 6.2 4.2C6 6.2 7.2 7 8 5C8.3 3.8 8.2 2.6 8 1.5Z"/><circle cx="8" cy="11" r="1.8" fill="currentColor"/></svg>`,
+        hpMult: 2.0,
+        speedMult: 1.28,
+        fireMult: 1.50,
+        dmgMult: 1.45,
+        eliteBonus: 0.34,
+        color: '#ff7b00'
+      },
+      {
+        id: 2,
+        label: 'GODSLAYER 2.8x',
+        name: 'APEX GODSLAYER',
+        svg: `<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="1.5,12.5 3,5 6.3,8.5 8,3 9.7,8.5 13,5 14.5,12.5" fill="rgba(255,230,0,0.22)"/><line x1="2" y1="14.2" x2="14" y2="14.2"/></svg>`,
+        hpMult: 2.8,
+        speedMult: 1.42,
+        fireMult: 1.75,
+        dmgMult: 1.65,
+        eliteBonus: 0.50,
+        color: '#ffe600'
+      }
     ];
     let threatModeIdx = 0;
 
@@ -3366,7 +3486,7 @@
       const cfg = getThreatConfig();
       const badge = document.getElementById('threatBadge');
       if (badge) {
-        badge.textContent = cfg.label;
+        badge.innerHTML = `${cfg.svg}<span id="threatBadgeText">${cfg.label}</span>`;
         badge.style.color = cfg.color;
         badge.style.borderColor = cfg.color;
       }
@@ -3375,7 +3495,7 @@
       });
       if (notify) {
         sound.dash();
-        announce(`⚠️ THREAT PROTOCOL: ${cfg.name} (${cfg.hpMult}x ENEMY POWER) ⚠️`, cfg.color);
+        announce(`// THREAT PROTOCOL: ${cfg.name} (${cfg.hpMult}x ENEMY POWER) //`, cfg.color);
       }
     }
 
@@ -3527,14 +3647,13 @@
       bannerTimeout = setTimeout(() => el.classList.remove('show'), 2200);
     }
 
-    // Stackable Cyber Upgrades with Custom Glowing Vector SVG Emblems
+    // Stackable Cyber Upgrades with Custom Glowing Vector SVG Emblems (Zero Emojis)
     const ALL_UPGRADES = [
       {
         id: 'multishot',
         title: 'Twin Plasma Matrix',
         category: '// WEAPON ARRAY',
         color: '#00f0ff',
-        icon: '⚡',
         stat: '▸ SALVO: +1 PLASMA STREAM | SPREAD COVERAGE +15%',
         desc: 'Splits your primary plasma conduit to fire an additional synchronized energy stream.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="color:#00f0ff"><path d="M20 4L20 36"/><path d="M10 9L16 34"/><path d="M30 9L24 34"/><polygon points="20,2 16,10 24,10" fill="#00f0ff"/><polygon points="9,6 7,13 13,12" fill="#00f0ff"/><polygon points="31,6 27,12 33,13" fill="#00f0ff"/><circle cx="20" cy="28" r="4" fill="#ffe600" stroke="#ffffff"/></svg>`
@@ -3544,47 +3663,42 @@
         title: 'Hyper-Trigger Overclock',
         category: '// CYCLIC ACCELERATOR',
         color: '#ff0077',
-        icon: '🔥',
         stat: '▸ FIRE RATE: +25% CYCLING | BOLT VELOCITY +18%',
         desc: 'Supercharges weapon capacitors to cycle plasma salvos at blistering hyper-frequency.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#ff0077" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="23,3 9,22 20,22 17,37 31,18 20,18" fill="rgba(255,0,119,0.28)"/><circle cx="20" cy="20" r="16" stroke-dasharray="5 4" stroke="#ffe600" stroke-width="1.6"/></svg>`
       },
       {
         id: 'katana',
-        title: 'Plasma Katana Overdrive',
-        category: '// MELEE DEFLECTOR',
-        color: '#ff0077',
-        icon: '⚔️',
-        stat: '▸ KATANA [Q]: +1 CRESCENT WAVE | +30% CLEAVE & PARRY',
-        desc: 'Expands your [Q] Cyber-Katana arc to hurl relativistic sword-waves and reflect bullets at 3.5x damage.',
-        svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#ff0077" stroke-width="2.4" stroke-linecap="round"><path d="M7 33L33 7" stroke="#ffe600" stroke-width="3"/><path d="M12 6C24 6 34 16 34 28" stroke="#00f0ff" stroke-width="2.5"/><polygon points="34,6 26,8 32,14" fill="#ffe600"/></svg>`
+        title: 'Dimension Katana Core',
+        category: '// RIFT MELEE SKILL [Q]',
+        color: '#00ff88',
+        stat: '▸ KATANA [Q]: +1 CRESCENT WAVE | X-CROSS RIFT CLEAVE',
+        desc: 'Expands your [Q] Rift Katana to hurl multi-wave dimension cuts and reflect bullets at 3.5x damage.',
+        svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#00ff88" stroke-width="2.4" stroke-linecap="round"><path d="M6 34L34 6" stroke="#ffe600" stroke-width="3"/><path d="M10 6L34 30" stroke="#ff0077" stroke-width="2.2" stroke-dasharray="4 3"/><path d="M12 5C25 5 35 15 35 28" stroke="#00f0ff" stroke-width="2.5"/><polygon points="35,5 27,7 33,13" fill="#ffe600"/></svg>`
       },
       {
         id: 'ion_beam',
-        title: 'Omega Ion Cannon Core',
+        title: 'Omega Funnel Array',
         category: '// HYPER-LASER SKILL [R]',
         color: '#00f0ff',
-        icon: '🔦',
-        stat: '▸ ION BEAM [R]: +35% BEAM WIDTH & DURATION | +30% DMG',
-        desc: 'Supercharges your [R] Omega Ion Cannon to project a wider, longer-lasting orbital deathray.',
-        svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#00f0ff" stroke-width="2.4"><circle cx="10" cy="20" r="5" fill="#ffe600" stroke="#ffffff"/><line x1="15" y1="20" x2="38" y2="20" stroke="#ffffff" stroke-width="4"/><line x1="15" y1="14" x2="38" y2="14" stroke="#00f0ff" stroke-width="2"/><line x1="15" y1="26" x2="38" y2="26" stroke="#ff0077" stroke-width="2"/></svg>`
+        stat: '▸ LASER [R]: +1 ORBITAL FUNNEL BIT | +35% BEAM & RAIL FINALE',
+        desc: 'Adds autonomous Fin-Funnel Laser Bits to your [R] Omega Ion Cannon and triggers a Rail Finale.',
+        svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#00f0ff" stroke-width="2.4"><polygon points="3,12 11,8 11,32 3,28" fill="rgba(0,240,255,0.28)"/><circle cx="11" cy="20" r="4.5" fill="#ffe600" stroke="#ffffff"/><line x1="15" y1="20" x2="38" y2="20" stroke="#ffffff" stroke-width="4"/><line x1="14" y1="11" x2="37" y2="16" stroke="#00f0ff" stroke-width="2"/><line x1="14" y1="29" x2="37" y2="24" stroke="#ff0077" stroke-width="2"/></svg>`
       },
       {
         id: 'chrono_phantom',
         title: 'Chrono-Phantom Matrix',
         category: '// TACTICAL SKILLS [F] & [X]',
         color: '#d946ef',
-        icon: '⏳',
-        stat: '▸ [F] DOME +35% SIZE/BLAST | [X] SALVO +4 MISSILES',
-        desc: 'Amplifies your [F] Chrono-Stasis Singularity Dome and adds +4 seekers to your [X] Phantom Swarm Salvo.',
-        svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#d946ef" stroke-width="2.3"><circle cx="20" cy="20" r="14" stroke-dasharray="5 3"/><polyline points="20,10 20,20 27,24" stroke="#00f0ff" stroke-width="2.6"/><circle cx="20" cy="20" r="3" fill="#ffe600"/></svg>`
+        stat: '▸ [F] DOME +35% ORBITAL TRAP | [X] +4 MISSILES & TETHER',
+        desc: 'Amplifies your [F] Chrono Singularity Dome and upgrades your [X] Phantom Clone laser tether & salvo.',
+        svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#d946ef" stroke-width="2.3"><circle cx="20" cy="20" r="15" stroke-dasharray="5 3"/><polygon points="20,7 31,20 20,33 9,20" stroke="#00f0ff" stroke-width="1.8" fill="rgba(217,70,239,0.2)"/><polyline points="20,11 20,20 27,24" stroke="#ffe600" stroke-width="2.6"/><circle cx="20" cy="20" r="3" fill="#ffffff"/></svg>`
       },
       {
         id: 'railgun',
         title: 'Quantum Rail Lance',
         category: '// HEAVY ORDNANCE',
         color: '#ff0077',
-        icon: '☄️',
         stat: '▸ RAIL DMG: 48 PIERCING | HYPER-VELOCITY BEAM',
         desc: 'Every Nth salvo discharges a relativistic magenta railbeam that pierces through all hostiles.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#ff0077" stroke-width="2.2"><line x1="4" y1="36" x2="36" y2="4" stroke="#ffe600" stroke-width="3.5"/><path d="M10 22L22 10M18 30L30 18" stroke="#00f0ff"/><circle cx="28" cy="12" r="6" stroke="#ff0077" fill="rgba(255,0,119,0.3)"/><circle cx="16" cy="24" r="4" stroke="#00f0ff"/></svg>`
@@ -3594,7 +3708,6 @@
         title: 'Arc-Tesla Coil',
         category: '// VOLTAIC CONDUIT',
         color: '#00f0ff',
-        icon: '🌩️',
         stat: '▸ CHAIN ARCS: +1 JUMP | 55% VOLTAIC SPLASH DMG',
         desc: 'Projectiles discharge high-voltage chain lightning that leaps across nearby enemy packs.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#00f0ff" stroke-width="2.2"><polyline points="8,32 16,18 12,18 24,6 22,18 30,18 18,34" fill="rgba(0,240,255,0.25)"/><circle cx="8" cy="32" r="3" fill="#ffe600"/><circle cx="32" cy="10" r="3" fill="#ff0077"/><path d="M24 6L32 10" stroke="#ffe600" stroke-dasharray="2 2"/></svg>`
@@ -3604,7 +3717,6 @@
         title: 'Orbital Combat Drone',
         category: '// AUTONOMOUS WINGMAN',
         color: '#00ff88',
-        icon: '🛸',
         stat: '▸ +1 ORBITAL DRONE | AUTO-TARGETING PULSE',
         desc: 'Deploys an autonomous cyber-interceptor that orbits your hull and snipes nearby threats.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#00ff88" stroke-width="2.2"><circle cx="20" cy="20" r="14" stroke-dasharray="6 4" stroke="rgba(0,255,136,0.5)"/><polygon points="20,9 29,26 20,22 11,26" fill="rgba(0,255,136,0.28)"/><circle cx="20" cy="18" r="2.5" fill="#ffffff"/><circle cx="34" cy="20" r="3" fill="#00f0ff"/></svg>`
@@ -3614,7 +3726,6 @@
         title: 'Swarm Seeker Pods',
         category: '// SMART MUNITIONS',
         color: '#ffe600',
-        icon: '🚀',
         stat: '▸ +1 SEEKER MISSILE / SALVO | 55 CRIT BLAST DMG',
         desc: 'Periodically launches curving micro-missiles that autonomously lock onto priority targets.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#ffe600" stroke-width="2.2"><circle cx="20" cy="20" r="13" stroke="#ff0077" stroke-dasharray="4 3"/><line x1="20" y1="3" x2="20" y2="11"/><line x1="20" y1="29" x2="20" y2="37"/><line x1="3" y1="20" x2="11" y2="20"/><line x1="29" y1="20" x2="37" y2="20"/><polygon points="20,12 26,25 20,22 14,25" fill="#ffe600"/></svg>`
@@ -3624,7 +3735,6 @@
         title: 'Prism Ricochet Core',
         category: '// PHOTONIC OPTICS',
         color: '#00f0ff',
-        icon: '💎',
         stat: '▸ +1 SMART BOUNCE | AUTO-REDIRECTS TO NEXT FOE',
         desc: 'Encases plasma bolts in a refractive prism lattice that rebounds off walls and enemies.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#00f0ff" stroke-width="2.2"><polygon points="20,4 35,20 20,36 5,20" fill="rgba(0,240,255,0.2)"/><polyline points="6,12 20,20 34,10" stroke="#ffe600" stroke-width="2.5"/><circle cx="20" cy="20" r="3.5" fill="#ff0077"/></svg>`
@@ -3634,7 +3744,6 @@
         title: 'Singularity Launcher',
         category: '// GRAVITATIONAL TECH',
         color: '#d946ef',
-        icon: '🌀',
         stat: '▸ VORTEX PULL: 210m | SUPERNOVA COLLAPSE: 90 DMG',
         desc: 'Fires a dark-matter singularity orb that drags hostiles inward before violently detonating.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#d946ef" stroke-width="2.3"><circle cx="20" cy="20" r="7" fill="#070210" stroke="#00f0ff" stroke-width="2.5"/><path d="M20 6C29 6 34 13 34 20C34 28 26 32 19 31"/><path d="M20 34C11 34 6 27 6 20C6 12 14 8 21 9"/><circle cx="20" cy="20" r="2.5" fill="#ffe600"/></svg>`
@@ -3644,9 +3753,8 @@
         title: 'Ion Drift Thrusters',
         category: '// KINETIC CHASSIS',
         color: '#00ff88',
-        icon: '💨',
         stat: '▸ THRUST SPEED +20% | DASH COOLDOWN -16%',
-        desc: 'Upgrades twin vector nozzles for razor-sharp strafing and rapid Chrono-Dash recovery.',
+        desc: 'Upgrades twin vector nozzles for razor-sharp strafing and rapid Phase-Rift Dash recovery.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#00ff88" stroke-width="2.3"><polyline points="12,8 24,20 12,32"/><polyline points="21,8 33,20 21,32" stroke="#00f0ff"/><line x1="4" y1="14" x2="14" y2="14" stroke="#ffe600"/><line x1="2" y1="20" x2="16" y2="20" stroke="#ffe600"/><line x1="4" y1="26" x2="14" y2="26" stroke="#ffe600"/></svg>`
       },
       {
@@ -3654,7 +3762,6 @@
         title: 'Chrono-Nova Dash',
         category: '// PHASE CAPACITOR',
         color: '#ff0077',
-        icon: '🌐',
         stat: '▸ EMP RADIUS: 220m+ | 85+ VOLTAIC NOVA DMG',
         desc: 'Phase-dashing unleashes a high-voltage EMP shockwave that electrocutes surrounding foes.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#ff0077" stroke-width="2.2"><circle cx="20" cy="20" r="15" stroke-dasharray="5 3"/><circle cx="20" cy="20" r="9" stroke="#00f0ff"/><polygon points="20,10 23,17 30,20 23,23 20,30 17,23 10,20 17,17" fill="#ffe600" stroke="none"/></svg>`
@@ -3664,7 +3771,6 @@
         title: 'Aegis Energy Barrier',
         category: '// DEFENSIVE MATRIX',
         color: '#00f0ff',
-        icon: '🛡️',
         stat: '▸ +1 RECHARGING AEGIS LAYER | INSTANT +30 HULL',
         desc: 'Projects a hexagonal hard-light barrier that nullifies incoming damage and repairs hull.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#00f0ff" stroke-width="2.3"><path d="M20 4L33 10V20C33 28.5 27.2 34.3 20 37C12.8 34.3 7 28.5 7 20V10L20 4Z" fill="rgba(0,240,255,0.22)"/><path d="M20 11L27 14.5V20C27 25 23.8 28.5 20 30.5C16.2 28.5 13 25 13 20V14.5L20 11Z" stroke="#00ff88" stroke-width="1.8"/></svg>`
@@ -3674,7 +3780,6 @@
         title: 'Vampiric Magnet Core',
         category: '// BIO-HARVESTER',
         color: '#00ff88',
-        icon: '🧲',
         stat: '▸ MAGNET RANGE +75m | +20% XP | KILL LIFESTEAL',
         desc: 'Deploys gravitational tractor beams to vacuum data shards and siphon hull integrity on kills.',
         svg: `<svg viewBox="0 0 40 40" fill="none" stroke="#00ff88" stroke-width="2.3"><path d="M11 10V21C11 26 15 30 20 30C25 30 29 26 29 21V10" stroke="#00f0ff" stroke-width="3"/><rect x="8" y="7" width="6" height="5" fill="#ff0077" stroke="none"/><rect x="26" y="7" width="6" height="5" fill="#ff0077" stroke="none"/><path d="M20 14V22M16 18H24" stroke="#00ff88" stroke-width="2.5"/></svg>`
@@ -3709,35 +3814,38 @@
         this.boostTimer = 0;
         this.frenzyTimer = 0;
 
-        // Cyber-Katana Slash & Parry Deflector [Q]
+        // [Q] Dimension Rift Katana Slash & Parry Deflector
         this.katanaCooldown = 0;
-        this.katanaMaxCooldown = 115;
+        this.katanaMaxCooldown = 110;
         this.katanaSlashTimer = 0;
         this.katanaSlashAngle = 0;
         this.katanaLevel = 0;
+        this.katanaCombo = 0;
+        this.katanaIsCross = false;
+        this.parryRingTimer = 0;
 
-        // Omega Ion Laser Cannon [R]
+        // [R] Omega Ion Laser Cannon + Autonomous Fin-Funnel Bits
         this.ionBeamCooldown = 0;
-        this.ionBeamMaxCooldown = 480;
+        this.ionBeamMaxCooldown = 460;
         this.ionBeamTimer = 0;
-        this.ionBeamMaxTimer = 135;
+        this.ionBeamMaxTimer = 140;
         this.ionBeamLevel = 0;
 
-        // Chrono-Stasis Singularity Dome [F]
+        // [F] Chrono-Stasis Singularity Dome
         this.chronoCooldown = 0;
-        this.chronoMaxCooldown = 560;
+        this.chronoMaxCooldown = 540;
         this.chronoLevel = 0;
 
-        // Phantom Decoy Clone & Macross Swarm Salvo [X]
+        // [X] Phantom Squadron Clone, Laser Tether & Phase-Swap
         this.phantomCooldown = 0;
-        this.phantomMaxCooldown = 500;
+        this.phantomMaxCooldown = 480;
         this.phantomLevel = 0;
 
         this.lastShot = 0;
         this.fireInterval = 11;
         this.shotCounter = 0;
 
-        // Overdrive Ultimate
+        // [E] Seraphim Overdrive Ultimate
         this.overdrive = 0;
         this.overdriveActive = 0; // frames remaining
 
@@ -3766,48 +3874,53 @@
         this.orbitAngle = 0;
       }
 
+      // SKILL [Q]: DIMENSION RIFT KATANA (3-Hit Combo with X-Cross Dimension Slash & 3.5x Bullet Parry!)
       tryKatana() {
         if (this.katanaCooldown > 0 && this.overdriveActive <= 0 && this.frenzyTimer <= 0) return;
 
-        const maxCd = Math.max(48, this.katanaMaxCooldown - this.katanaLevel * 18);
-        this.katanaCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 24 : maxCd;
-        this.katanaSlashTimer = 14;
+        this.katanaCombo = (this.katanaCombo + 1) % 3;
+        const isCrossCut = (this.katanaCombo === 0) || this.overdriveActive > 0 || this.frenzyTimer > 0;
+        this.katanaIsCross = isCrossCut;
+
+        const maxCd = Math.max(44, this.katanaMaxCooldown - this.katanaLevel * 18);
+        this.katanaCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 22 : maxCd;
+        this.katanaSlashTimer = isCrossCut ? 18 : 14;
         this.katanaSlashAngle = this.angle;
-        this.invulnTimer = Math.max(this.invulnTimer, 16);
+        this.invulnTimer = Math.max(this.invulnTimer, isCrossCut ? 22 : 16);
 
         sound.katanaSlash();
-        screenShake = Math.max(screenShake, 11);
-        const slashRadius = 135 + this.katanaLevel * 28;
-        addGridRipple(this.x, this.y, slashRadius + 75, 28, '#ff0077');
+        screenShake = Math.max(screenShake, isCrossCut ? 15 : 11);
+        const slashRadius = (142 + this.katanaLevel * 30) * (isCrossCut ? 1.25 : 1.0);
+        addGridRipple(this.x, this.y, slashRadius + 85, isCrossCut ? 36 : 28, isCrossCut ? '#ffe600' : '#00ff88');
 
-        // Launch wide crescent sword-beam projectile(s)
-        const waveCount = 1 + this.katanaLevel;
+        // Launch wide crescent sword-beam projectile(s) (+ bonus X-Cross Judgement wave on 3rd slash!)
+        const waveCount = 1 + this.katanaLevel + (isCrossCut ? 2 : 0);
         for (let w = 0; w < waveCount; w++) {
-          const wAng = this.angle + (w - (waveCount - 1) / 2) * 0.22;
+          const wAng = this.angle + (w - (waveCount - 1) / 2) * 0.2;
           projectiles.push(new Projectile(
             this.x + Math.cos(wAng) * 22,
             this.y + Math.sin(wAng) * 22,
             wAng,
-            w % 2 === 0 ? '#ff0077' : '#ffe600',
-            18.5,
-            68 + this.level * 8 + this.katanaLevel * 22,
-            this.ricochetLevel,
+            isCrossCut ? (w % 2 === 0 ? '#ffe600' : '#00f0ff') : (w % 2 === 0 ? '#00ff88' : '#ff0077'),
+            19.5,
+            (74 + this.level * 9 + this.katanaLevel * 24) * (isCrossCut ? 1.3 : 1.0),
+            this.ricochetLevel + (isCrossCut ? 1 : 0),
             true,
             'overdrive'
           ));
         }
 
-        // 1. PARRY & DEFLECT ENEMY PROJECTILES BACK AT HOSTILES AT 3X DAMAGE!
+        // 1. PARRY & DEFLECT ENEMY PROJECTILES BACK AT HOSTILES AT 3.5X DAMAGE!
         let deflected = 0;
         for (let i = 0; i < enemyProjectiles.length; i++) {
           const ep = enemyProjectiles[i];
           if (!ep.active) continue;
           const dist = Math.hypot(ep.x - this.x, ep.y - this.y);
-          if (dist <= slashRadius + 24) {
+          if (dist <= slashRadius + 28) {
             ep.active = false;
             deflected++;
-            let targetAng = this.angle + (Math.random() - 0.5) * 0.16;
-            let bestDist = 900;
+            let targetAng = this.angle + (Math.random() - 0.5) * 0.14;
+            let bestDist = 950;
             for (let j = 0; j < enemies.length; j++) {
               const en = enemies[j];
               if (!en.active) continue;
@@ -3822,19 +3935,19 @@
               ep.y,
               targetAng,
               '#ffe600',
-              22,
-              (85 + this.level * 12) * (1 + this.katanaLevel * 0.25),
+              23,
+              (92 + this.level * 14) * (1 + this.katanaLevel * 0.28),
               1 + this.ricochetLevel,
               true,
               'rail'
             ));
-            lightningBolts.push({ x1: this.x, y1: this.y, x2: ep.x, y2: ep.y, color: '#ffe600', life: 9 });
+            lightningBolts.push({ x1: this.x, y1: this.y, x2: ep.x, y2: ep.y, color: '#ffe600', life: 10 });
           }
         }
 
-        // 2. CLEAVE NEARBY ENEMIES WITH MASSIVE CRIT DAMAGE & KNOCKBACK
+        // 2. CLEAVE NEARBY ENEMIES WITH SPATIAL DIMENSION RIFTS
         let cleaved = 0;
-        const cleaveDmg = (115 + this.level * 22) * (1 + this.katanaLevel * 0.3);
+        const cleaveDmg = (125 + this.level * 24) * (1 + this.katanaLevel * 0.32) * (isCrossCut ? 1.35 : 1.0);
         for (let i = 0; i < enemies.length; i++) {
           const e = enemies[i];
           if (!e.active) continue;
@@ -3843,24 +3956,33 @@
             cleaved++;
             const pushAng = Math.atan2(e.y - this.y, e.x - this.x);
             if (e.type !== 'boss') {
-              e.x += Math.cos(pushAng) * 42;
-              e.y += Math.sin(pushAng) * 42;
+              e.x += Math.cos(pushAng) * 44;
+              e.y += Math.sin(pushAng) * 44;
             }
             e.takeDamage(cleaveDmg, true);
-            lightningBolts.push({ x1: this.x, y1: this.y, x2: e.x, y2: e.y, color: '#ff0077', life: 10 });
+            lightningBolts.push({ x1: this.x, y1: this.y, x2: e.x, y2: e.y, color: isCrossCut ? '#ffe600' : '#00ff88', life: 11 });
+            // Draw spatial X-rift across cleaved target!
+            if (isCrossCut) {
+              lightningBolts.push({ x1: e.x - 28, y1: e.y - 28, x2: e.x + 28, y2: e.y + 28, color: '#00f0ff', life: 14 });
+              lightningBolts.push({ x1: e.x - 28, y1: e.y + 28, x2: e.x + 28, y2: e.y - 28, color: '#ff0077', life: 14 });
+            }
           }
         }
 
         if (deflected > 0) {
+          this.parryRingTimer = 18;
           sound.parryDeflect();
-          score += deflected * 150 * combo;
-          this.overdrive = Math.min(100, this.overdrive + deflected * 7);
+          score += deflected * 160 * combo;
+          this.overdrive = Math.min(100, this.overdrive + deflected * 8);
           this.hp = Math.min(this.maxHp, this.hp + deflected * 4);
-          spawnFloatingText(this.x, this.y - 28, `⚔️ ${deflected}x PARRY REFLECT! +${deflected * 150}`, '#ffe600', 1.3);
+          spawnFloatingText(this.x, this.y - 28, `[PARRY] ${deflected}x RIPOSTE! +${deflected * 160}`, '#ffe600', 1.32);
           if (typeof recordContractAction === 'function') {
             recordContractAction('parry', deflected);
           }
+        } else if (isCrossCut) {
+          spawnFloatingText(this.x, this.y - 26, '// X-CROSS DIMENSION CUT //', '#00ff88', 1.25);
         }
+
         if (cleaved > 0 && typeof recordContractAction === 'function') {
           recordContractAction('parry', cleaved);
         }
@@ -3870,35 +3992,35 @@
           this.katanaCooldown = Math.floor(this.katanaCooldown * 0.45);
         }
 
-        for (let i = 0; i < 16; i++) {
-          const a = this.angle + ((i / 15) - 0.5) * 2.4;
-          const sp = 6 + Math.random() * 6;
-          spawnParticle(this.x + Math.cos(a) * 24, this.y + Math.sin(a) * 24, Math.cos(a) * sp, Math.sin(a) * sp, i % 2 === 0 ? '#ff0077' : '#ffe600', 16, 3.6);
+        for (let i = 0; i < 18; i++) {
+          const a = this.angle + ((i / 17) - 0.5) * 2.5;
+          const sp = 6.5 + Math.random() * 6.5;
+          spawnParticle(this.x + Math.cos(a) * 24, this.y + Math.sin(a) * 24, Math.cos(a) * sp, Math.sin(a) * sp, i % 2 === 0 ? '#00ff88' : '#ffe600', 17, 3.6);
         }
       }
 
-      // SKILL [R]: OMEGA ION LASER CANNON (Continuous sweeping hyper-beam that vaporizes bullets & melts armor!)
+      // SKILL [R]: OMEGA ION LASER CANNON + AUTONOMOUS ORBITAL FIN-FUNNELS
       tryIonBeam() {
         if (this.ionBeamTimer > 0) return;
         if (this.ionBeamCooldown > 0 && this.overdriveActive <= 0 && this.frenzyTimer <= 0) return;
 
-        this.ionBeamMaxTimer = 135 + this.ionBeamLevel * 28;
+        this.ionBeamMaxTimer = 140 + this.ionBeamLevel * 30;
         this.ionBeamTimer = this.ionBeamMaxTimer;
-        const maxCd = Math.max(220, this.ionBeamMaxCooldown - this.ionBeamLevel * 55);
-        this.ionBeamCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 140 : maxCd;
-        this.invulnTimer = Math.max(this.invulnTimer, 30);
+        const maxCd = Math.max(210, this.ionBeamMaxCooldown - this.ionBeamLevel * 55);
+        this.ionBeamCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 135 : maxCd;
+        this.invulnTimer = Math.max(this.invulnTimer, 34);
 
         sound.ionBeam();
         screenShake = Math.max(screenShake, 16);
         chromaticFlash = 10;
-        addGridRipple(this.x, this.y, 440, 36, '#00f0ff');
-        spawnFloatingText(this.x, this.y - 28, '⚡ OMEGA ION BEAM ONLINE! ⚡', '#00f0ff', 1.35);
-        announce('⚡ OMEGA ION CANNON ENGAGED — SWEEP CURSOR TO INCINERATE HOSTILES! ⚡', '#00f0ff');
+        addGridRipple(this.x, this.y, 460, 38, '#00f0ff');
+        const funnelCount = 2 + Math.min(2, this.ionBeamLevel);
+        spawnFloatingText(this.x, this.y - 28, `// OMEGA LASER + ${funnelCount}x FIN-FUNNELS //`, '#00f0ff', 1.35);
+        announce(`// OMEGA ION CANNON & ${funnelCount} ORBITAL LASER FUNNELS ENGAGED //`, '#00f0ff');
       }
 
       // SKILL [F]: CHRONO-STASIS SINGULARITY DOME (Deploys time-freeze dome at cursor; press [F] again to shatter!)
       tryChronoField() {
-        // If an active Chrono-Dome exists, pressing [F] again immediately shatters time!
         if (typeof chronoFields !== 'undefined' && chronoFields.length > 0) {
           for (let i = 0; i < chronoFields.length; i++) {
             if (chronoFields[i].active) chronoFields[i].detonate();
@@ -3907,34 +4029,67 @@
         }
         if (this.chronoCooldown > 0 && this.overdriveActive <= 0 && this.frenzyTimer <= 0) return;
 
-        const maxCd = Math.max(240, this.chronoMaxCooldown - this.chronoLevel * 60);
-        this.chronoCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 150 : maxCd;
+        const maxCd = Math.max(230, this.chronoMaxCooldown - this.chronoLevel * 60);
+        this.chronoCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 145 : maxCd;
 
-        // Deploy at cursor (clamped within 420px of player)
+        // Deploy at cursor (clamped within 430px of player)
         const dx = mouse.x - this.x;
         const dy = mouse.y - this.y;
-        const dist = Math.min(420, Math.hypot(dx, dy));
+        const dist = Math.min(430, Math.hypot(dx, dy));
         const ang = Math.atan2(dy, dx);
         const cx = Math.max(120, Math.min(WORLD_W - 120, this.x + Math.cos(ang) * dist));
         const cy = Math.max(120, Math.min(WORLD_H - 120, this.y + Math.sin(ang) * dist));
 
-        const domeR = 230 + this.chronoLevel * 40;
-        const domeLife = 270 + this.chronoLevel * 45;
+        const domeR = 235 + this.chronoLevel * 42;
+        const domeLife = 275 + this.chronoLevel * 45;
         chronoFields.push(new ChronoField(cx, cy, domeR, domeLife));
 
         sound.chronoField(false);
         screenShake = Math.max(screenShake, 12);
-        addGridRipple(cx, cy, domeR * 1.4, -30, '#d946ef');
-        spawnFloatingText(cx, cy - 24, '⏳ CHRONO-STASIS DOME! (+50% DMG)', '#f0abfc', 1.3);
-        announce('⏳ CHRONO-STASIS SINGULARITY DEPLOYED — PRESS [F] AGAIN TO SHATTER TIME! ⏳', '#f0abfc');
+        addGridRipple(cx, cy, domeR * 1.45, -32, '#d946ef');
+        spawnFloatingText(cx, cy - 24, '// CHRONO-SINGULARITY (+50% DMG) //', '#f0abfc', 1.3);
+        announce('// CHRONO-STASIS SINGULARITY ACTIVE — PRESS [F] AGAIN TO SHATTER TIME //', '#f0abfc');
       }
 
-      // SKILL [X]: PHANTOM DECOY CLONE & 12-MISSILE MACROSS SWARM SALVO
+      // SKILL [X]: PHANTOM SQUADRON, LASER TETHER & QUANTUM PHASE-SWAP
       tryPhantomBarrage() {
+        // Recasting [X] while a Phantom Clone is active triggers an instant QUANTUM PHASE-SWAP!
+        const activeClone = (typeof phantomDecoys !== 'undefined') ? phantomDecoys.find(pd => pd.active && !pd.hasSwapped) : null;
+        if (activeClone) {
+          activeClone.hasSwapped = true;
+          const oldX = this.x;
+          const oldY = this.y;
+          this.x = activeClone.x;
+          this.y = activeClone.y;
+          activeClone.x = oldX;
+          activeClone.y = oldY;
+          this.invulnTimer = Math.max(this.invulnTimer, 40);
+          sound.dash();
+          screenShake = Math.max(screenShake, 15);
+          addGridRipple(this.x, this.y, 300, 32, '#00f0ff');
+          addGridRipple(activeClone.x, activeClone.y, 300, 32, '#ff0077');
+          lightningBolts.push({ x1: oldX, y1: oldY, x2: this.x, y2: this.y, color: '#ffe600', life: 14 });
+
+          // Deal Phase-Swap EMP damage around both swap locations + fire 8 bonus seekers!
+          for (let i = 0; i < enemies.length; i++) {
+            const e = enemies[i];
+            if (!e.active) continue;
+            if (Math.hypot(e.x - this.x, e.y - this.y) < 190 || Math.hypot(e.x - activeClone.x, e.y - activeClone.y) < 190) {
+              e.takeDamage(95 + this.level * 12, true);
+            }
+          }
+          for (let k = 0; k < 8; k++) {
+            const mAng = (k * Math.PI * 2) / 8;
+            missiles.push(new HomingMissile(this.x, this.y, mAng));
+          }
+          spawnFloatingText(this.x, this.y - 28, '// QUANTUM PHASE-SWAP! //', '#00f0ff', 1.35);
+          return;
+        }
+
         if (this.phantomCooldown > 0 && this.overdriveActive <= 0 && this.frenzyTimer <= 0) return;
 
-        const maxCd = Math.max(220, this.phantomMaxCooldown - this.phantomLevel * 55);
-        this.phantomCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 130 : maxCd;
+        const maxCd = Math.max(210, this.phantomMaxCooldown - this.phantomLevel * 55);
+        this.phantomCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 125 : maxCd;
         this.invulnTimer = Math.max(this.invulnTimer, 45);
         this.boostTimer = Math.max(this.boostTimer, 95);
 
@@ -3942,8 +4097,8 @@
         screenShake = Math.max(screenShake, 14);
         addGridRipple(this.x, this.y, 340, 30, '#ffe600');
 
-        // 1. Spawn Holographic Phantom Decoy Clone that taunts enemies & fires 360° laser volleys!
-        phantomDecoys.push(new PhantomDecoy(this.x, this.y, this.angle, 360 + this.phantomLevel * 60));
+        // 1. Spawn Holographic Phantom Decoy Clone connected by a Voltaic Laser Tether!
+        phantomDecoys.push(new PhantomDecoy(this.x, this.y, this.angle, 370 + this.phantomLevel * 60));
 
         // 2. Launch 12+ Macross Micro-Missile Swarm in a 360° spiral!
         const salvoCount = 12 + this.phantomLevel * 4;
@@ -3954,32 +4109,43 @@
             this.y + Math.sin(mAng) * 18,
             mAng
           );
-          m.damage = 64 + this.level * 8 + this.phantomLevel * 18;
-          m.speed = 11.2;
+          m.damage = 66 + this.level * 8 + this.phantomLevel * 18;
+          m.speed = 11.4;
           missiles.push(m);
         }
 
-        spawnFloatingText(this.x, this.y - 28, `🔥 PHANTOM CLONE + ${salvoCount}x MISSILE SALVO!`, '#ffe600', 1.35);
-        announce(`🔥 PHANTOM HOLO-DECOY & ${salvoCount}-MISSILE MACROSS SALVO UNLEASHED! 🔥`, '#ffe600');
+        spawnFloatingText(this.x, this.y - 28, `// PHANTOM TETHER + ${salvoCount}x SALVO //`, '#ffe600', 1.35);
+        announce(`// PHANTOM HOLO-CLONE & ${salvoCount}-MISSILE SALVO DEPLOYED — PRESS [X] AGAIN TO PHASE-SWAP //`, '#ffe600');
       }
 
       tryDash() {
         if (this.dashCooldown <= 0 || this.overdriveActive > 0 || this.frenzyTimer > 0) {
           this.isDashing = true;
           this.dashDuration = 13;
-          this.invulnTimer = 20;
+          this.invulnTimer = 22;
           this.dashCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 16 : this.dashMaxCooldown;
           sound.dash();
           screenShake = 9;
           addGridRipple(this.x, this.y, 240, 22, '#00f0ff');
 
-          // Bullet-time slow on nearby enemy bullets
+          // Absorb closest enemy projectiles within 95px into Overdrive energy & slow outer ring!
+          let absorbed = 0;
           enemyProjectiles.forEach(ep => {
-            if (Math.hypot(ep.x - this.x, ep.y - this.y) < 220) {
+            if (!ep.active) return;
+            const d = Math.hypot(ep.x - this.x, ep.y - this.y);
+            if (d < 95) {
+              ep.active = false;
+              absorbed++;
+              this.overdrive = Math.min(100, this.overdrive + 6);
+              spawnParticle(ep.x, ep.y, 0, 0, '#00f0ff', 14, 3.5);
+            } else if (d < 230) {
               ep.vx *= 0.35;
               ep.vy *= 0.35;
             }
           });
+          if (absorbed > 0) {
+            spawnFloatingText(this.x, this.y - 22, `PHASE ABSORB +${absorbed * 6}% OD`, '#00f0ff', 1.15);
+          }
 
           for (let i = 0; i < 16; i++) {
             const a = Math.random() * Math.PI * 2;
@@ -3990,10 +4156,10 @@
           if (this.empLevel > 0) {
             screenShake = 15;
             addGridRipple(this.x, this.y, 320, 35, '#ff0077');
-            const radius = 180 + this.empLevel * 40;
+            const radius = 190 + this.empLevel * 42;
             enemies.forEach(e => {
               if (e.active && Math.hypot(e.x - this.x, e.y - this.y) < radius) {
-                e.takeDamage(55 + this.empLevel * 30, true);
+                e.takeDamage(60 + this.empLevel * 32, true);
                 lightningBolts.push({ x1: this.x, y1: this.y, x2: e.x, y2: e.y, color: '#ff0077', life: 10 });
               }
             });
@@ -4004,23 +4170,26 @@
       tryOverdrive() {
         if (this.overdrive >= 100 && this.overdriveActive <= 0) {
           this.overdrive = 0;
-          this.overdriveActive = 360; // 6 seconds of pure mayhem
-          this.invulnTimer = 60;
+          this.overdriveActive = 360; // 6 seconds of Seraphim Overdrive + Orbital Judgment
+          this.invulnTimer = 65;
           sound.overdrive();
           screenShake = 24;
           chromaticFlash = 18;
           addGridRipple(this.x, this.y, 650, 55, '#ffe600');
-          announce('⚡ PROTOCOL OVERDRIVE UNLEASHED ⚡', '#ffe600');
+          announce('// SERAPHIM OVERDRIVE UNLEASHED — ORBITAL JUDGMENT ONLINE //', '#ffe600');
 
-          // Clear enemy projectiles & blast nearby enemies
-          enemyProjectiles.forEach(ep => {
+          // Convert all active enemy projectiles into friendly homing seekers or golden sparks!
+          enemyProjectiles.forEach((ep, idx) => {
             spawnParticle(ep.x, ep.y, 0, 0, '#ffe600', 16, 4.5);
+            if (idx % 2 === 0 && missiles.length < 36) {
+              missiles.push(new HomingMissile(ep.x, ep.y, Math.atan2(ep.y - this.y, ep.x - this.x)));
+            }
           });
           enemyProjectiles = [];
 
           enemies.forEach(e => {
             if (e.active) {
-              e.takeDamage(85, true);
+              e.takeDamage(95 + this.level * 8, true);
             }
           });
         }
@@ -4060,10 +4229,8 @@
           if (this.dashDuration <= 0) {
             this.isDashing = false;
           }
-          // Holographic afterimage
           afterimages.push({ x: this.x, y: this.y, angle: this.angle, life: 12, maxLife: 12 });
         } else {
-          // Smooth drift physics
           const targetVx = dx * this.speed * speedMult;
           const targetVy = dy * this.speed * speedMult;
           this.vx += (targetVx - this.vx) * 0.24;
@@ -4091,23 +4258,46 @@
         this.orbitAngle += 0.06;
 
         if (this.invulnTimer > 0) this.invulnTimer--;
-        if (this.overdriveActive > 0) this.overdriveActive--;
+        if (this.parryRingTimer > 0) this.parryRingTimer--;
+        if (this.overdriveActive > 0) {
+          this.overdriveActive--;
+          // Seraphim Overdrive Orbital Judgment Pillar every 36 frames!
+          if (this.overdriveActive % 36 === 0 && enemies.length > 0) {
+            let bestTarget = null;
+            let bestHp = -1;
+            for (let i = 0; i < enemies.length; i++) {
+              const e = enemies[i];
+              if (e.active && Math.hypot(e.x - this.x, e.y - this.y) < 750 && e.hp > bestHp) {
+                bestHp = e.hp;
+                bestTarget = e;
+              }
+            }
+            if (bestTarget) {
+              const jDmg = 95 + this.level * 12;
+              bestTarget.takeDamage(jDmg, true);
+              addGridRipple(bestTarget.x, bestTarget.y, 210, 28, '#ffe600');
+              lightningBolts.push({ x1: bestTarget.x, y1: bestTarget.y - 380, x2: bestTarget.x, y2: bestTarget.y, color: '#ffe600', life: 12 });
+              lightningBolts.push({ x1: bestTarget.x - 16, y1: bestTarget.y - 380, x2: bestTarget.x + 16, y2: bestTarget.y, color: '#ff0077', life: 12 });
+              spawnFloatingText(bestTarget.x, bestTarget.y - 26, 'ORBITAL JUDGMENT!', '#ffe600', 1.15);
+            }
+          }
+        }
         if (this.katanaCooldown > 0) this.katanaCooldown--;
         if (this.katanaSlashTimer > 0) this.katanaSlashTimer--;
         if (this.ionBeamCooldown > 0) this.ionBeamCooldown--;
         if (this.chronoCooldown > 0) this.chronoCooldown--;
         if (this.phantomCooldown > 0) this.phantomCooldown--;
 
-        // Active Omega Ion Laser Beam [R]: Continuous raycast incineration & bullet vaporization!
+        // Active Omega Ion Laser Beam [R] + Orbital Fin-Funnels + Finale Rail Burst!
         if (this.ionBeamTimer > 0) {
           this.ionBeamTimer--;
           const cosA = Math.cos(this.angle);
           const sinA = Math.sin(this.angle);
           const beamLen = 1150;
-          const beamHalfW = 30 + this.ionBeamLevel * 9;
-          screenShake = Math.max(screenShake, 4.2);
+          const beamHalfW = 34 + this.ionBeamLevel * 10;
+          screenShake = Math.max(screenShake, 4.4);
 
-          // Vaporize all enemy projectiles caught inside the Ion Beam corridor!
+          // Vaporize all enemy projectiles caught inside the Ion Beam & Funnel corridor!
           for (let i = 0; i < enemyProjectiles.length; i++) {
             const ep = enemyProjectiles[i];
             if (!ep.active) continue;
@@ -4116,7 +4306,7 @@
             const proj = relX * cosA + relY * sinA;
             if (proj > 0 && proj < beamLen) {
               const perp = Math.abs(-relX * sinA + relY * cosA);
-              if (perp <= beamHalfW + 14) {
+              if (perp <= beamHalfW + 26) {
                 ep.active = false;
                 spawnParticle(ep.x, ep.y, (Math.random() - 0.5) * 5, (Math.random() - 0.5) * 5, '#00f0ff', 10, 3);
                 if (typeof recordContractAction === 'function') {
@@ -4126,9 +4316,9 @@
             }
           }
 
-          // Deal high-frequency plasma melt ticks every 4 frames to enemies & destructible vaults in beam!
+          // Deal high-frequency plasma melt ticks every 4 frames + chain arcs to nearby foes!
           if (this.ionBeamTimer % 4 === 0) {
-            const tickDmg = (34 + this.level * 5.5) * (1 + this.ionBeamLevel * 0.3);
+            const tickDmg = (36 + this.level * 6) * (1 + this.ionBeamLevel * 0.32);
             for (let i = 0; i < enemies.length; i++) {
               const e = enemies[i];
               if (!e.active) continue;
@@ -4137,13 +4327,25 @@
               const proj = relX * cosA + relY * sinA;
               if (proj > -15 && proj < beamLen) {
                 const perp = Math.abs(-relX * sinA + relY * cosA);
-                if (perp <= beamHalfW + e.radius) {
+                if (perp <= beamHalfW + 22 + e.radius) {
                   e.takeDamage(tickDmg, true);
                   if (e.type !== 'boss') {
-                    e.x += cosA * 7;
-                    e.y += sinA * 7;
+                    e.x += cosA * 7.5;
+                    e.y += sinA * 7.5;
                   }
                   spawnParticle(e.x, e.y, cosA * 6 + (Math.random() - 0.5) * 4, sinA * 6 + (Math.random() - 0.5) * 4, '#ffe600', 12, 3.4);
+
+                  // Arc-chain from beam targets to nearby enemies within 165px
+                  if (this.ionBeamTimer % 12 === 0) {
+                    for (let k = 0; k < enemies.length; k++) {
+                      const other = enemies[k];
+                      if (other.active && other.id !== e.id && Math.hypot(other.x - e.x, other.y - e.y) < 165) {
+                        other.takeDamage(tickDmg * 0.55, false);
+                        lightningBolts.push({ x1: e.x, y1: e.y, x2: other.x, y2: other.y, color: '#00f0ff', life: 7 });
+                        break;
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -4162,6 +4364,17 @@
           if (this.ionBeamTimer % 10 === 0) {
             addGridRipple(this.x + cosA * 340, this.y + sinA * 340, 260, 22, '#00f0ff');
           }
+
+          // Final Frame Overcharge Rail-Pulse Finale!
+          if (this.ionBeamTimer === 1) {
+            sound.laser(true);
+            screenShake = Math.max(screenShake, 14);
+            for (let s = -1; s <= 1; s++) {
+              const a = this.angle + s * 0.08;
+              projectiles.push(new Projectile(this.x, this.y, a, '#ffe600', 25, 110 + this.level * 14, 1 + this.ricochetLevel, true, 'rail'));
+            }
+            spawnFloatingText(this.x, this.y - 24, '// OMEGA RAIL FINALE //', '#ffe600', 1.2);
+          }
         }
 
         // Shield recharge
@@ -4170,7 +4383,7 @@
           if (this.shieldRechargeTimer >= 360) {
             this.shieldCharges++;
             this.shieldRechargeTimer = 0;
-            announce('🛡️ AEGIS BARRIER RECHARGED', '#00f0ff');
+            announce('// AEGIS HARD-LIGHT BARRIER RECHARGED //', '#00f0ff');
           }
         }
 
@@ -4199,20 +4412,20 @@
         }
 
         // Orbital Drones firing
-        if (this.droneCount > 0 && frameCount % 22 === 0 && enemies.length > 0) {
+        if (this.droneCount > 0 && frameCount % 20 === 0 && enemies.length > 0) {
           for (let d = 0; d < this.droneCount; d++) {
             const dAngle = this.orbitAngle + (d * Math.PI * 2) / this.droneCount;
-            const dxPos = this.x + Math.cos(dAngle) * 44;
-            const dyPos = this.y + Math.sin(dAngle) * 44;
+            const dxPos = this.x + Math.cos(dAngle) * 46;
+            const dyPos = this.y + Math.sin(dAngle) * 46;
             let closest = null;
-            let minD = 500;
+            let minD = 540;
             enemies.forEach(e => {
               const dist = Math.hypot(e.x - dxPos, e.y - dyPos);
               if (dist < minD) { minD = dist; closest = e; }
             });
             if (closest) {
               const aim = Math.atan2(closest.y - dyPos, closest.x - dxPos);
-              projectiles.push(new Projectile(dxPos, dyPos, aim, '#00ff88', 15, 18, 0, false, 'drone'));
+              projectiles.push(new Projectile(dxPos, dyPos, aim, '#00ff88', 16, 22 + this.level * 2, 0, false, 'drone'));
             }
           }
         }
@@ -4252,7 +4465,6 @@
         const spreadStep = 0.11;
         const startOffset = -((totalShots - 1) / 2) * spreadStep;
 
-        // Slight recoil push
         this.x -= Math.cos(this.angle) * 1.1;
         this.y -= Math.sin(this.angle) * 1.1;
 
@@ -4281,7 +4493,7 @@
           this.invulnTimer = 35;
           screenShake = 10;
           addGridRipple(this.x, this.y, 200, 25, '#00f0ff');
-          spawnFloatingText(this.x, this.y - 22, 'SHIELD BLOCKED!', '#00f0ff');
+          spawnFloatingText(this.x, this.y - 22, 'AEGIS BLOCKED!', '#00f0ff');
           return;
         }
 
@@ -4316,10 +4528,10 @@
       }
 
       draw() {
-        // Draw Omega Ion Laser Cannon [R] when active!
+        // 1. Draw Omega Ion Laser Cannon [R] + Floating Orbital Fin-Funnel Bits when active!
         if (this.ionBeamTimer > 0) {
           const beamLen = 1150;
-          const beamW = (44 + this.ionBeamLevel * 12) + Math.sin(frameCount * 0.7) * 8;
+          const beamW = (46 + this.ionBeamLevel * 12) + Math.sin(frameCount * 0.7) * 8;
           ctx.save();
           ctx.translate(this.x, this.y);
           ctx.rotate(this.angle);
@@ -4328,9 +4540,38 @@
           ctx.drawImage(getGlowSprite('#00f0ff'), -32, -56, 112, 112);
           ctx.drawImage(getGlowSprite('#ff0077'), -12, -38, 76, 76);
 
+          // Autonomous Floating Fin-Funnel Bits flanking the ship & firing converging sub-lasers!
+          const funnelPairs = 1 + Math.min(1, this.ionBeamLevel);
+          for (let fp = 1; fp <= funnelPairs; fp++) {
+            for (const side of [-1, 1]) {
+              const fy = side * (46 + fp * 22) + Math.sin(frameCount * 0.2 + side) * 4;
+              const fx = -8 + fp * 6;
+              // Converging sub-beam from Funnel Bit into main beam
+              ctx.strokeStyle = side > 0 ? 'rgba(0, 240, 255, 0.72)' : 'rgba(255, 0, 119, 0.72)';
+              ctx.lineWidth = 4.5;
+              ctx.beginPath();
+              ctx.moveTo(fx + 10, fy);
+              ctx.lineTo(beamLen * 0.85, 0);
+              ctx.stroke();
+
+              // Funnel Bit geometric chassis
+              ctx.fillStyle = '#061024';
+              ctx.strokeStyle = '#ffe600';
+              ctx.lineWidth = 1.8;
+              ctx.beginPath();
+              ctx.moveTo(fx + 14, fy);
+              ctx.lineTo(fx - 6, fy - 7);
+              ctx.lineTo(fx - 2, fy);
+              ctx.lineTo(fx - 6, fy + 7);
+              ctx.closePath();
+              ctx.fill();
+              ctx.stroke();
+            }
+          }
+
           // Outer magenta/cyan plasma sheath
-          ctx.strokeStyle = 'rgba(255, 0, 119, 0.34)';
-          ctx.lineWidth = beamW * 1.35;
+          ctx.strokeStyle = 'rgba(255, 0, 119, 0.36)';
+          ctx.lineWidth = beamW * 1.38;
           ctx.lineCap = 'round';
           ctx.beginPath();
           ctx.moveTo(22, 0);
@@ -4338,7 +4579,7 @@
           ctx.stroke();
 
           // Mid-layer high-voltage cyan beam
-          ctx.strokeStyle = 'rgba(0, 240, 255, 0.78)';
+          ctx.strokeStyle = 'rgba(0, 240, 255, 0.82)';
           ctx.lineWidth = beamW * 0.72;
           ctx.beginPath();
           ctx.moveTo(22, 0);
@@ -4347,7 +4588,7 @@
 
           // Inner blinding white-gold core
           ctx.strokeStyle = '#ffffff';
-          ctx.lineWidth = beamW * 0.28;
+          ctx.lineWidth = beamW * 0.3;
           ctx.beginPath();
           ctx.moveTo(20, 0);
           ctx.lineTo(beamLen, 0);
@@ -4356,45 +4597,69 @@
           // Helical shockwave rings traveling down the beam
           ctx.strokeStyle = '#ffe600';
           ctx.lineWidth = 2.2;
-          const ringOffset = (frameCount * 22) % 110;
-          for (let rx = 45 + ringOffset; rx < beamLen - 60; rx += 110) {
+          const ringOffset = (frameCount * 24) % 105;
+          for (let rx = 45 + ringOffset; rx < beamLen - 60; rx += 105) {
             ctx.beginPath();
-            ctx.ellipse(rx, 0, 8, beamW * 0.58, 0, 0, Math.PI * 2);
+            ctx.ellipse(rx, 0, 9, beamW * 0.62, 0, 0, Math.PI * 2);
             ctx.stroke();
           }
           ctx.restore();
         }
 
-        // Draw Cyber-Katana Crescent Slash Arc when active
+        // 2. Draw Dimension Rift Katana Slash Arc (with X-Cross Dimension Cut & Golden Riposte Ring!)
         if (this.katanaSlashTimer > 0) {
-          const prog = 1 - this.katanaSlashTimer / 14;
-          const slashR = (118 + this.katanaLevel * 24) * (0.75 + prog * 0.35);
+          const maxT = this.katanaIsCross ? 18 : 14;
+          const prog = 1 - this.katanaSlashTimer / maxT;
+          const slashR = (124 + this.katanaLevel * 26) * (0.78 + prog * 0.36) * (this.katanaIsCross ? 1.18 : 1.0);
+          const slashes = this.katanaIsCross ? [-0.28, 0.28] : [0];
+
+          for (let s = 0; s < slashes.length; s++) {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.katanaSlashAngle + slashes[s]);
+            ctx.globalAlpha = Math.min(1, (this.katanaSlashTimer / maxT) * 1.4);
+
+            // Outer neon crescent blade sweep
+            ctx.beginPath();
+            ctx.arc(0, 0, slashR, -1.42, 1.42, false);
+            ctx.arc(-20, 0, slashR * 0.76, 1.32, -1.32, true);
+            ctx.closePath();
+            ctx.fillStyle = s === 0 ? 'rgba(0, 255, 136, 0.36)' : 'rgba(255, 0, 119, 0.38)';
+            ctx.fill();
+            ctx.strokeStyle = this.katanaIsCross ? '#ffe600' : '#00ff88';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Inner white-hot katana edge
+            ctx.beginPath();
+            ctx.arc(0, 0, slashR - 4, -1.2, 1.2);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2.4;
+            ctx.stroke();
+            ctx.restore();
+          }
+        }
+
+        // Golden Hex-Parry Riposte Ring when bullets are deflected
+        if (this.parryRingTimer > 0) {
           ctx.save();
           ctx.translate(this.x, this.y);
-          ctx.rotate(this.katanaSlashAngle);
-          ctx.globalAlpha = Math.min(1, (this.katanaSlashTimer / 14) * 1.35);
-
-          // Outer neon magenta/gold crescent blade sweep
+          ctx.rotate(-frameCount * 0.08);
+          const pr = this.radius + 26 + (18 - this.parryRingTimer) * 2.5;
+          ctx.strokeStyle = `rgba(255, 230, 0, ${this.parryRingTimer / 18})`;
+          ctx.lineWidth = 2.8;
           ctx.beginPath();
-          ctx.arc(0, 0, slashR, -1.35, 1.35, false);
-          ctx.arc(-18, 0, slashR * 0.78, 1.25, -1.25, true);
+          for (let i = 0; i < 6; i++) {
+            const a = (i * Math.PI) / 3;
+            if (i === 0) ctx.moveTo(Math.cos(a) * pr, Math.sin(a) * pr);
+            else ctx.lineTo(Math.cos(a) * pr, Math.sin(a) * pr);
+          }
           ctx.closePath();
-          ctx.fillStyle = 'rgba(255, 0, 119, 0.38)';
-          ctx.fill();
-          ctx.strokeStyle = '#ffe600';
-          ctx.lineWidth = 3;
-          ctx.stroke();
-
-          // Inner white-hot katana edge
-          ctx.beginPath();
-          ctx.arc(0, 0, slashR - 4, -1.15, 1.15);
-          ctx.strokeStyle = '#ffffff';
-          ctx.lineWidth = 2.2;
           ctx.stroke();
           ctx.restore();
         }
 
-        // Draw Orbital Drones (Mini Cyber-Interceptors)
+        // 3. Draw Orbital Drones (Mini Cyber-Interceptors)
         const droneGlow = getGlowSprite('#00ff88');
         for (let d = 0; d < this.droneCount; d++) {
           const dAngle = this.orbitAngle + (d * Math.PI * 2) / this.droneCount;
@@ -4422,7 +4687,7 @@
           ctx.restore();
         }
 
-        // Draw Aegis Shield Hex-Ring
+        // 4. Draw Aegis Shield Hex-Ring
         if (this.shieldCharges > 0) {
           ctx.save();
           ctx.translate(this.x, this.y);
@@ -4451,11 +4716,33 @@
 
         const isOver = this.overdriveActive > 0 || this.frenzyTimer > 0;
         const glowColor = isOver ? '#ffe600' : (this.isDashing ? '#ff0077' : '#00f0ff');
-        const gR = isOver ? 48 : 36;
+        const gR = isOver ? 56 : 36;
         ctx.drawImage(getGlowSprite(glowColor), -gR, -gR, gR * 2, gR * 2);
 
+        // 5. SERAPHIM 6-WING HARD-LIGHT ENERGY PINIONS during [E] Overdrive / Frenzy!
+        if (isOver) {
+          const wingBeat = Math.sin(frameCount * 0.25) * 4;
+          for (let w = 0; w < 3; w++) {
+            const span = 26 + w * 10 + wingBeat;
+            const sweep = -10 - w * 7;
+            ctx.fillStyle = w === 0 ? 'rgba(255, 230, 0, 0.45)' : (w === 1 ? 'rgba(255, 0, 119, 0.38)' : 'rgba(0, 240, 255, 0.32)');
+            ctx.strokeStyle = w === 0 ? '#ffe600' : (w === 1 ? '#ff0077' : '#00f0ff');
+            ctx.lineWidth = 1.6;
+            for (const side of [-1, 1]) {
+              ctx.beginPath();
+              ctx.moveTo(-4, side * 6);
+              ctx.lineTo(sweep, side * span);
+              ctx.lineTo(sweep - 12, side * (span - 5));
+              ctx.lineTo(-12, side * 4);
+              ctx.closePath();
+              ctx.fill();
+              ctx.stroke();
+            }
+          }
+        }
+
         // Twin flickering afterburner plumes
-        const flameLen = 10 + Math.random() * 8 + (isOver ? 8 : 0);
+        const flameLen = 10 + Math.random() * 8 + (isOver ? 10 : 0);
         ctx.fillStyle = isOver ? '#ff0077' : '#00f0ff';
         ctx.beginPath();
         ctx.moveTo(-13, -6);
@@ -4999,7 +5286,7 @@
       }
     }
 
-    // ★★★ SKILL [F]: CHRONO-STASIS SINGULARITY DOME ★★★
+    // === SKILL [F]: CHRONO-STASIS SINGULARITY DOME (ORBITAL BULLET CAPTURE + TEMPORAL CHAINS) ===
     class ChronoField {
       constructor(x, y, radius = 235, maxLife = 270) {
         this.x = x;
@@ -5016,7 +5303,7 @@
         this.rot += 0.025;
         const dmgTick = frameCount % 12 === 0;
         const dmgMult = 1 + (player.level - 1) * 0.12;
-        const tickDmg = (16 + player.chronoLevel * 6) * dmgMult;
+        const tickDmg = (18 + player.chronoLevel * 7) * dmgMult;
 
         // Freeze & pull enemies inside the temporal dome + apply +50% damage vulnerability
         for (let i = 0; i < enemies.length; i++) {
@@ -5026,8 +5313,8 @@
           const dy = this.y - e.y;
           const d = Math.hypot(dx, dy);
           if (d < this.radius + e.radius) {
-            e.chronoSlowTimer = 4;
-            const pullStrength = e.type === 'boss' ? 0.35 : 1.15;
+            e.chronoSlowTimer = 5;
+            const pullStrength = e.type === 'boss' ? 0.38 : 1.25;
             if (d > 14) {
               e.x += (dx / d) * pullStrength;
               e.y += (dy / d) * pullStrength;
@@ -5038,14 +5325,18 @@
           }
         }
 
-        // Suspend & decelerate all hostile projectiles entering the Chrono-Stasis matrix
+        // Capture hostile projectiles into a swirling tangential orbit inside the Chrono-Stasis matrix!
         for (let i = 0; i < enemyProjectiles.length; i++) {
           const ep = enemyProjectiles[i];
           if (!ep.active) continue;
-          const d = Math.hypot(ep.x - this.x, ep.y - this.y);
-          if (d < this.radius) {
-            ep.vx *= 0.84;
-            ep.vy *= 0.84;
+          const dx = ep.x - this.x;
+          const dy = ep.y - this.y;
+          const d = Math.hypot(dx, dy);
+          if (d < this.radius && d > 4) {
+            const tangAng = Math.atan2(dy, dx) + Math.PI * 0.52;
+            const orbitPull = (this.radius * 0.72 - d) * 0.05;
+            ep.vx = Math.cos(tangAng) * 3.6 + (dx / d) * orbitPull;
+            ep.vy = Math.sin(tangAng) * 3.6 + (dy / d) * orbitPull;
             ep.color = '#d946ef';
           }
         }
@@ -5081,7 +5372,7 @@
         addGridRipple(this.x, this.y, this.radius * 2.1, 42, '#d946ef');
         addGridRipple(this.x, this.y, this.radius * 1.4, 28, '#00f0ff');
 
-        // Convert every frozen enemy projectile in the dome into a high-velocity friendly plasma bolt!
+        // Convert every captured enemy projectile in the dome into a high-velocity friendly plasma bolt!
         let convertedShots = 0;
         for (let i = 0; i < enemyProjectiles.length; i++) {
           const ep = enemyProjectiles[i];
@@ -5102,7 +5393,7 @@
               }
             }
             projectiles.push(
-              new Projectile(ep.x, ep.y, targetAng, '#00f0ff', 18.5, 65 * dmgMult, 1, true, 'overdrive')
+              new Projectile(ep.x, ep.y, targetAng, '#00f0ff', 19.5, 68 * dmgMult, 1, true, 'overdrive')
             );
           }
         }
@@ -5110,8 +5401,17 @@
           recordContractAction('parry', convertedShots);
         }
 
+        // Launch 8 Radial Chrono-Lance Blades outward on Shatter!
+        const lanceCount = 8 + player.chronoLevel * 2;
+        for (let k = 0; k < lanceCount; k++) {
+          const lAng = (k * Math.PI * 2) / lanceCount;
+          projectiles.push(
+            new Projectile(this.x, this.y, lAng, k % 2 === 0 ? '#d946ef' : '#00f0ff', 20, 72 * dmgMult, 1, true, 'rail')
+          );
+        }
+
         // Massive Temporal Shatter Supernova across the entire dome radius
-        const shatterDmg = (210 + player.chronoLevel * 75 + convertedShots * 12) * dmgMult;
+        const shatterDmg = (220 + player.chronoLevel * 78 + convertedShots * 14) * dmgMult;
         let hitCount = 0;
         for (let i = 0; i < enemies.length; i++) {
           const e = enemies[i];
@@ -5150,7 +5450,7 @@
           spawnFloatingText(
             this.x,
             this.y - 28,
-            `⏳ TEMPORAL SHATTER! (${hitCount} HIT${convertedShots > 0 ? ' + ' + convertedShots + ' REVERSED' : ''})`,
+            `// TEMPORAL SHATTER (${hitCount} HIT${convertedShots > 0 ? ' + ' + convertedShots + ' REVERSED' : ''}) //`,
             '#00f0ff',
             1.35
           );
@@ -5179,6 +5479,24 @@
         ctx.beginPath();
         ctx.arc(0, 0, r, 0, Math.PI * 2);
         ctx.fill();
+
+        // Draw Temporal Tether Chains from the central clock core to trapped enemies!
+        ctx.strokeStyle = 'rgba(0, 240, 255, 0.45)';
+        ctx.lineWidth = 1.6;
+        ctx.setLineDash([6, 4]);
+        for (let i = 0; i < enemies.length; i++) {
+          const e = enemies[i];
+          if (!e.active) continue;
+          const dx = e.x - this.x;
+          const dy = e.y - this.y;
+          if (dx * dx + dy * dy < r * r) {
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(dx, dy);
+            ctx.stroke();
+          }
+        }
+        ctx.setLineDash([]);
 
         // Outer containment perimeter + life progress arc
         ctx.beginPath();
@@ -5252,7 +5570,7 @@
       }
     }
 
-    // ★★★ SKILL [X]: PHANTOM HOLO-DECOY CLONE ★★★
+    // === SKILL [X]: PHANTOM HOLO-DECOY CLONE + VOLTAIC LASER TETHER + PHASE-SWAP ===
     class PhantomDecoy {
       constructor(x, y, angle, maxLife = 360) {
         this.x = x;
@@ -5263,6 +5581,7 @@
         this.radius = 48;
         this.active = true;
         this.fireTimer = 18;
+        this.hasSwapped = false;
       }
 
       update() {
@@ -5287,6 +5606,25 @@
           const dir = Math.atan2(nearest.y - this.y, nearest.x - this.x);
           this.x += Math.cos(dir) * 2.1;
           this.y += Math.sin(dir) * 2.1;
+        }
+
+        // Voltaic Laser Tether between Player and Phantom Clone: electrocutes enemies crossing the line!
+        const tdx = player.x - this.x;
+        const tdy = player.y - this.y;
+        const tLenSq = tdx * tdx + tdy * tdy;
+        if (tLenSq > 100 && tLenSq < 720 * 720 && frameCount % 6 === 0) {
+          const tetherDmg = (24 + player.phantomLevel * 9) * dmgMult;
+          for (let i = 0; i < enemies.length; i++) {
+            const e = enemies[i];
+            if (!e.active) continue;
+            const proj = Math.max(0, Math.min(1, ((e.x - this.x) * tdx + (e.y - this.y) * tdy) / tLenSq));
+            const cx = this.x + proj * tdx;
+            const cy = this.y + proj * tdy;
+            if (Math.hypot(e.x - cx, e.y - cy) <= e.radius + 16) {
+              e.takeDamage(tetherDmg, true);
+              spawnParticle(e.x, e.y, (Math.random() - 0.5) * 4, (Math.random() - 0.5) * 4, '#ffe600', 10, 2.8);
+            }
+          }
         }
 
         // Absorb & reflect enemy bullets that hit the decoy's 48px holographic barrier!
@@ -5340,12 +5678,30 @@
             const a = (k * Math.PI * 2) / 16;
             projectiles.push(new Projectile(this.x, this.y, a, '#ffe600', 15, 38 * dmgMult, 1, true, 'overdrive'));
           }
-          spawnFloatingText(this.x, this.y - 20, '💥 PHANTOM CLONE NOVA! 💥', '#00f0ff', 1.25);
+          spawnFloatingText(this.x, this.y - 20, '// PHANTOM CLONE NOVA //', '#00f0ff', 1.25);
         }
       }
 
       draw() {
         const lifeRatio = Math.max(0, this.life / this.maxLife);
+
+        // Draw Voltaic Laser Tether between Player and Phantom Clone
+        const distToPlayer = Math.hypot(player.x - this.x, player.y - this.y);
+        if (distToPlayer < 720) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(this.x, this.y);
+          ctx.lineTo(player.x, player.y);
+          ctx.strokeStyle = 'rgba(255, 230, 0, 0.32)';
+          ctx.lineWidth = 6;
+          ctx.stroke();
+          ctx.strokeStyle = '#00f0ff';
+          ctx.lineWidth = 2;
+          ctx.setLineDash([8, 6]);
+          ctx.stroke();
+          ctx.restore();
+        }
+
         ctx.save();
         ctx.translate(this.x, this.y);
 
@@ -5405,8 +5761,8 @@
 
         ctx.font = '700 9px Orbitron, monospace';
         ctx.textAlign = 'center';
-        ctx.fillStyle = '#00f0ff';
-        ctx.fillText('PHANTOM DECOY // TAUNTING', 0, -this.radius - 12);
+        ctx.fillStyle = this.hasSwapped ? '#00f0ff' : '#ffe600';
+        ctx.fillText(this.hasSwapped ? 'PHANTOM CLONE // TETHERED' : 'PHANTOM CLONE // [X] PHASE-SWAP', 0, -this.radius - 12);
 
         ctx.restore();
       }
@@ -5460,7 +5816,7 @@
             spawnFloatingText(this.x, this.y, '+OVERDRIVE', '#ffe600');
           } else if (this.type === 'magnet') {
             for (let i = 0; i < shards.length; i++) shards[i].magnetized = true;
-            announce('🧲 QUANTUM VACUUM ACTIVATED', '#00f0ff');
+            announce('// QUANTUM VACUUM ACTIVATED //', '#00f0ff');
           }
         }
       }
@@ -5737,16 +6093,16 @@
         if (isBoss) {
           hitStopFrames = 6;
           chromaticFlash = 16;
-          announce('💥 OMEGA DREADNOUGHT OBLITERATED 💥', '#ffe600');
+          announce('// OMEGA DREADNOUGHT OBLITERATED //', '#ffe600');
         } else if (isNemesis) {
           hitStopFrames = 4;
           chromaticFlash = 12;
           player.frenzyTimer = Math.max(player.frenzyTimer, 420);
           shards.push(new DataShard(this.x, this.y, 0, 'heal'));
           shards.push(new DataShard(this.x, this.y, 0, 'overdrive'));
-          announce('🎯 CRIMSON NEMESIS VIP TERMINATED — 7s HYPER-FRENZY! 🎯', '#ffe600');
+          announce('// CRIMSON NEMESIS VIP TERMINATED — 7s HYPER-FRENZY //', '#ffe600');
         } else if (this.type === 'juggernaut') {
-          announce('🔥 COLOSSUS JUGGERNAUT DESTROYED! 🔥', '#ff2a55');
+          announce('// COLOSSUS JUGGERNAUT DESTROYED //', '#ff2a55');
         }
 
         if (isHeavy || gridRipples.length < 3) {
@@ -5808,9 +6164,9 @@
         if (combo > maxComboReached) maxComboReached = combo;
         if (comboCounter > maxStreakReached) maxStreakReached = comboCounter;
 
-        if (comboCounter === 10) announce('🔥 10x KILLSTREAK - RAMPAGE!', '#00f0ff');
-        else if (comboCounter === 25) announce('⚡ 25x KILLSTREAK - CYBER GOD!', '#ff0077');
-        else if (comboCounter === 50) announce('👑 50x KILLSTREAK - UNSTOPPABLE!', '#ffe600');
+        if (comboCounter === 10) announce('// 10x KILLSTREAK — RAMPAGE //', '#00f0ff');
+        else if (comboCounter === 25) announce('// 25x KILLSTREAK — CYBER GOD //', '#ff0077');
+        else if (comboCounter === 50) announce('// 50x KILLSTREAK — UNSTOPPABLE //', '#ffe600');
       }
 
       update() {
@@ -6126,7 +6482,7 @@
           ctx.drawImage(getGlowSprite(this.color), -gR, -gR, gR * 2, gR * 2);
         }
 
-        // ★ OVERCLOCKED ELITE GOLDEN HALO RING
+        // === OVERCLOCKED ELITE GOLDEN HALO RING ===
         if (this.isElite) {
           ctx.save();
           ctx.rotate(-frameCount * 0.05);
@@ -6140,7 +6496,7 @@
           ctx.restore();
         }
 
-        // ★ CHRONO-STASIS TIME-LOCK RING (+50% VULNERABILITY INDICATOR)
+        // === CHRONO-STASIS TIME-LOCK RING (+50% VULNERABILITY INDICATOR) ===
         if (this.chronoSlowTimer > 0) {
           ctx.save();
           ctx.rotate(frameCount * 0.03);
@@ -6829,12 +7185,22 @@
             ctx.font = "900 10px 'Segoe UI', sans-serif";
             ctx.textAlign = 'center';
             ctx.fillStyle = '#ffe600';
-            ctx.fillText('🎯 VIP NEMESIS BOUNTY', 0, -this.radius - 18);
+            ctx.fillText('[VIP] NEMESIS BOUNTY', 0, -this.radius - 18);
+            // Vector target diamond
+            ctx.strokeStyle = '#ff0055';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(0, -this.radius - 34);
+            ctx.lineTo(5, -this.radius - 29);
+            ctx.lineTo(0, -this.radius - 24);
+            ctx.lineTo(-5, -this.radius - 29);
+            ctx.closePath();
+            ctx.stroke();
           } else if (this.isElite) {
             ctx.font = "900 9px 'Segoe UI', sans-serif";
             ctx.textAlign = 'center';
             ctx.fillStyle = '#ffe600';
-            ctx.fillText('★ ELITE', 0, -this.radius - 18);
+            ctx.fillText('[ELITE]', 0, -this.radius - 18);
           }
         }
 
@@ -7023,7 +7389,7 @@
               addGridRipple(this.x, this.y, 380, 34, '#ffe600');
               player.hp = Math.min(player.maxHp, player.hp + 25);
               score += 500;
-              announce('★ ANCIENT SHRINE SYNCHRONIZED — SELECT AUGMENTATION ★', '#ffe600');
+              announce('// ANCIENT SHRINE SYNCHRONIZED — SELECT AUGMENTATION //', '#ffe600');
               showUpgradeMenu();
             }
           } else if (this.charge > 0) {
@@ -7081,7 +7447,7 @@
             player.overdrive = Math.min(100, player.overdrive + 15);
             sound.dash();
             addGridRipple(this.x, this.y, 260, 24, '#00f0ff');
-            spawnFloatingText(player.x, player.y - 22, '⚡ SLIPSTREAM HYPER-BOOST! ⚡', '#00f0ff', 1.2);
+            spawnFloatingText(player.x, player.y - 22, '// SLIPSTREAM HYPER-BOOST //', '#00f0ff', 1.2);
           }
         }
 
@@ -7112,8 +7478,8 @@
               sound.levelUp();
               wingmen.push(new AlliedWingman(this.x, this.y));
               score += 650 * combo;
-              spawnFloatingText(this.x, this.y - 26, '🎰 777 JACKPOT: VALKYRIE WINGMAN DEPLOYED!', '#00ff88', 1.35);
-              announce('🎰 777 JACKPOT! AUTONOMOUS VALKYRIE WINGMAN DEPLOYED FOR 45s!', '#00ff88');
+              spawnFloatingText(this.x, this.y - 26, '777 JACKPOT: VALKYRIE WINGMAN DEPLOYED!', '#00ff88', 1.35);
+              announce('// 777 JACKPOT: AUTONOMOUS VALKYRIE WINGMAN DEPLOYED FOR 45s //', '#00ff88');
             } else if (roll < 0.60) {
               // Outcome 2: 7 Seconds of Hyper-Frenzy (2x Fire Rate + Infinite Dash + Katana Reset)
               sound.overdrive();
@@ -7121,10 +7487,10 @@
               player.katanaCooldown = 0;
               player.overdrive = Math.min(100, player.overdrive + 40);
               score += 500 * combo;
-              spawnFloatingText(this.x, this.y - 26, '🎰 HYPER-FRENZY SURGE! 2X FIRE & INFINITE DASH!', '#ffe600', 1.35);
-              announce('🔥 JACKPOT OVERCLOCK: 7s HYPER-FRENZY (2X FIRE RATE & ZERO DASH COOLDOWN)!', '#ffe600');
+              spawnFloatingText(this.x, this.y - 26, '777 HYPER-FRENZY SURGE! 2X FIRE & INFINITE DASH!', '#ffe600', 1.35);
+              announce('// JACKPOT OVERCLOCK: 7s HYPER-FRENZY (2X FIRE & ZERO DASH CD) //', '#ffe600');
             } else if (roll < 0.86) {
-              // Outcome 3: Mega Loot Piñata Eruption
+              // Outcome 3: Mega Loot Vault Eruption
               sound.ringPass(4);
               score += 600 * combo;
               for (let i = 0; i < 10; i++) {
@@ -7132,7 +7498,7 @@
               }
               shards.push(new DataShard(this.x - 16, this.y, 0, 'heal'));
               shards.push(new DataShard(this.x + 16, this.y, 0, 'overdrive'));
-              spawnFloatingText(this.x, this.y - 26, '🎰 LOOT PIÑATA JACKPOT! +600 PTS', '#00f0ff', 1.35);
+              spawnFloatingText(this.x, this.y - 26, '777 LOOT VAULT JACKPOT! +600 PTS', '#00f0ff', 1.35);
             } else {
               // Outcome 4: High-Stakes Elite Ambush + Instant Overdrive Charge!
               sound.parryDeflect();
@@ -7143,8 +7509,8 @@
                 enemies.push(new Enemy('striker', this.x + Math.cos(a) * 180, this.y + Math.sin(a) * 180, true));
               }
               shards.push(new DataShard(this.x, this.y, 0, 'overdrive'));
-              spawnFloatingText(this.x, this.y - 26, '🎰 HIGH-STAKES AMBUSH! +60% OVERDRIVE!', '#ff0077', 1.3);
-              announce('⚡ OBELISK SECURITY TRIGGERED: ELITE HUNTERS + +60% OVERDRIVE SURGE!', '#ff0077');
+              spawnFloatingText(this.x, this.y - 26, '777 HIGH-STAKES AMBUSH! +60% OVERDRIVE!', '#ff0077', 1.3);
+              announce('// OBELISK SECURITY TRIGGERED: ELITE HUNTERS + 60% OVERDRIVE //', '#ff0077');
             }
           }
         }
@@ -7212,7 +7578,7 @@
           ctx.font = "900 10px 'Segoe UI', sans-serif";
           ctx.textAlign = 'center';
           ctx.fillStyle = '#ffe600';
-          ctx.fillText(this.charge > 0 ? `SYNCING ${Math.floor(this.charge)}%` : '★ AUGMENT SHRINE', 0, -this.radius - 12);
+          ctx.fillText(this.charge > 0 ? `SYNCING ${Math.floor(this.charge)}%` : '[AUGMENT SHRINE]', 0, -this.radius - 12);
         }
 
         // 2. QUANTUM DATA VAULT (Destructible Crystal Loot Node)
@@ -7378,7 +7744,7 @@
           ctx.font = "900 11px 'Segoe UI', sans-serif";
           ctx.textAlign = 'center';
           ctx.fillStyle = '#f0abfc';
-          ctx.fillText(this.charge > 0 ? `WARP CHARGING ${Math.floor(this.charge)}%` : '🌀 DIMENSIONAL WARP GATE', 0, -this.radius - 14);
+          ctx.fillText(this.charge > 0 ? `WARP CHARGING ${Math.floor(this.charge)}%` : '[DIMENSIONAL WARP GATE]', 0, -this.radius - 14);
         }
 
         // 7. NEON JACKPOT OBELISK (Interactive Cyber-Roulette Shrine)
@@ -7421,7 +7787,7 @@
           ctx.fillStyle = ready ? '#ffe600' : '#94a3b8';
           ctx.fillText('777', 0, 4);
           ctx.fillStyle = ready ? '#ff66b2' : '#64748b';
-          ctx.fillText(ready ? `🎰 JACKPOT OBELISK (${this.spinsLeft} SPINS)` : `RECHARGING ${Math.ceil(this.cooldown / 60)}s`, 0, -this.radius - 11);
+          ctx.fillText(ready ? `[777] JACKPOT OBELISK (${this.spinsLeft} SPINS)` : `RECHARGING ${Math.ceil(this.cooldown / 60)}s`, 0, -this.radius - 11);
         }
 
         ctx.restore();
@@ -7655,7 +8021,8 @@
 
         activeContract = {
           type: 'slalom',
-          title: '🏎️ NEON DRIFT SLALOM [C]',
+          svg: `<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none"><polygon points="3,2 10,8 3,14" stroke="currentColor" stroke-width="1.8"/><polygon points="8,2 15,8 8,14" stroke="#00f0ff" stroke-width="1.6"/></svg>`,
+          title: 'NEON DRIFT SLALOM [C]',
           desc: 'Dash/Fly through all 5 Golden Holo-Gates in sequence!',
           timer: 24 * 60,
           maxTimer: 24 * 60,
@@ -7664,7 +8031,7 @@
           gates
         };
         sound.ringPass(0);
-        announce('🏎️ LIVE CONTRACT: NEON DRIFT SLALOM — FLY THROUGH 5 GOLDEN HOLO-GATES!', '#ffe600');
+        announce('// LIVE CONTRACT: NEON DRIFT SLALOM — FLY THROUGH 5 GOLDEN HOLO-GATES //', '#ffe600');
       } else if (type === 'heist') {
         // 2. ORBITAL PAYLOAD HEIST: Tether to the Orbital Data Core while fending off Elite Ambushers
         const ang = Math.random() * Math.PI * 2;
@@ -7673,7 +8040,8 @@
 
         activeContract = {
           type: 'heist',
-          title: '🛰️ ORBITAL PAYLOAD HEIST [C]',
+          svg: `<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none"><polygon points="8,1 14,5 14,11 8,15 2,11 2,5" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="2.5" fill="#00f0ff"/></svg>`,
+          title: 'ORBITAL PAYLOAD HEIST [C]',
           desc: 'Stay inside the Orbital Data Core ring to hack 100%!',
           timer: 26 * 60,
           maxTimer: 26 * 60,
@@ -7687,7 +8055,7 @@
         };
         sound.pickup(8);
         addGridRipple(hx, hy, 360, 30, '#00f0ff');
-        announce('🛰️ LIVE CONTRACT: ORBITAL PAYLOAD HEIST — HOLD INSIDE THE DATA CORE RING!', '#00f0ff');
+        announce('// LIVE CONTRACT: ORBITAL PAYLOAD HEIST — HOLD INSIDE DATA CORE RING //', '#00f0ff');
       } else if (type === 'bounty') {
         // 3. CRIMSON NEMESIS VIP BOUNTY: Hunt down the high-speed VIP Dread-Cruiser
         const ang = Math.random() * Math.PI * 2;
@@ -7698,7 +8066,8 @@
 
         activeContract = {
           type: 'bounty',
-          title: '🎯 VIP NEMESIS BOUNTY [C]',
+          svg: `<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.6"/><line x1="8" y1="0" x2="8" y2="16" stroke="#ff0055" stroke-width="1.4"/><line x1="0" y1="8" x2="16" y2="8" stroke="#ff0055" stroke-width="1.4"/></svg>`,
+          title: 'VIP NEMESIS BOUNTY [C]',
           desc: 'Hunt down & destroy the Crimson Nemesis VIP Gunship!',
           timer: 28 * 60,
           maxTimer: 28 * 60,
@@ -7707,12 +8076,13 @@
           vipEnemy: vip
         };
         sound.parryDeflect();
-        announce('🎯 LIVE CONTRACT: CRIMSON NEMESIS VIP GUNSHIP DETECTED — ELIMINATE FOR AUGMENT!', '#ff0077');
+        announce('// LIVE CONTRACT: CRIMSON NEMESIS VIP GUNSHIP DETECTED — ELIMINATE FOR AUGMENT //', '#ff0077');
       } else {
         // 4. CYBER-KATANA BLITZ TRIAL: Deflect bullets / cleave enemies with [Q] Katana or rapid kills!
         activeContract = {
           type: 'parry_blitz',
-          title: '⚔️ CYBER-KATANA BLITZ [C]',
+          svg: `<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none"><line x1="2" y1="14" x2="14" y2="2" stroke="#00ff88" stroke-width="2"/><line x1="14" y1="14" x2="2" y2="2" stroke="#00f0ff" stroke-width="2"/></svg>`,
+          title: 'DIMENSION KATANA BLITZ [C]',
           desc: 'Press [Q] to Parry Bullets / Cleave Hostiles (or score Kills)!',
           timer: 22 * 60,
           maxTimer: 22 * 60,
@@ -7721,7 +8091,7 @@
         };
         player.katanaCooldown = 0;
         sound.katanaSlash();
-        announce('⚔️ LIVE CONTRACT: CYBER-KATANA BLITZ — PARRY SHOTS OR CLEAVE HOSTILES WITH [Q]!', '#00ff88');
+        announce('// LIVE CONTRACT: DIMENSION KATANA BLITZ — PARRY OR CLEAVE WITH [Q] //', '#00ff88');
       }
     }
 
@@ -7745,8 +8115,8 @@
 
       if (c.type === 'slalom' || c.type === 'bounty') {
         player.frenzyTimer = Math.max(player.frenzyTimer, 360);
-        spawnFloatingText(player.x, player.y - 30, `★ CONTRACT COMPLETE! +${rewardPts.toLocaleString()} & FREE AUGMENT! ★`, '#ffe600', 1.4);
-        announce(`★ CONTRACT COMPLETED (+${rewardPts.toLocaleString()} PTS) — SELECT BONUS AUGMENTATION! ★`, '#ffe600');
+        spawnFloatingText(player.x, player.y - 30, `// CONTRACT COMPLETE! +${rewardPts.toLocaleString()} & FREE AUGMENT //`, '#ffe600', 1.4);
+        announce(`// CONTRACT COMPLETED (+${rewardPts.toLocaleString()} PTS) — SELECT BONUS AUGMENTATION //`, '#ffe600');
         showUpgradeMenu();
       } else {
         wingmen.push(new AlliedWingman(player.x + 40, player.y - 40));
@@ -7755,8 +8125,8 @@
           shards.push(new DataShard(player.x + (Math.random() - 0.5) * 60, player.y + (Math.random() - 0.5) * 60, 25, 'xp'));
         }
         shards.push(new DataShard(player.x, player.y, 0, 'overdrive'));
-        spawnFloatingText(player.x, player.y - 30, `★ CONTRACT COMPLETE! VALKYRIE ALLY + FRENZY! ★`, '#00ff88', 1.4);
-        announce(`★ CONTRACT COMPLETED (+${rewardPts.toLocaleString()} PTS) — VALKYRIE WINGMAN & HYPER-FRENZY! ★`, '#00ff88');
+        spawnFloatingText(player.x, player.y - 30, `// CONTRACT COMPLETE! VALKYRIE ALLY + FRENZY //`, '#00ff88', 1.4);
+        announce(`// CONTRACT COMPLETED (+${rewardPts.toLocaleString()} PTS) — VALKYRIE WINGMAN & HYPER-FRENZY //`, '#00ff88');
       }
     }
 
@@ -7841,7 +8211,7 @@
             activeContract.ambush1 = true;
             const a = Math.random() * Math.PI * 2;
             enemies.push(new Enemy('striker', activeContract.x + Math.cos(a) * 260, activeContract.y + Math.sin(a) * 260, true));
-            spawnFloatingText(activeContract.x, activeContract.y - 36, '⚠️ SECURITY AMBUSH INBOUND!', '#ff0077', 1.2);
+            spawnFloatingText(activeContract.x, activeContract.y - 36, '// SECURITY AMBUSH INBOUND //', '#ff0077', 1.2);
           }
           if (!activeContract.ambush2 && activeContract.progress >= 72) {
             activeContract.ambush2 = true;
@@ -7909,7 +8279,7 @@
           ctx.font = "900 12px 'Segoe UI', sans-serif";
           ctx.textAlign = 'center';
           ctx.fillStyle = isCurrent ? '#ffffff' : 'rgba(255, 230, 0, 0.6)';
-          ctx.fillText(isCurrent ? `★ GATE ${i + 1}/5 ★` : `GATE ${i + 1}`, 0, -g.r - 10);
+          ctx.fillText(isCurrent ? `[ GATE ${i + 1}/5 ]` : `GATE ${i + 1}`, 0, -g.r - 10);
           ctx.restore();
         }
       } else if (activeContract.type === 'heist') {
@@ -7954,7 +8324,7 @@
         ctx.textAlign = 'center';
         ctx.fillStyle = inside ? '#00ff88' : '#ffe600';
         ctx.fillText(
-          inside ? `🛰️ HACKING PAYLOAD ${Math.floor(activeContract.progress)}%` : '🛰️ ENTER RING TO HACK PAYLOAD',
+          inside ? `[HACKING PAYLOAD ${Math.floor(activeContract.progress)}%]` : '[ENTER RING TO HACK PAYLOAD]',
           0,
           -54
         );
@@ -7996,7 +8366,7 @@
       addGridRipple(player.x, player.y, 680, 55, '#d946ef');
       generateWorldProps();
       spawnWave();
-      announce(`🌀 WARPED TO UNCHARTED SECTOR ${wave} (+1,000 PTS) 🌀`, '#f0abfc');
+      announce(`// WARPED TO UNCHARTED SECTOR ${wave} (+1,000 PTS) //`, '#f0abfc');
     }
 
     // Game collections & state
@@ -8122,17 +8492,17 @@
       waveSpawnQueue = [];
 
       if (isBossWave) {
-        announce(`⚠️ SECTOR ${wave}: OMEGA SERAPHIM DREADNOUGHT & ESCORT FLEET DETECTED ⚠️`, '#ff0077');
+        announce(`// SECTOR ${wave}: OMEGA SERAPHIM DREADNOUGHT & ESCORT FLEET DETECTED //`, '#ff0077');
         const bossY = Math.max(120, player.y - 460);
         enemies.push(new Enemy('boss', player.x, bossY));
       } else if (wave === 1) {
-        announce(`🔥 SECTOR 1 (${threatCfg.name}) — ARMED VANGUARD, STRIKERS & ELITE HUNTERS INBOUND!`, '#ff2a55');
+        announce(`// SECTOR 1 (${threatCfg.name}) — ARMED VANGUARD, STRIKERS & ELITE HUNTERS INBOUND //`, '#ff2a55');
       } else if (wave === 2) {
-        announce(`⚡ SECTOR 2 — AEGIS GUARDIANS, RAIL SNIPERS & PHANTOM ASSASSINS INBOUND!`, '#ff7b00');
+        announce(`// SECTOR 2 — AEGIS GUARDIANS, RAIL SNIPERS & PHANTOM ASSASSINS INBOUND //`, '#ff7b00');
       } else if (wave === 4) {
-        announce(`🔥 SECTOR 4 — CHRONO-WEAVERS & SIEGE JUGGERNAUTS UNLEASHED!`, '#ff2a55');
+        announce(`// SECTOR 4 — CHRONO-WEAVERS & SIEGE JUGGERNAUTS UNLEASHED //`, '#ff2a55');
       } else {
-        announce(`SECTOR ${wave} — ${threatLabels[tierIdx]} HOSTILES INBOUND`, '#ffe600');
+        announce(`// SECTOR ${wave} — ${threatLabels[tierIdx]} HOSTILES INBOUND //`, '#ffe600');
       }
 
       // Build aggressive, multi-stage combat waves right from Sector 1!
@@ -8219,11 +8589,11 @@
         let bonusLevels = 1;
         if (rRoll < 0.14) {
           rarity = 'legendary';
-          rarityLabel = '★ OMEGA PROTOTYPE (+2 LVL)';
+          rarityLabel = '[OMEGA] PROTOTYPE (+2 LVL)';
           bonusLevels = 2;
         } else if (rRoll < 0.42) {
           rarity = 'epic';
-          rarityLabel = '⚡ MK-II OVERCLOCK (+25% OD)';
+          rarityLabel = '[MK-II] OVERCLOCK (+25% OD)';
           bonusLevels = 1;
         }
         return { ...up, rarity, rarityLabel, bonusLevels };
@@ -8247,8 +8617,8 @@
         }
 
         const extraStat = up.rarity === 'legendary'
-          ? `<br><span style="color:#ffe600">★ OMEGA BONUS: INSTANT +2 LEVELS &amp; +20 HP</span>`
-          : (up.rarity === 'epic' ? `<br><span style="color:#ff66b2">⚡ OVERCLOCK BONUS: +25% OVERDRIVE CHARGE</span>` : '');
+          ? `<br><span style="color:#ffe600">[OMEGA BONUS]: INSTANT +2 LEVELS &amp; +20 HP</span>`
+          : (up.rarity === 'epic' ? `<br><span style="color:#ff66b2">[OVERCLOCK BONUS]: +25% OVERDRIVE CHARGE</span>` : '');
 
         card.innerHTML = `
           <div>
@@ -8265,7 +8635,7 @@
                 <div class="upgrade-title">${up.title}</div>
                 <div class="level-pips-row">
                   ${pipsHtml}
-                  <span class="lvl-pip-label">LVL ${currentLvl} ➔ ${nextLvl}</span>
+                  <span class="lvl-pip-label">LVL ${currentLvl} &gt;&gt; ${nextLvl}</span>
                 </div>
               </div>
             </div>
@@ -8376,7 +8746,7 @@
       } else if (rarity === 'legendary') {
         player.hp = Math.min(player.maxHp, player.hp + 20);
         player.overdrive = Math.min(100, player.overdrive + 30);
-        announce(`★ OMEGA AUGMENTATION INSTALLED ★`, '#ffe600');
+        announce(`// OMEGA AUGMENTATION INSTALLED //`, '#ffe600');
       }
 
       sound.pickup(6);
@@ -8402,7 +8772,7 @@
       const threatCfg = getThreatConfig();
       const threatTag = document.getElementById('goThreatTag');
       if (threatTag && threatCfg) {
-        threatTag.textContent = `THREAT: ${threatCfg.name}`;
+        threatTag.innerHTML = `${threatCfg.svg}<span>THREAT: ${threatCfg.name}</span>`;
         threatTag.style.color = threatCfg.color;
         threatTag.style.borderColor = threatCfg.color;
       }
@@ -8643,7 +9013,7 @@
         if (e.type === 'boss') {
           targets.push({ x: e.x, y: e.y, color: '#ff0055', label: 'BOSS' });
         } else if (e.type === 'nemesis') {
-          targets.push({ x: e.x, y: e.y, color: '#ffe600', label: '🎯 VIP' });
+          targets.push({ x: e.x, y: e.y, color: '#ffe600', label: 'VIP' });
         }
       }
 
@@ -8655,7 +9025,7 @@
             targets.push({ x: g.x, y: g.y, color: '#ffe600', label: `GATE ${activeContract.progress + 1}` });
           }
         } else if (activeContract.type === 'heist') {
-          targets.push({ x: activeContract.x, y: activeContract.y, color: '#00f0ff', label: '🛰️ HEIST' });
+          targets.push({ x: activeContract.x, y: activeContract.y, color: '#00f0ff', label: 'HEIST' });
         }
       }
 
@@ -8690,7 +9060,7 @@
 
       if (nearestShrine) targets.push({ x: nearestShrine.x, y: nearestShrine.y, color: '#ffe600', label: 'SHRINE' });
       if (nearestGate) targets.push({ x: nearestGate.x, y: nearestGate.y, color: '#d946ef', label: 'WARP' });
-      if (nearestSlot) targets.push({ x: nearestSlot.x, y: nearestSlot.y, color: '#ff0077', label: '🎰 777' });
+      if (nearestSlot) targets.push({ x: nearestSlot.x, y: nearestSlot.y, color: '#ff0077', label: '777' });
       if (nearestCache) targets.push({ x: nearestCache.x, y: nearestCache.y, color: '#00f0ff', label: 'VAULT' });
 
       const cx = canvas.width / 2;
@@ -8732,7 +9102,7 @@
       ctx.save();
       ctx.font = "800 9px 'Segoe UI', sans-serif";
       ctx.textAlign = 'center';
-      ctx.globalAlpha = 0.58;
+      ctx.globalAlpha = 0.62;
 
       for (let i = 0; i < visibleWaypoints.length; i++) {
         const w = visibleWaypoints[i];
@@ -8743,13 +9113,16 @@
         ctx.translate(ix, iy);
         ctx.rotate(w.ang);
         ctx.fillStyle = w.color;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(7, 0);
-        ctx.lineTo(-5, -4.5);
+        ctx.moveTo(8, 0);
+        ctx.lineTo(-5, -5);
         ctx.lineTo(-2, 0);
-        ctx.lineTo(-5, 4.5);
+        ctx.lineTo(-5, 5);
         ctx.closePath();
         ctx.fill();
+        ctx.stroke();
         ctx.restore();
 
         ctx.fillStyle = w.color;
@@ -8912,18 +9285,23 @@
       skillSlotQ: document.getElementById('skillSlotQ'),
       skillTextQ: document.getElementById('skillTextQ'),
       skillBarQ: document.getElementById('skillBarQ'),
+      skillTierQ: document.getElementById('skillTierQ'),
       skillSlotR: document.getElementById('skillSlotR'),
       skillTextR: document.getElementById('skillTextR'),
       skillBarR: document.getElementById('skillBarR'),
+      skillTierR: document.getElementById('skillTierR'),
       skillSlotF: document.getElementById('skillSlotF'),
       skillTextF: document.getElementById('skillTextF'),
       skillBarF: document.getElementById('skillBarF'),
+      skillTierF: document.getElementById('skillTierF'),
       skillSlotX: document.getElementById('skillSlotX'),
       skillTextX: document.getElementById('skillTextX'),
       skillBarX: document.getElementById('skillBarX'),
+      skillTierX: document.getElementById('skillTierX'),
       skillSlotE: document.getElementById('skillSlotE'),
       skillTextE: document.getElementById('skillTextE'),
-      skillBarE: document.getElementById('skillBarE')
+      skillBarE: document.getElementById('skillBarE'),
+      skillTierE: document.getElementById('skillTierE')
     };
     const hudCache = {};
     function setHudText(key, text) {
@@ -9368,13 +9746,14 @@
         hudEls.odText.classList.toggle('ready-glow', odReady);
       }
 
-      // ★★★ UPDATE 5-SLOT TACTICAL SKILL HOTBAR (#skillHotbar) ★★★
-      // 1. [Q] Cyber-Katana Parry
+      // === UPDATE 5-SLOT TACTICAL SKILL HOTBAR (#skillHotbar) ===
+      // 1. [Q] Dimension Rift Katana
       setHudWidth('skillBarQ', katanaPct);
-      setHudText('skillTextQ', isKatanaReady ? 'READY' : `${(player.katanaCooldown / 60).toFixed(1)}s`);
+      setHudText('skillTextQ', isKatanaReady ? (player.katanaCombo === 2 ? 'X-SLASH!' : 'READY') : `${(player.katanaCooldown / 60).toFixed(1)}s`);
+      setHudText('skillTierQ', player.katanaCombo === 2 ? 'X-RIFT' : `MK-${1 + player.katanaLevel}`);
       setSlotState('skillSlotQ', isKatanaReady, player.katanaSlashTimer > 0);
 
-      // 2. [R] Omega Ion Laser Beam
+      // 2. [R] Omega Ion Laser Beam + Fin-Funnel Bits
       const ionActive = player.ionBeamTimer > 0;
       const ionMaxCd = Math.max(220, player.ionBeamMaxCooldown - player.ionBeamLevel * 55);
       const ionPct = ionActive
@@ -9383,6 +9762,7 @@
       const ionReady = player.ionBeamCooldown <= 0 && !ionActive;
       setHudWidth('skillBarR', ionPct);
       setHudText('skillTextR', ionActive ? 'FIRING!' : (ionReady ? 'READY' : `${(player.ionBeamCooldown / 60).toFixed(1)}s`));
+      setHudText('skillTierR', `MK-${1 + player.ionBeamLevel}`);
       setSlotState('skillSlotR', ionReady, ionActive);
 
       // 3. [F] Chrono-Stasis Singularity Dome
@@ -9394,9 +9774,10 @@
       const chronoReady = player.chronoCooldown <= 0 && !activeDome;
       setHudWidth('skillBarF', chronoPct);
       setHudText('skillTextF', activeDome ? 'SHATTER [F]' : (chronoReady ? 'READY' : `${(player.chronoCooldown / 60).toFixed(1)}s`));
+      setHudText('skillTierF', `MK-${1 + player.chronoLevel}`);
       setSlotState('skillSlotF', chronoReady, !!activeDome);
 
-      // 4. [X] Phantom Decoy & Missile Salvo
+      // 4. [X] Phantom Squadron & Quantum Phase-Swap
       const activeDecoy = phantomDecoys.length > 0 ? phantomDecoys[0] : null;
       const phantomMaxCd = Math.max(220, player.phantomMaxCooldown - player.phantomLevel * 55);
       const phantomPct = activeDecoy
@@ -9404,12 +9785,14 @@
         : Math.max(0, 1 - (player.phantomCooldown / phantomMaxCd)) * 100;
       const phantomReady = player.phantomCooldown <= 0 && !activeDecoy;
       setHudWidth('skillBarX', phantomPct);
-      setHudText('skillTextX', activeDecoy ? 'CLONE ON' : (phantomReady ? 'READY' : `${(player.phantomCooldown / 60).toFixed(1)}s`));
+      setHudText('skillTextX', activeDecoy ? 'PHASE SWAP' : (phantomReady ? 'READY' : `${(player.phantomCooldown / 60).toFixed(1)}s`));
+      setHudText('skillTierX', activeDecoy ? 'SWAP [X]' : `MK-${1 + player.phantomLevel}`);
       setSlotState('skillSlotX', phantomReady, !!activeDecoy);
 
-      // 5. [E] Overdrive Supernova
+      // 5. [E] Seraphim Overdrive
       setHudWidth('skillBarE', odPct);
-      setHudText('skillTextE', player.overdriveActive > 0 ? 'ACTIVE' : (player.overdrive >= 100 ? 'READY' : `${Math.floor(player.overdrive)}%`));
+      setHudText('skillTextE', player.overdriveActive > 0 ? 'SERAPHIM!' : (player.overdrive >= 100 ? 'READY' : `${Math.floor(player.overdrive)}%`));
+      setHudText('skillTierE', player.overdriveActive > 0 ? '6-WING' : 'ULT');
       setSlotState('skillSlotE', player.overdrive >= 100 && player.overdriveActive <= 0, player.overdriveActive > 0);
 
       const xpPct = (player.xp / player.xpNext) * 100;
@@ -9438,7 +9821,10 @@
         hudEls.contractTracker.classList.toggle('hidden', !hasContract);
       }
       if (activeContract) {
-        setHudText('contractTitle', activeContract.title);
+        if (hudEls.contractTitle && hudCache.contractTitle !== activeContract.title) {
+          hudCache.contractTitle = activeContract.title;
+          hudEls.contractTitle.innerHTML = `${activeContract.svg || ''}<span>${activeContract.title}</span>`;
+        }
         setHudText('contractDesc', activeContract.desc);
         setHudText('contractTimer', `${Math.ceil(activeContract.timer / 60)}s`);
         const cPct = Math.max(0, Math.min(100, (activeContract.progress / activeContract.target) * 100));
@@ -9519,7 +9905,7 @@
 
     document.getElementById('nextTrackBtn').onclick = () => {
       const track = sound.nextTrack();
-      document.getElementById('trackNameDisplay').textContent = `♫ ${track.name}`;
+      document.getElementById('trackNameDisplay').textContent = track.name;
       const bpmEl = document.getElementById('bpmDisplay');
       if (bpmEl) bpmEl.textContent = `${track.bpm} BPM`;
       announce(`NOW PLAYING: ${track.name} (${track.bpm} BPM)`, '#00f0ff');

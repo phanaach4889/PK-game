@@ -10,3 +10,4 @@ Whenever you finish making any code, UI, gameplay, or asset changes to **NEON PR
    Keep `e:\Code\neon_protocol_overdrive.html`, `e:\Code\PK-game\neon_protocol_overdrive.html`, and `e:\Code\PK-game\index.html` identical.
 3. **Commit & Push to GitHub (`origin/main`)**:
    Run `e:\Code\PK-game\deploy.ps1 -Message "<descriptive commit message>"` (or `git add -A && git commit -m "..." && git push origin main` inside `e:\Code\PK-game`) so that GitHub Actions (`.github/workflows/deploy.yml`) automatically deploys the latest build to GitHub Pages (`https://phanaach4889.github.io/PK-game/`).
+
