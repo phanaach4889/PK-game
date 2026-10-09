@@ -68,137 +68,137 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 20px 26px;
+      padding: 10px 14px;
     }
 
     .hud-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 16px;
+      gap: 10px;
     }
 
     /* =========================================================================
-       LEFT HUD: CYBER-CHASSIS TELEMETRY MODULE (.player-stats)
+       LEFT HUD: COMPACT TRANSLUCENT TELEMETRY MODULE (.player-stats)
        ========================================================================= */
     .player-stats {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(0, 240, 255, 0.14), transparent 65%),
-        linear-gradient(160deg, rgba(8, 13, 28, 0.88) 0%, rgba(4, 6, 15, 0.92) 100%);
-      border: 1px solid rgba(0, 240, 255, 0.35);
-      border-left: 3.5px solid var(--cyan);
+      gap: 5px;
+      background: linear-gradient(160deg, rgba(6, 10, 22, 0.44) 0%, rgba(3, 5, 14, 0.5) 100%);
+      border: 1px solid rgba(0, 240, 255, 0.24);
+      border-left: 2.5px solid var(--cyan);
       clip-path: polygon(
         0 0,
-        calc(100% - 18px) 0,
-        100% 18px,
+        calc(100% - 12px) 0,
+        100% 12px,
         100% 100%,
-        16px 100%,
-        0 calc(100% - 16px)
+        10px 100%,
+        0 calc(100% - 10px)
       );
-      backdrop-filter: blur(12px);
-      padding: 14px 18px 15px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.65), inset 0 0 20px rgba(0, 240, 255, 0.05);
-      min-width: 305px;
+      backdrop-filter: blur(4px);
+      padding: 8px 10px 9px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+      width: 214px;
+      max-width: 214px;
       position: relative;
+      contain: layout style paint;
+      transition: opacity 0.2s ease;
     }
 
-    .player-stats::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-      background-size: 16px 16px;
-      pointer-events: none;
+    .player-stats.hud-dimmed,
+    .center-hud.hud-dimmed,
+    .right-hud.hud-dimmed {
+      opacity: 0.24;
+    }
+
+    .right-hud:hover {
+      opacity: 0.96 !important;
     }
 
     .telemetry-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 7px;
-      border-bottom: 1px solid rgba(0, 240, 255, 0.2);
-      margin-bottom: 1px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.15);
     }
 
     .telemetry-sys-tag {
       display: flex;
       align-items: center;
-      gap: 7px;
-      font-size: 0.66rem;
+      gap: 5px;
+      font-size: 0.54rem;
       font-weight: 900;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.12em;
       color: var(--cyan);
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .sys-led {
-      width: 7px;
-      height: 7px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 8px var(--green);
+      box-shadow: 0 0 6px var(--green);
       animation: pulsePip 1.4s infinite;
     }
 
     .core-lvl-badge {
-      font-size: 0.68rem;
+      font-size: 0.56rem;
       font-weight: 900;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.08em;
       color: #04040a;
       background: linear-gradient(90deg, var(--cyan), var(--green));
-      padding: 2px 10px;
-      clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
-      box-shadow: 0 0 12px rgba(0, 240, 255, 0.45);
+      padding: 1px 6px;
+      clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+      white-space: nowrap;
     }
 
     .stat-row {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
       position: relative;
       z-index: 1;
     }
 
     .bar-label {
-      font-size: 0.68rem;
+      font-size: 0.56rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #dbeafe;
+      letter-spacing: 0.08em;
+      color: rgba(219, 234, 254, 0.9);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
     }
 
     .label-left {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       white-space: nowrap;
     }
 
     .label-left svg {
-      width: 13px;
-      height: 13px;
+      width: 10px;
+      height: 10px;
       flex-shrink: 0;
     }
 
     .stat-readout-pill {
       font-family: 'Courier New', monospace;
-      font-size: 0.7rem;
+      font-size: 0.58rem;
       font-weight: 900;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
       color: #fff;
-      padding: 1px 7px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 0px 5px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       white-space: nowrap;
     }
 
@@ -206,16 +206,16 @@
       color: #05050c;
       background: var(--yellow);
       border-color: #ffffff;
-      box-shadow: 0 0 12px var(--yellow);
+      box-shadow: 0 0 8px var(--yellow);
       animation: pulsePip 0.7s infinite;
     }
 
     .bar-container {
       width: 100%;
-      height: 11px;
-      background: rgba(3, 6, 16, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+      height: 6px;
+      background: rgba(3, 6, 16, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);
       overflow: hidden;
       position: relative;
     }
@@ -228,9 +228,9 @@
       background: repeating-linear-gradient(
         90deg,
         transparent 0px,
-        transparent 14px,
-        rgba(4, 6, 15, 0.65) 14px,
-        rgba(4, 6, 15, 0.65) 16px
+        transparent 11px,
+        rgba(4, 6, 15, 0.55) 11px,
+        rgba(4, 6, 15, 0.55) 12px
       );
       pointer-events: none;
       z-index: 2;
@@ -248,27 +248,23 @@
       position: absolute;
       top: 0;
       right: 0;
-      width: 3px;
+      width: 2px;
       height: 100%;
       background: #ffffff;
-      box-shadow: 0 0 8px #ffffff;
     }
 
     #hpBar {
       background: linear-gradient(90deg, #b80038, #ff0055, #ff5588);
-      box-shadow: 0 0 14px #ff0055;
     }
 
     #dashBar {
       background: linear-gradient(90deg, #0077ff, #00f0ff, #99ffff);
-      box-shadow: 0 0 14px #00f0ff;
     }
 
     #overdriveBar {
       background: linear-gradient(90deg, #ff0077, #ffe600, #00f0ff, #ff0077);
       background-size: 200% 100%;
       animation: overdriveShimmer 1.4s linear infinite;
-      box-shadow: 0 0 14px #ff0077;
     }
 
     @keyframes overdriveShimmer {
@@ -278,100 +274,123 @@
 
     #xpBar {
       background: linear-gradient(90deg, #00b862, #00ff88, #00f0ff);
-      box-shadow: 0 0 12px #00ff88;
     }
 
     .active-perks {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 3px;
-      padding-top: 7px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 3px;
+      margin-top: 1px;
+      padding-top: 4px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      max-width: 100%;
       position: relative;
       z-index: 1;
+    }
+
+    .active-perks:empty {
+      display: none;
     }
 
     .perk-pill {
       --pill-color: #00f0ff;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      font-size: 0.68rem;
-      background: rgba(6, 10, 22, 0.85);
+      gap: 2px;
+      font-size: 0.54rem;
+      background: rgba(6, 10, 22, 0.65);
       border: 1px solid var(--pill-color);
       color: #fff;
-      padding: 3px 8px 3px 6px;
-      clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+      padding: 1px 4px 1px 3px;
+      border-radius: 3px;
       font-weight: 800;
-      box-shadow: inset 0 0 8px rgba(0, 240, 255, 0.15);
     }
 
     .perk-pill svg {
-      width: 14px;
-      height: 14px;
-      filter: drop-shadow(0 0 4px var(--pill-color));
+      width: 10px;
+      height: 10px;
     }
 
+    /* =========================================================================
+       CENTER HUD: LOW-PROFILE TOP RIBBON (.center-hud)
+       ========================================================================= */
     .center-hud {
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 3px;
+      contain: layout style;
+      transition: opacity 0.2s ease;
     }
 
-    .score-display {
-      font-size: 2.7rem;
-      font-weight: 900;
-      letter-spacing: 0.06em;
-      color: #fff;
-      text-shadow: 0 0 18px var(--cyan), 0 0 36px rgba(0, 240, 255, 0.4);
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .wave-badge {
-      font-size: 0.85rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.28em;
-      color: var(--cyan);
-      margin-top: 6px;
+    .center-top-ribbon {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: rgba(4, 7, 16, 0.42);
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      backdrop-filter: blur(4px);
       padding: 3px 12px;
-      background: rgba(0, 240, 255, 0.1);
-      border: 1px solid rgba(0, 240, 255, 0.3);
       border-radius: 99px;
     }
 
+    .score-display {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      color: #fff;
+      text-shadow: 0 0 10px var(--cyan);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      padding-right: 6px;
+      border-right: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .wave-badge {
+      font-size: 0.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--cyan);
+      padding: 2px 7px;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.24);
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+
     .combo-badge {
-      margin-top: 8px;
-      font-size: 1.25rem;
+      font-size: 0.78rem;
       font-weight: 900;
       letter-spacing: 0.08em;
       color: var(--yellow);
-      text-shadow: 0 0 14px var(--magenta);
+      text-shadow: 0 0 8px var(--magenta);
       opacity: 0;
-      transform: scale(0.8);
+      transform: scale(0.85);
       transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
     }
 
     .combo-badge.active {
-      opacity: 1;
-      transform: scale(1.08);
+      opacity: 0.92;
+      transform: scale(1);
     }
 
     .killstreak-banner {
-      margin-top: 6px;
-      font-size: 1.05rem;
+      font-size: 0.74rem;
       font-weight: 900;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.18em;
       color: #fff;
-      background: linear-gradient(90deg, transparent, rgba(255, 0, 119, 0.65), transparent);
-      padding: 4px 24px;
-      text-shadow: 0 0 12px var(--magenta);
+      background: linear-gradient(90deg, transparent, rgba(255, 0, 119, 0.55), transparent);
+      padding: 2px 16px;
+      text-shadow: 0 0 8px var(--magenta);
       opacity: 0;
-      transform: translateY(-6px);
+      transform: translateY(-4px);
       transition: all 0.2s ease;
+      pointer-events: none;
     }
 
     .killstreak-banner.show {
@@ -380,176 +399,149 @@
     }
 
     /* =========================================================================
-       RIGHT HUD: SYNTH-WAVE AUDIO & TACTICAL DECK (.music-deck)
+       RIGHT HUD: ULTRA-SLIM SYNTH & RADAR DECK (.right-hud)
        ========================================================================= */
     .right-hud {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 10px;
+      gap: 6px;
       pointer-events: auto;
+      contain: layout style;
+      transition: opacity 0.2s ease;
     }
 
     .music-deck {
-      background:
-        radial-gradient(circle at 100% 0%, rgba(255, 0, 119, 0.16), transparent 65%),
-        linear-gradient(160deg, rgba(10, 14, 30, 0.9) 0%, rgba(4, 6, 15, 0.94) 100%);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(0, 240, 255, 0.32);
-      border-right: 3.5px solid var(--magenta);
+      background: linear-gradient(160deg, rgba(8, 12, 26, 0.44) 0%, rgba(4, 6, 15, 0.5) 100%);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      border-right: 2.5px solid var(--magenta);
       clip-path: polygon(
-        18px 0,
+        10px 0,
         100% 0,
-        100% calc(100% - 16px),
-        calc(100% - 16px) 100%,
+        100% calc(100% - 10px),
+        calc(100% - 10px) 100%,
         0 100%,
-        0 18px
+        0 10px
       );
-      padding: 13px 16px 14px;
+      padding: 6px 8px 7px;
       display: flex;
       flex-direction: column;
-      gap: 9px;
-      min-width: 295px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.65), inset 0 0 20px rgba(255, 0, 119, 0.05);
+      gap: 4px;
+      width: 172px;
+      max-width: 172px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
       position: relative;
-    }
-
-    .music-deck::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255, 0, 119, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-      background-size: 16px 16px;
-      pointer-events: none;
     }
 
     .deck-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid rgba(255, 0, 119, 0.25);
+      gap: 4px;
+      padding-bottom: 3px;
+      border-bottom: 1px solid rgba(255, 0, 119, 0.2);
       position: relative;
       z-index: 1;
     }
 
     .deck-station-tag {
-      font-size: 0.62rem;
+      font-size: 0.52rem;
       font-weight: 900;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.12em;
       color: #ff66b2;
       text-transform: uppercase;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
+      white-space: nowrap;
     }
 
     .synth-disc-icon {
-      width: 14px;
-      height: 14px;
+      width: 11px;
+      height: 11px;
       animation: iconSpinSlow 3.5s linear infinite;
     }
 
     .bpm-pill {
       font-family: 'Courier New', monospace;
-      font-size: 0.66rem;
+      font-size: 0.52rem;
       font-weight: 900;
       color: var(--yellow);
-      background: rgba(255, 230, 0, 0.12);
-      border: 1px solid rgba(255, 230, 0, 0.4);
-      padding: 1px 7px;
-      border-radius: 4px;
-      letter-spacing: 0.08em;
+      background: rgba(255, 230, 0, 0.1);
+      border: 1px solid rgba(255, 230, 0, 0.3);
+      padding: 0px 4px;
+      border-radius: 3px;
+      letter-spacing: 0.04em;
     }
 
     .deck-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 6px;
       position: relative;
       z-index: 1;
     }
 
     .track-title {
-      font-size: 0.78rem;
+      font-size: 0.6rem;
       font-weight: 900;
-      letter-spacing: 0.11em;
+      letter-spacing: 0.06em;
       color: var(--cyan);
       text-transform: uppercase;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      text-shadow: 0 0 10px rgba(0, 240, 255, 0.45);
     }
 
     .visualizer-visor {
-      background: rgba(2, 4, 12, 0.85);
-      border: 1px solid rgba(0, 240, 255, 0.22);
-      border-radius: 6px;
-      padding: 6px 8px 4px;
+      background: rgba(2, 4, 12, 0.55);
+      border: 1px solid rgba(0, 240, 255, 0.16);
+      border-radius: 4px;
+      padding: 3px 5px 2px;
       position: relative;
       z-index: 1;
       overflow: hidden;
-      box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8);
-    }
-
-    /* Horizontal dB grid lines inside spectrum visor */
-    .visualizer-visor::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(4, 6, 15, 0.55) 0px,
-        rgba(4, 6, 15, 0.55) 2px,
-        transparent 2px,
-        transparent 5px
-      );
-      pointer-events: none;
     }
 
     .visualizer-bars {
       display: flex;
       align-items: flex-end;
-      gap: 2.5px;
-      height: 28px;
+      gap: 1.5px;
+      height: 12px;
     }
 
     .v-bar {
       flex: 1;
       background: linear-gradient(to top, #00f0ff 0%, #ff0077 60%, #ffe600 100%);
       height: 18%;
-      border-radius: 1.5px 1.5px 0 0;
+      border-radius: 1px 1px 0 0;
       transition: height 0.045s ease;
-      box-shadow: 0 0 6px rgba(0, 240, 255, 0.45);
     }
 
     /* Volume Slider Row */
     .volume-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 5px;
       position: relative;
       z-index: 1;
     }
 
     .vol-label {
-      font-size: 0.62rem;
+      font-size: 0.52rem;
       font-weight: 900;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.08em;
       color: #94a3b8;
-      min-width: 52px;
+      min-width: 42px;
     }
 
     .cyber-slider {
       -webkit-appearance: none;
       appearance: none;
       width: 100%;
-      height: 5px;
+      height: 4px;
       background: rgba(255, 255, 255, 0.14);
       border-radius: 99px;
       outline: none;
@@ -559,32 +551,31 @@
     .cyber-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 13px;
-      height: 13px;
+      width: 10px;
+      height: 10px;
       background: var(--cyan);
-      border: 2px solid #ffffff;
-      border-radius: 3px;
+      border: 1.5px solid #ffffff;
+      border-radius: 2px;
       transform: rotate(45deg);
-      box-shadow: 0 0 10px var(--cyan);
       cursor: pointer;
     }
 
     .deck-buttons {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
+      gap: 4px;
       position: relative;
       z-index: 1;
     }
 
     .hud-btn {
-      background: rgba(0, 240, 255, 0.08);
-      border: 1px solid rgba(0, 240, 255, 0.32);
-      clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
-      padding: 6px 8px;
-      font-size: 0.66rem;
+      background: rgba(0, 240, 255, 0.07);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 3px;
+      padding: 3px 4px;
+      font-size: 0.52rem;
       font-weight: 800;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.03em;
       cursor: pointer;
       color: #e2e8f0;
       transition: all 0.16s ease;
@@ -592,29 +583,27 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 3px;
       white-space: nowrap;
+      overflow: hidden;
     }
 
     .hud-btn svg {
-      width: 12px;
-      height: 12px;
+      width: 9px;
+      height: 9px;
       flex-shrink: 0;
     }
 
     .hud-btn:hover {
-      background: rgba(0, 240, 255, 0.24);
+      background: rgba(0, 240, 255, 0.22);
       border-color: var(--cyan);
       color: #ffffff;
-      box-shadow: 0 0 14px rgba(0, 240, 255, 0.45);
-      transform: translateY(-1px);
     }
 
     .hud-btn.active-mode {
       border-color: var(--yellow);
       color: var(--yellow);
       background: rgba(255, 230, 0, 0.15);
-      box-shadow: 0 0 14px rgba(255, 230, 0, 0.35);
     }
 
     .hud-btn.muted-mode {
@@ -624,59 +613,58 @@
     }
 
     .zone-badge {
-      margin-top: 5px;
-      font-size: 0.68rem;
+      font-size: 0.58rem;
       font-weight: 900;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.1em;
       color: #e2e8f0;
-      padding: 3px 12px;
-      background: rgba(6, 10, 24, 0.82);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+      padding: 2px 7px;
+      background: rgba(6, 10, 24, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 99px;
       text-transform: uppercase;
+      white-space: nowrap;
       transition: border-color 0.3s, color 0.3s;
     }
 
     /* Holographic Sector Radar / Minimap Deck */
     .radar-deck {
-      background:
-        radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.1), transparent 70%),
-        linear-gradient(160deg, rgba(8, 12, 26, 0.9) 0%, rgba(4, 6, 15, 0.94) 100%);
-      border: 1px solid rgba(0, 240, 255, 0.32);
-      border-right: 3.5px solid var(--cyan);
-      clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
-      padding: 8px 10px;
-      width: 176px;
+      background: linear-gradient(160deg, rgba(6, 10, 22, 0.44) 0%, rgba(3, 5, 14, 0.5) 100%);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      border-right: 2.5px solid var(--cyan);
+      clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+      padding: 6px 8px;
+      width: 146px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7);
+      gap: 4px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
     }
 
     .radar-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.58rem;
+      font-size: 0.5rem;
       font-weight: 900;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.1em;
       color: var(--cyan);
-      border-bottom: 1px solid rgba(0, 240, 255, 0.18);
-      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+      padding-bottom: 2px;
     }
 
     .radar-coords {
       font-family: 'Courier New', monospace;
       color: #94a3b8;
-      font-size: 0.58rem;
+      font-size: 0.5rem;
     }
 
     #radarCanvas {
-      width: 152px;
-      height: 152px;
-      background: rgba(2, 4, 12, 0.9);
-      border: 1px solid rgba(0, 240, 255, 0.24);
-      border-radius: 4px;
+      width: 122px;
+      height: 122px;
+      background: rgba(2, 4, 12, 0.58);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 3px;
       display: block;
       margin: 0 auto;
     }
@@ -684,21 +672,21 @@
     .radar-legend {
       display: flex;
       justify-content: space-between;
-      font-size: 0.52rem;
+      font-size: 0.46rem;
       font-weight: 800;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
       color: #cbd5e1;
     }
 
     .radar-legend span {
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 2px;
     }
 
     .r-dot {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
       display: inline-block;
     }
@@ -708,34 +696,35 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
       width: 100%;
     }
 
     #bossHud {
-      width: min(640px, 85vw);
-      background: rgba(15, 5, 25, 0.8);
+      width: min(460px, 78vw);
+      background: rgba(15, 5, 25, 0.52);
+      backdrop-filter: blur(4px);
       border: 1px solid var(--magenta);
-      border-radius: 10px;
-      padding: 10px 16px;
-      box-shadow: 0 0 25px rgba(255, 0, 119, 0.35);
+      border-radius: 8px;
+      padding: 6px 12px;
+      box-shadow: 0 0 16px rgba(255, 0, 119, 0.25);
       transition: opacity 0.3s;
     }
 
     .boss-title {
       display: flex;
       justify-content: space-between;
-      font-size: 0.8rem;
+      font-size: 0.66rem;
       font-weight: 900;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.16em;
       color: var(--magenta);
-      margin-bottom: 6px;
-      text-shadow: 0 0 8px var(--magenta);
+      margin-bottom: 4px;
+      text-shadow: 0 0 6px var(--magenta);
     }
 
     .boss-bar-bg {
       width: 100%;
-      height: 14px;
+      height: 8px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 99px;
       overflow: hidden;
@@ -745,19 +734,19 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(90deg, #9d4edd, #ff0077, #ffe600);
-      box-shadow: 0 0 15px #ff0077;
+      box-shadow: 0 0 10px #ff0077;
       transition: width 0.1s;
     }
 
     .quick-tips {
-      font-size: 0.73rem;
-      letter-spacing: 0.14em;
-      color: rgba(203, 213, 225, 0.75);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: rgba(203, 213, 225, 0.55);
       text-transform: uppercase;
-      background: rgba(5, 8, 18, 0.6);
-      padding: 6px 16px;
+      background: rgba(4, 6, 14, 0.36);
+      padding: 3px 12px;
       border-radius: 99px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.07);
     }
 
     .quick-tips span {
@@ -1354,7 +1343,7 @@
 
   <div id="hud">
     <div class="hud-top">
-      <div class="player-stats">
+      <div class="player-stats" id="leftHudPanel">
         <div class="telemetry-header">
           <span class="telemetry-sys-tag">
             <svg class="hud-brand-crest" viewBox="-74 -74 148 148" fill="none">
@@ -1365,9 +1354,9 @@
                 <polygon points="22,0 -4,-7 -11,0 -4,7" fill="#00f0ff"/>
               </g>
             </svg>
-            NEON PROTOCOL // MK-IV
+            MK-IV // CORE
           </span>
-          <span class="core-lvl-badge" id="lvlText">CORE LVL 1</span>
+          <span class="core-lvl-badge" id="lvlText">LVL 1</span>
         </div>
 
         <div class="stat-row">
@@ -1377,7 +1366,7 @@
                 <path d="M8 1.5L13.5 4V8.5C13.5 11.8 11 14 8 14.8C5 14 2.5 11.8 2.5 8.5V4L8 1.5Z"/>
                 <path d="M8 5V11M5 8H11" stroke-linecap="round"/>
               </svg>
-              <span>HULL INTEGRITY</span>
+              <span>HULL</span>
             </span>
             <span class="stat-readout-pill" id="hpText">100 / 100</span>
           </div>
@@ -1390,7 +1379,7 @@
               <svg viewBox="0 0 16 16" fill="none" stroke="#00f0ff" stroke-width="1.8">
                 <path d="M9.5 1.5L3.5 9H8L6.5 14.5L12.5 7H8L9.5 1.5Z" stroke-linejoin="round"/>
               </svg>
-              <span>CHRONO DASH [SPACE]</span>
+              <span>DASH [SPACE]</span>
             </span>
             <span class="stat-readout-pill" id="dashText">READY</span>
           </div>
@@ -1404,7 +1393,7 @@
                 <circle cx="8" cy="8" r="3.2"/>
                 <path d="M8 1V3.2M8 12.8V15M1 8H3.2M12.8 8H15M3.1 3.1L4.7 4.7M11.3 11.3L12.9 12.9M12.9 3.1L11.3 4.7M4.7 11.3L3.1 12.9" stroke-linecap="round"/>
               </svg>
-              <span>OVERDRIVE NOVA [E]</span>
+              <span>NOVA [E]</span>
             </span>
             <span class="stat-readout-pill" id="overdriveText">0%</span>
           </div>
@@ -1418,9 +1407,9 @@
                 <polygon points="8,1.5 14,5 14,11 8,14.5 2,11 2,5"/>
                 <circle cx="8" cy="8" r="2" fill="#00f0ff" stroke="none"/>
               </svg>
-              <span>NEURAL XP MATRIX</span>
+              <span>XP</span>
             </span>
-            <span class="stat-readout-pill" id="xpText">0 / 100 XP</span>
+            <span class="stat-readout-pill" id="xpText">0 / 100</span>
           </div>
           <div class="bar-container"><div id="xpBar" class="bar-fill" style="width: 0%;"></div></div>
         </div>
@@ -1428,15 +1417,17 @@
         <div class="active-perks" id="perkList"></div>
       </div>
 
-      <div class="center-hud">
-        <div class="score-display" id="scoreDisplay">0</div>
-        <div class="wave-badge" id="waveDisplay">SECTOR 1</div>
-        <div class="zone-badge" id="zoneDisplay">📍 NEXUS CORE // CITADEL HUB</div>
+      <div class="center-hud" id="centerHudPanel">
+        <div class="center-top-ribbon">
+          <div class="score-display" id="scoreDisplay">0</div>
+          <div class="wave-badge" id="waveDisplay">SECTOR 1</div>
+          <div class="zone-badge" id="zoneDisplay">NEXUS CORE</div>
+        </div>
         <div class="combo-badge" id="comboDisplay">x2 OVERCLOCK</div>
         <div class="killstreak-banner" id="announcementBanner">SYSTEM INITIALIZED</div>
       </div>
 
-      <div class="right-hud">
+      <div class="right-hud" id="rightHudPanel">
         <div class="music-deck">
           <div class="deck-header">
             <span class="deck-station-tag">
@@ -1445,7 +1436,7 @@
                 <circle cx="8" cy="8" r="2" fill="#00f0ff" stroke="none"/>
                 <path d="M8 1.8V4M8 12V14.2" stroke="#00f0ff"/>
               </svg>
-              SYNTH-DECK // HI-FI
+              SYNTH-DECK
             </span>
             <span class="bpm-pill" id="bpmDisplay">132 BPM</span>
           </div>
@@ -1456,8 +1447,6 @@
 
           <div class="visualizer-visor">
             <div class="visualizer-bars" id="visualizerBars">
-              <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
-              <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
               <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
               <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
               <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
@@ -1476,7 +1465,7 @@
                 <polygon points="2.5,6 6,6 10,2.5 10,13.5 6,10 2.5,10" fill="currentColor" fill-opacity="0.25"/>
                 <path d="M12.5 5.5C13.4 6.8 13.4 9.2 12.5 10.5"/>
               </svg>
-              <span id="audioBtnText">AUDIO: ON</span>
+              <span id="audioBtnText">ON</span>
             </button>
             <button class="hud-btn" id="nextTrackBtn">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -1492,22 +1481,22 @@
                 <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
                 <path d="M8 1V3M8 13V15M1 8H3M13 8H15"/>
               </svg>
-              <span id="autoFireBtnText">AUTO: OFF</span>
+              <span id="autoFireBtnText">AUTO</span>
             </button>
           </div>
         </div>
 
         <div class="radar-deck">
           <div class="radar-header">
-            <span>SECTOR RADAR</span>
+            <span>RADAR</span>
             <span class="radar-coords" id="radarCoords">2100, 2100</span>
           </div>
-          <canvas id="radarCanvas" width="152" height="152"></canvas>
+          <canvas id="radarCanvas" width="122" height="122"></canvas>
           <div class="radar-legend">
-            <span><i class="r-dot" style="background:#00f0ff"></i>SHRINE</span>
-            <span><i class="r-dot" style="background:#ffe600"></i>VAULT</span>
-            <span><i class="r-dot" style="background:#00ff88"></i>TURRET</span>
-            <span><i class="r-dot" style="background:#d946ef"></i>WARP</span>
+            <span><i class="r-dot" style="background:#00f0ff"></i>SHRN</span>
+            <span><i class="r-dot" style="background:#ffe600"></i>VLT</span>
+            <span><i class="r-dot" style="background:#00ff88"></i>TRT</span>
+            <span><i class="r-dot" style="background:#d946ef"></i>WRP</span>
           </div>
         </div>
       </div>
@@ -1524,7 +1513,7 @@
         </div>
       </div>
       <div class="quick-tips">
-        <span>[WASD]</span> THRUST &nbsp;•&nbsp; <span>[SPACE]</span> CHRONO-DASH &nbsp;•&nbsp; <span>[E / RIGHT-CLICK]</span> UNLEASH OVERDRIVE &nbsp;•&nbsp; <span>[F]</span> AUTO-FIRE
+        <span>[WASD]</span> THRUST &nbsp;•&nbsp; <span>[SPACE]</span> DASH &nbsp;•&nbsp; <span>[E / R-CLICK]</span> NOVA &nbsp;•&nbsp; <span>[F]</span> AUTO-FIRE
       </div>
     </div>
   </div>
@@ -2339,11 +2328,11 @@
     let camY = WORLD_H / 2 - canvas.height / 2;
 
     const BIOME_ZONES = [
-      { id: 'nexus', name: 'NEXUS CORE // CITADEL HUB', x: 2100, y: 2100, r: 780, color: '#00f0ff', rgb: '0, 240, 255' },
-      { id: 'foundry', name: 'CRIMSON FOUNDRY // WEAPON FORGE', x: 920, y: 920, r: 720, color: '#ff0055', rgb: '255, 0, 85' },
-      { id: 'vault', name: 'QUANTUM VAULT // DATA ARCHIVE', x: 3280, y: 920, r: 720, color: '#ffe600', rgb: '255, 230, 0' },
-      { id: 'nebula', name: 'ION NEBULA // NANITE SANCTUARY', x: 920, y: 3280, r: 720, color: '#00ff88', rgb: '0, 255, 136' },
-      { id: 'void', name: 'VOID SINGULARITY // DARK SECTOR', x: 3280, y: 3280, r: 740, color: '#d946ef', rgb: '217, 70, 239' }
+      { id: 'nexus', name: 'NEXUS CORE // CITADEL HUB', shortName: 'NEXUS CORE', x: 2100, y: 2100, r: 780, color: '#00f0ff', rgb: '0, 240, 255' },
+      { id: 'foundry', name: 'CRIMSON FOUNDRY // WEAPON FORGE', shortName: 'CRIMSON FOUNDRY', x: 920, y: 920, r: 720, color: '#ff0055', rgb: '255, 0, 85' },
+      { id: 'vault', name: 'QUANTUM VAULT // DATA ARCHIVE', shortName: 'QUANTUM VAULT', x: 3280, y: 920, r: 720, color: '#ffe600', rgb: '255, 230, 0' },
+      { id: 'nebula', name: 'ION NEBULA // NANITE SANCTUARY', shortName: 'ION NEBULA', x: 920, y: 3280, r: 720, color: '#00ff88', rgb: '0, 255, 136' },
+      { id: 'void', name: 'VOID SINGULARITY // DARK SECTOR', shortName: 'VOID SINGULARITY', x: 3280, y: 3280, r: 740, color: '#d946ef', rgb: '217, 70, 239' }
     ];
 
     function getActiveBiome(wx, wy) {
@@ -2353,7 +2342,7 @@
         const dy = wy - b.y;
         if (dx * dx + dy * dy <= b.r * b.r) return b;
       }
-      return { id: 'expanse', name: 'HYPER-GRID EXPANSE // UNCHARTED', x: wx, y: wy, r: 0, color: '#00f0ff', rgb: '0, 240, 255' };
+      return { id: 'expanse', name: 'HYPER-GRID EXPANSE // UNCHARTED', shortName: 'HYPER-GRID', x: wx, y: wy, r: 0, color: '#00f0ff', rgb: '0, 240, 255' };
     }
 
     // Input state (screenX/screenY for reticle, x/y for world space)
@@ -2412,7 +2401,7 @@
       autoFire = !autoFire;
       const btn = document.getElementById('autoFireBtn');
       const txt = document.getElementById('autoFireBtnText');
-      if (txt) txt.textContent = autoFire ? 'AUTO: ON' : 'AUTO: OFF';
+      if (txt) txt.textContent = autoFire ? 'AUTO' : 'MAN';
       btn.classList.toggle('active-mode', autoFire);
     }
 
@@ -5441,8 +5430,9 @@
         'TIER V: SEVERE',
         'TIER VI: APEX OVERDRIVE'
       ];
+      const shortTiers = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6 APEX'];
       const tierIdx = Math.min(threatLabels.length - 1, wave - 1);
-      document.getElementById('waveDisplay').textContent = `SECTOR ${wave} // ${threatLabels[tierIdx]}`;
+      document.getElementById('waveDisplay').textContent = `SEC ${wave} • ${shortTiers[tierIdx]}`;
 
       const isBossWave = wave === 4 || (wave >= 6 && wave % 3 === 0);
       waveSpawnQueue = [];
@@ -5828,7 +5818,7 @@
       ctx.restore();
     }
 
-    // Draw Off-Screen Tactical Waypoint Indicators (Shrines, Warp Gates & Bosses)
+    // Draw Off-Screen Tactical Waypoint Indicators (HUD-Safe Compass Ring + Angular De-Collision)
     function drawOffscreenWaypoints() {
       const targets = [];
 
@@ -5836,17 +5826,17 @@
       for (let i = 0; i < enemies.length; i++) {
         const e = enemies[i];
         if (e.active && e.type === 'boss') {
-          targets.push({ x: e.x, y: e.y, color: '#ff0055', label: 'OMEGA BOSS' });
+          targets.push({ x: e.x, y: e.y, color: '#ff0055', label: 'BOSS' });
         }
       }
 
-      // Add nearest Shrine, Warp Gate, and Data Vault
+      // Add nearest Shrine, Warp Gate, and Data Vault (within 1650px so distant clutter is hidden)
       let nearestShrine = null;
-      let nearestShrineDist = 99999;
+      let nearestShrineDist = 1650;
       let nearestGate = null;
-      let nearestGateDist = 99999;
+      let nearestGateDist = 1650;
       let nearestCache = null;
-      let nearestCacheDist = 99999;
+      let nearestCacheDist = 1450;
 
       for (let i = 0; i < worldProps.length; i++) {
         const wp = worldProps[i];
@@ -5865,52 +5855,70 @@
       }
 
       if (nearestShrine) targets.push({ x: nearestShrine.x, y: nearestShrine.y, color: '#ffe600', label: 'SHRINE' });
-      if (nearestGate) targets.push({ x: nearestGate.x, y: nearestGate.y, color: '#d946ef', label: 'WARP GATE' });
+      if (nearestGate) targets.push({ x: nearestGate.x, y: nearestGate.y, color: '#d946ef', label: 'WARP' });
       if (nearestCache) targets.push({ x: nearestCache.x, y: nearestCache.y, color: '#00f0ff', label: 'VAULT' });
 
-      const pad = 54;
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
+      // HUD-safe compass ellipse around screen center (never enters top/side/bottom HUD zones)
+      const rx = Math.min(235, canvas.width * 0.24);
+      const ry = Math.min(150, canvas.height * 0.22);
 
-      ctx.save();
-      ctx.font = "900 10px 'Segoe UI', sans-serif";
-      ctx.textAlign = 'center';
-
+      const visibleWaypoints = [];
       for (let i = 0; i < targets.length; i++) {
         const t = targets[i];
         const sx = t.x - camX;
         const sy = t.y - camY;
         // Skip if already visible on screen
-        if (sx >= 40 && sx <= canvas.width - 40 && sy >= 40 && sy <= canvas.height - 40) continue;
-
+        if (sx >= 50 && sx <= canvas.width - 50 && sy >= 50 && sy <= canvas.height - 50) continue;
         const ang = Math.atan2(sy - cy, sx - cx);
-        const maxRx = cx - pad;
-        const maxRy = cy - pad - 30;
-        const cosA = Math.cos(ang);
-        const sinA = Math.sin(ang);
-        const scale = Math.min(
-          Math.abs(cosA) > 0.001 ? maxRx / Math.abs(cosA) : 9999,
-          Math.abs(sinA) > 0.001 ? maxRy / Math.abs(sinA) : 9999
-        );
-        const ix = cx + cosA * scale;
-        const iy = cy + sinA * scale;
         const distMeters = Math.round(Math.hypot(t.x - player.x, t.y - player.y) / 10);
+        visibleWaypoints.push({ ...t, ang, drawAng: ang, distMeters });
+      }
+
+      if (visibleWaypoints.length === 0) return;
+
+      // Angular de-collision so two nearby waypoints never overlap each other
+      visibleWaypoints.sort((a, b) => a.drawAng - b.drawAng);
+      const minSep = 0.34;
+      for (let pass = 0; pass < 2; pass++) {
+        for (let i = 1; i < visibleWaypoints.length; i++) {
+          const prev = visibleWaypoints[i - 1];
+          const cur = visibleWaypoints[i];
+          const diff = cur.drawAng - prev.drawAng;
+          if (diff < minSep) {
+            const push = (minSep - diff) * 0.5;
+            prev.drawAng -= push;
+            cur.drawAng += push;
+          }
+        }
+      }
+
+      ctx.save();
+      ctx.font = "800 9px 'Segoe UI', sans-serif";
+      ctx.textAlign = 'center';
+      ctx.globalAlpha = 0.58;
+
+      for (let i = 0; i < visibleWaypoints.length; i++) {
+        const w = visibleWaypoints[i];
+        const ix = cx + Math.cos(w.drawAng) * rx;
+        const iy = cy + Math.sin(w.drawAng) * ry;
 
         ctx.save();
         ctx.translate(ix, iy);
-        ctx.rotate(ang);
-        ctx.fillStyle = t.color;
+        ctx.rotate(w.ang);
+        ctx.fillStyle = w.color;
         ctx.beginPath();
-        ctx.moveTo(10, 0);
-        ctx.lineTo(-7, -7);
-        ctx.lineTo(-3, 0);
-        ctx.lineTo(-7, 7);
+        ctx.moveTo(7, 0);
+        ctx.lineTo(-5, -4.5);
+        ctx.lineTo(-2, 0);
+        ctx.lineTo(-5, 4.5);
         ctx.closePath();
         ctx.fill();
         ctx.restore();
 
-        ctx.fillStyle = t.color;
-        ctx.fillText(`${t.label} ${distMeters}m`, ix, iy + (sinA > 0 ? -12 : 18));
+        ctx.fillStyle = w.color;
+        ctx.fillText(`${w.label} ${w.distMeters}m`, ix, iy + (Math.sin(w.drawAng) > 0 ? 13 : -8));
       }
       ctx.restore();
     }
@@ -6023,6 +6031,9 @@
 
     // Cached HUD DOM References & State (Prevents 60fps backdrop-filter re-rasterization!)
     const hudEls = {
+      leftPanel: document.getElementById('leftHudPanel'),
+      centerPanel: document.getElementById('centerHudPanel'),
+      rightPanel: document.getElementById('rightHudPanel'),
       hpText: document.getElementById('hpText'),
       hpBar: document.getElementById('hpBar'),
       dashText: document.getElementById('dashText'),
@@ -6362,17 +6373,55 @@
 
       // Update Biome Badge, Coordinates & Radar Minimap
       const curBiome = getActiveBiome(player.x, player.y);
-      setHudText('zoneDisplay', `BIOME // ${curBiome.name}`);
+      setHudText('zoneDisplay', curBiome.shortName || curBiome.name);
       if (hudCache.biomeColor !== curBiome.color && hudEls.zoneDisplay) {
         hudCache.biomeColor = curBiome.color;
         hudEls.zoneDisplay.style.color = curBiome.color;
         hudEls.zoneDisplay.style.borderColor = curBiome.color;
       }
-      setHudText('radarCoords', `X:${Math.round(player.x)} Y:${Math.round(player.y)}`);
+      setHudText('radarCoords', `${Math.round(player.x)},${Math.round(player.y)}`);
       drawRadar();
 
+      // Dynamic HUD Proximity Auto-Dimming (fades HUD panels to 24% opacity when combat/cursor is underneath)
+      if (frameCount % 4 === 0) {
+        const psx = player.x - camX;
+        const psy = player.y - camY;
+        const msx = mouse.screenX;
+        const msy = mouse.screenY;
+        const cw = canvas.width;
+
+        let dimLeft = (psx < 245 && psy < 210) || (msx < 245 && msy < 210);
+        let dimCenter = (Math.abs(psx - cw * 0.5) < 230 && psy < 110) || (Math.abs(msx - cw * 0.5) < 230 && msy < 110);
+        let dimRight = (psx > cw - 205 && psy < 310);
+
+        for (let i = 0; i < enemies.length; i++) {
+          const e = enemies[i];
+          if (!e.active) continue;
+          const esx = e.x - camX;
+          const esy = e.y - camY;
+          if (esy < 310) {
+            if (esx < 245 && esy < 210) dimLeft = true;
+            if (Math.abs(esx - cw * 0.5) < 230 && esy < 110) dimCenter = true;
+            if (esx > cw - 205) dimRight = true;
+          }
+        }
+
+        if (hudCache.dimLeft !== dimLeft && hudEls.leftPanel) {
+          hudCache.dimLeft = dimLeft;
+          hudEls.leftPanel.classList.toggle('hud-dimmed', dimLeft);
+        }
+        if (hudCache.dimCenter !== dimCenter && hudEls.centerPanel) {
+          hudCache.dimCenter = dimCenter;
+          hudEls.centerPanel.classList.toggle('hud-dimmed', dimCenter);
+        }
+        if (hudCache.dimRight !== dimRight && hudEls.rightPanel) {
+          hudCache.dimRight = dimRight;
+          hudEls.rightPanel.classList.toggle('hud-dimmed', dimRight);
+        }
+      }
+
       // Update HUD elements via diff cache (zero unnecessary DOM layout/backdrop-filter invalidations)
-      setHudText('hpText', `${Math.ceil(player.hp)} / ${player.maxHp}${player.shieldCharges > 0 ? ` [+${player.shieldCharges} SHLD]` : ''}`);
+      setHudText('hpText', `${Math.ceil(player.hp)}/${player.maxHp}${player.shieldCharges > 0 ? ` +${player.shieldCharges}S` : ''}`);
       setHudWidth('hpBar', (player.hp / player.maxHp) * 100);
 
       const dashPct = Math.max(0, 1 - (player.dashCooldown / player.dashMaxCooldown)) * 100;
@@ -6388,7 +6437,7 @@
       setHudWidth('odBar', odPct);
       const odReady = player.overdrive >= 100 || player.overdriveActive > 0;
       setHudText('odText', player.overdriveActive > 0
-        ? 'NOVA ACTIVE'
+        ? 'ACTIVE'
         : (player.overdrive >= 100 ? 'READY [E]' : `${Math.floor(player.overdrive)}%`));
       if (hudCache.odReady !== odReady) {
         hudCache.odReady = odReady;
@@ -6397,8 +6446,8 @@
 
       const xpPct = (player.xp / player.xpNext) * 100;
       setHudWidth('xpBar', xpPct);
-      setHudText('xpText', `${Math.floor(player.xp)} / ${player.xpNext} XP`);
-      setHudText('lvlText', `CORE LVL ${player.level}`);
+      setHudText('xpText', `${Math.floor(player.xp)}/${player.xpNext}`);
+      setHudText('lvlText', `LVL ${player.level}`);
       setHudText('score', score.toLocaleString());
 
       // Boss HUD
@@ -6420,7 +6469,7 @@
         hudEls.combo.classList.toggle('active', showCombo);
       }
       if (showCombo) {
-        setHudText('combo', `x${combo} OVERCLOCK (${comboCounter} HIT)`);
+        setHudText('combo', `x${combo} OVERCLOCK (${comboCounter})`);
       }
     }
 
@@ -6438,7 +6487,7 @@
     document.getElementById('audioBtn').onclick = () => {
       const active = sound.toggle();
       const txt = document.getElementById('audioBtnText');
-      if (txt) txt.textContent = active ? 'AUDIO: ON' : 'MUTED';
+      if (txt) txt.textContent = active ? 'ON' : 'MUTE';
       document.getElementById('audioBtn').classList.toggle('active-mode', !active);
     };
 
