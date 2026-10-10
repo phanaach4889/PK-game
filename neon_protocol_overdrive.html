@@ -3189,6 +3189,10 @@
         osc.stop(t + (isRail ? 0.17 : 0.1));
       }
 
+      shoot() {
+        this.laser(false);
+      }
+
       pickup(comboPitch = 1) {
         if (!this.enabled || !this.ctx) return;
         const t = this.ctx.currentTime;
@@ -3872,9 +3876,12 @@
         this.homingTimer = 0;
         this.blackholeTimer = 0;
         this.orbitAngle = 0;
+        this.daggerOrbitAngle = 0;
+        this.dashTrail = [];
+        this.tetherOverloadCooldown = 0;
       }
 
-      // SKILL [Q]: DIMENSION RIFT KATANA (3-Hit Combo with X-Cross Dimension Slash & 3.5x Bullet Parry!)
+        // SKILL [Q]: DIMENSION RIFT KATANA (3-Hit Combo with X-Cross Dimension Slash & 3.5x Bullet Parry!)
       tryKatana() {
         if (this.katanaCooldown > 0 && this.overdriveActive <= 0 && this.frenzyTimer <= 0) return;
 
@@ -3886,12 +3893,27 @@
         this.katanaCooldown = (this.overdriveActive > 0 || this.frenzyTimer > 0) ? 22 : maxCd;
         this.katanaSlashTimer = isCrossCut ? 18 : 14;
         this.katanaSlashAngle = this.angle;
-        this.invulnTimer = Math.max(this.invulnTimer, isCrossCut ? 22 : 16);
+        this.invulnTimer = Math.max(this.invulnTimer, isCrossCut ? 24 : 16);
 
         sound.katanaSlash();
-        screenShake = Math.max(screenShake, isCrossCut ? 15 : 11);
+        screenShake = Math.max(screenShake, isCrossCut ? 18 : 12);
+        if (isCrossCut) {
+          hitStopFrames = Math.max(hitStopFrames, 3);
+          chromaticFlash = Math.max(chromaticFlash, 9);
+        }
         const slashRadius = (142 + this.katanaLevel * 30) * (isCrossCut ? 1.25 : 1.0);
         addGridRipple(this.x, this.y, slashRadius + 85, isCrossCut ? 36 : 28, isCrossCut ? '#ffe600' : '#00ff88');
+
+        // Spawn lingering Spatial Rift at slash focal point on Judgement Cut / Overdrive!
+        if (typeof spatialRifts !== 'undefined') {
+          const riftX = this.x + Math.cos(this.katanaSlashAngle) * (slashRadius * 0.58);
+          const riftY = this.y + Math.sin(this.katanaSlashAngle) * (slashRadius * 0.58);
+          if (isCrossCut) {
+            spatialRifts.push(new SpatialRift(riftX, riftY, this.katanaSlashAngle, 130, true, '#ffe600'));
+          } else if (this.katanaLevel >= 1) {
+            spatialRifts.push(new SpatialRift(riftX, riftY, this.katanaSlashAngle, 85, false, '#00ff88'));
+          }
+        }
 
         // Launch wide crescent sword-beam projectile(s) (+ bonus X-Cross Judgement wave on 3rd slash!)
         const waveCount = 1 + this.katanaLevel + (isCrossCut ? 2 : 0);
@@ -3979,6 +4001,9 @@
           if (typeof recordContractAction === 'function') {
             recordContractAction('parry', deflected);
           }
+          if (typeof spatialRifts !== 'undefined') {
+            spatialRifts.push(new SpatialRift(this.x, this.y, this.angle, 100, true, '#ffe600'));
+          }
         } else if (isCrossCut) {
           spawnFloatingText(this.x, this.y - 26, '// X-CROSS DIMENSION CUT //', '#00ff88', 1.25);
         }
@@ -4063,23 +4088,33 @@
           this.y = activeClone.y;
           activeClone.x = oldX;
           activeClone.y = oldY;
-          this.invulnTimer = Math.max(this.invulnTimer, 40);
+          this.invulnTimer = Math.max(this.invulnTimer, 50);
           sound.dash();
-          screenShake = Math.max(screenShake, 15);
-          addGridRipple(this.x, this.y, 300, 32, '#00f0ff');
-          addGridRipple(activeClone.x, activeClone.y, 300, 32, '#ff0077');
-          lightningBolts.push({ x1: oldX, y1: oldY, x2: this.x, y2: this.y, color: '#ffe600', life: 14 });
+          sound.parryDeflect();
+          screenShake = Math.max(screenShake, 18);
+          chromaticFlash = Math.max(chromaticFlash, 12);
+          addGridRipple(this.x, this.y, 340, 36, '#00f0ff');
+          addGridRipple(activeClone.x, activeClone.y, 340, 36, '#ff0077');
+          lightningBolts.push({ x1: oldX, y1: oldY, x2: this.x, y2: this.y, color: '#ffe600', life: 16 });
 
-          // Deal Phase-Swap EMP damage around both swap locations + fire 8 bonus seekers!
+          afterimages.push({ x: oldX, y: oldY, angle: this.angle, life: 25, maxLife: 25 });
+          afterimages.push({ x: this.x, y: this.y, angle: this.angle, life: 25, maxLife: 25 });
+
+          if (typeof spatialRifts !== 'undefined') {
+            spatialRifts.push(new SpatialRift(oldX, oldY, 0, 95, true, '#00f0ff'));
+            spatialRifts.push(new SpatialRift(this.x, this.y, 0, 95, true, '#ff0077'));
+          }
+
+          // Deal Phase-Swap EMP damage around both swap locations + fire 16 bonus seekers!
           for (let i = 0; i < enemies.length; i++) {
             const e = enemies[i];
             if (!e.active) continue;
-            if (Math.hypot(e.x - this.x, e.y - this.y) < 190 || Math.hypot(e.x - activeClone.x, e.y - activeClone.y) < 190) {
-              e.takeDamage(95 + this.level * 12, true);
+            if (Math.hypot(e.x - this.x, e.y - this.y) < 220 || Math.hypot(e.x - activeClone.x, e.y - activeClone.y) < 220) {
+              e.takeDamage(110 + this.level * 16, true);
             }
           }
-          for (let k = 0; k < 8; k++) {
-            const mAng = (k * Math.PI * 2) / 8;
+          for (let k = 0; k < 16; k++) {
+            const mAng = (k * Math.PI * 2) / 16;
             missiles.push(new HomingMissile(this.x, this.y, mAng));
           }
           spawnFloatingText(this.x, this.y - 28, '// QUANTUM PHASE-SWAP! //', '#00f0ff', 1.35);
@@ -4230,6 +4265,87 @@
             this.isDashing = false;
           }
           afterimages.push({ x: this.x, y: this.y, angle: this.angle, life: 12, maxLife: 12 });
+          if (this.dashTrail) {
+            this.dashTrail.push({ x: this.x, y: this.y, angle: this.angle, life: 14, maxLife: 14 });
+          }
+
+          // 1. Kinetic Collision Ramming: Ramming enemies during dash deals heavy kinetic impact
+          for (let i = 0; i < enemies.length; i++) {
+            const e = enemies[i];
+            if (!e.active) continue;
+            if (Math.hypot(e.x - this.x, e.y - this.y) <= this.radius + e.radius + 14) {
+              e.takeDamage(75 + this.level * 14, true);
+              if (e.type !== 'boss') {
+                const pushA = Math.atan2(e.y - this.y, e.x - this.x);
+                e.x += Math.cos(pushA) * 36;
+                e.y += Math.sin(pushA) * 36;
+              }
+              spawnParticle(e.x, e.y, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8, '#00f0ff', 12, 3.2);
+              screenShake = Math.max(screenShake, 7);
+            }
+          }
+
+          // 2. Tether Overload Combo: Dashing near or through the Voltaic Tether supercharges it!
+          if (typeof phantomDecoys !== 'undefined' && this.tetherOverloadCooldown <= 0) {
+            for (let i = 0; i < phantomDecoys.length; i++) {
+              const pd = phantomDecoys[i];
+              if (!pd.active) continue;
+              const tdx = pd.x - this.x;
+              const tdy = pd.y - this.y;
+              const tDist = Math.hypot(tdx, tdy);
+              if (tDist < 750 && tDist > 30) {
+                this.tetherOverloadCooldown = 40;
+                sound.dash();
+                sound.parryDeflect();
+                screenShake = Math.max(screenShake, 18);
+                chromaticFlash = Math.max(chromaticFlash, 12);
+                addGridRipple(this.x, this.y, 350, 38, '#ffe600');
+                addGridRipple(pd.x, pd.y, 350, 38, '#00f0ff');
+                for (let step = 0; step <= 8; step++) {
+                  const lx = this.x + (tdx * step) / 8;
+                  const ly = this.y + (tdy * step) / 8;
+                  lightningBolts.push({
+                    x1: lx + (Math.random() - 0.5) * 45,
+                    y1: ly + (Math.random() - 0.5) * 45,
+                    x2: lx + (Math.random() - 0.5) * 45,
+                    y2: ly + (Math.random() - 0.5) * 45,
+                    color: step % 2 === 0 ? '#ffe600' : '#00f0ff',
+                    life: 14
+                  });
+                }
+                const overloadDmg = 120 + this.level * 22;
+                for (let ie = 0; ie < enemies.length; ie++) {
+                  const e = enemies[ie];
+                  if (!e.active) continue;
+                  const ex = e.x - this.x;
+                  const ey = e.y - this.y;
+                  const proj = Math.max(0, Math.min(1, (ex * tdx + ey * tdy) / (tDist * tDist)));
+                  const nx = this.x + proj * tdx;
+                  const ny = this.y + proj * tdy;
+                  if (Math.hypot(e.x - nx, e.y - ny) <= 85 + e.radius) {
+                    e.takeDamage(overloadDmg, true);
+                    spawnParticle(e.x, e.y, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 6, '#ffe600', 16, 3.5);
+                  }
+                }
+                this.dashCooldown = 0;
+                spawnFloatingText(this.x, this.y - 30, '// TETHER OVERLOAD EMP (DASH RESET!) //', '#ffe600', 1.35);
+                break;
+              }
+            }
+          }
+
+          // 3. Dimensional Slingshot through Spatial Rifts
+          if (typeof spatialRifts !== 'undefined') {
+            for (let r = 0; r < spatialRifts.length; r++) {
+              const sr = spatialRifts[r];
+              if (!sr.active) continue;
+              if (Math.hypot(this.x - sr.x, this.y - sr.y) < sr.radius + 35) {
+                this.vx *= 1.32;
+                this.vy *= 1.32;
+                spawnParticle(this.x, this.y, 0, 0, '#00ff88', 12, 3);
+              }
+            }
+          }
         } else {
           const targetVx = dx * this.speed * speedMult;
           const targetVy = dy * this.speed * speedMult;
@@ -4259,26 +4375,78 @@
 
         if (this.invulnTimer > 0) this.invulnTimer--;
         if (this.parryRingTimer > 0) this.parryRingTimer--;
+        if (this.tetherOverloadCooldown > 0) this.tetherOverloadCooldown--;
+        if (this.dashTrail) {
+          for (let i = this.dashTrail.length - 1; i >= 0; i--) {
+            this.dashTrail[i].life--;
+            if (this.dashTrail[i].life <= 0) this.dashTrail.splice(i, 1);
+          }
+        }
+
         if (this.overdriveActive > 0) {
           this.overdriveActive--;
-          // Seraphim Overdrive Orbital Judgment Pillar every 36 frames!
-          if (this.overdriveActive % 36 === 0 && enemies.length > 0) {
+          this.daggerOrbitAngle = (this.daggerOrbitAngle || 0) + 0.12;
+
+          // Continuous Hard-Light Celestial Daggers shredding radius (90px)
+          if (frameCount % 4 === 0) {
+            for (let i = 0; i < enemies.length; i++) {
+              const e = enemies[i];
+              if (!e.active) continue;
+              if (Math.hypot(e.x - this.x, e.y - this.y) <= 90 + e.radius) {
+                e.takeDamage(34 + this.level * 4, false);
+                const sAng = Math.random() * Math.PI * 2;
+                spawnParticle(e.x, e.y, Math.cos(sAng) * 4, Math.sin(sAng) * 4, '#ffe600', 8, 2.5);
+              }
+            }
+          }
+
+          // Celestial Dagger Needle fired at closest enemy every 14 frames
+          if (frameCount % 14 === 0 && enemies.length > 0) {
+            let closestEn = null;
+            let closestD = 650;
+            for (let i = 0; i < enemies.length; i++) {
+              const e = enemies[i];
+              if (!e.active) continue;
+              const d = Math.hypot(e.x - this.x, e.y - this.y);
+              if (d < closestD) {
+                closestD = d;
+                closestEn = e;
+              }
+            }
+            if (closestEn) {
+              const aNeedle = Math.atan2(closestEn.y - this.y, closestEn.x - this.x);
+              projectiles.push(new Projectile(
+                this.x,
+                this.y,
+                aNeedle,
+                '#ffe600',
+                22,
+                48 + this.level * 6,
+                0,
+                true,
+                'rail'
+              ));
+            }
+          }
+
+          // Seraphim Overdrive Orbital Judgment Pillar every 32 frames!
+          if (this.overdriveActive % 32 === 0 && enemies.length > 0) {
             let bestTarget = null;
             let bestHp = -1;
             for (let i = 0; i < enemies.length; i++) {
               const e = enemies[i];
-              if (e.active && Math.hypot(e.x - this.x, e.y - this.y) < 750 && e.hp > bestHp) {
+              if (e.active && Math.hypot(e.x - this.x, e.y - this.y) < 800 && e.hp > bestHp) {
                 bestHp = e.hp;
                 bestTarget = e;
               }
             }
             if (bestTarget) {
-              const jDmg = 95 + this.level * 12;
+              const jDmg = 110 + this.level * 16;
               bestTarget.takeDamage(jDmg, true);
-              addGridRipple(bestTarget.x, bestTarget.y, 210, 28, '#ffe600');
-              lightningBolts.push({ x1: bestTarget.x, y1: bestTarget.y - 380, x2: bestTarget.x, y2: bestTarget.y, color: '#ffe600', life: 12 });
-              lightningBolts.push({ x1: bestTarget.x - 16, y1: bestTarget.y - 380, x2: bestTarget.x + 16, y2: bestTarget.y, color: '#ff0077', life: 12 });
-              spawnFloatingText(bestTarget.x, bestTarget.y - 26, 'ORBITAL JUDGMENT!', '#ffe600', 1.15);
+              addGridRipple(bestTarget.x, bestTarget.y, 220, 32, '#ffe600');
+              lightningBolts.push({ x1: bestTarget.x, y1: bestTarget.y - 420, x2: bestTarget.x, y2: bestTarget.y, color: '#ffe600', life: 14 });
+              lightningBolts.push({ x1: bestTarget.x - 18, y1: bestTarget.y - 420, x2: bestTarget.x + 18, y2: bestTarget.y, color: '#ff0077', life: 14 });
+              spawnFloatingText(bestTarget.x, bestTarget.y - 26, '// ORBITAL JUDGMENT! //', '#ffe600', 1.25);
             }
           }
         }
@@ -4296,6 +4464,47 @@
           const beamLen = 1150;
           const beamHalfW = 34 + this.ionBeamLevel * 10;
           screenShake = Math.max(screenShake, 4.4);
+
+          // Check Prismatic Refraction through active ChronoFields [F]!
+          if (typeof chronoFields !== 'undefined') {
+            for (let c = 0; c < chronoFields.length; c++) {
+              const cf = chronoFields[c];
+              if (!cf.active) continue;
+              const rdx = cf.x - this.x;
+              const rdy = cf.y - this.y;
+              const projDist = rdx * cosA + rdy * sinA;
+              if (projDist > 0 && projDist < beamLen) {
+                const perpDist = Math.abs(-rdx * sinA + rdy * cosA);
+                if (perpDist <= cf.radius + 15) {
+                  cf.refractionTimer = 4;
+                  cf.refractionAngle = this.angle;
+                  if (this.ionBeamTimer % 4 === 0) {
+                    const refColors = ['#ff0077', '#00f0ff', '#ffe600', '#00ff88', '#d946ef'];
+                    for (let rb = 0; rb < 5; rb++) {
+                      const refAng = this.angle + (rb - 2) * 0.32;
+                      const refCos = Math.cos(refAng);
+                      const refSin = Math.sin(refAng);
+                      const refLen = 780;
+                      for (let ie = 0; ie < enemies.length; ie++) {
+                        const en = enemies[ie];
+                        if (!en.active) continue;
+                        const edx = en.x - cf.x;
+                        const edy = en.y - cf.y;
+                        const epProj = edx * refCos + edy * refSin;
+                        if (epProj > 0 && epProj < refLen) {
+                          const epPerp = Math.abs(-edx * refSin + edy * refCos);
+                          if (epPerp <= 28 + en.radius) {
+                            en.takeDamage((28 + this.level * 5) * (1 + this.ionBeamLevel * 0.28), false);
+                            spawnParticle(en.x, en.y, refCos * 4, refSin * 4, refColors[rb], 10, 2.6);
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
 
           // Vaporize all enemy projectiles caught inside the Ion Beam & Funnel corridor!
           for (let i = 0; i < enemyProjectiles.length; i++) {
@@ -4528,6 +4737,28 @@
       }
 
       draw() {
+        // Draw Prismatic Hyper-Slipstream Ribbon Trails during dash
+        if (this.dashTrail && this.dashTrail.length > 1) {
+          const colors = ['#00f0ff', '#ff0077', '#ffe600'];
+          for (let c = 0; c < 3; c++) {
+            const offset = (c - 1) * 6;
+            ctx.save();
+            ctx.strokeStyle = colors[c];
+            ctx.lineWidth = 2.4;
+            ctx.beginPath();
+            for (let t = 0; t < this.dashTrail.length; t++) {
+              const pt = this.dashTrail[t];
+              const perpX = -Math.sin(pt.angle) * offset;
+              const perpY = Math.cos(pt.angle) * offset;
+              if (t === 0) ctx.moveTo(pt.x + perpX, pt.y + perpY);
+              else ctx.lineTo(pt.x + perpX, pt.y + perpY);
+            }
+            ctx.globalAlpha = 0.55;
+            ctx.stroke();
+            ctx.restore();
+          }
+        }
+
         // 1. Draw Omega Ion Laser Cannon [R] + Floating Orbital Fin-Funnel Bits when active!
         if (this.ionBeamTimer > 0) {
           const beamLen = 1150;
@@ -4585,6 +4816,19 @@
           ctx.moveTo(22, 0);
           ctx.lineTo(beamLen, 0);
           ctx.stroke();
+
+          // Braided double-helix energy arcs winding down the beam
+          for (const hSign of [-1, 1]) {
+            ctx.strokeStyle = hSign > 0 ? 'rgba(0, 240, 255, 0.88)' : 'rgba(255, 0, 119, 0.88)';
+            ctx.lineWidth = 2.6;
+            ctx.beginPath();
+            for (let bx = 22; bx < beamLen; bx += 22) {
+              const by = Math.sin(bx * 0.038 + frameCount * 0.35 * hSign) * (beamW * 0.48);
+              if (bx === 22) ctx.moveTo(bx, by);
+              else ctx.lineTo(bx, by);
+            }
+            ctx.stroke();
+          }
 
           // Inner blinding white-gold core
           ctx.strokeStyle = '#ffffff';
@@ -4738,6 +4982,32 @@
               ctx.fill();
               ctx.stroke();
             }
+          }
+
+          // Rotating Crown of 6 Hard-Light Celestial Daggers orbiting the ship
+          const daggerR = 52 + Math.sin(frameCount * 0.15) * 4;
+          const dBaseAng = (this.daggerOrbitAngle || 0) - this.angle;
+          for (let d = 0; d < 6; d++) {
+            const dAng = dBaseAng + (d * Math.PI) / 3;
+            const dX = Math.cos(dAng) * daggerR;
+            const dY = Math.sin(dAng) * daggerR;
+            ctx.save();
+            ctx.translate(dX, dY);
+            ctx.rotate(dAng + Math.PI * 0.5);
+            ctx.drawImage(getGlowSprite('#ffe600'), -14, -14, 28, 28);
+            ctx.fillStyle = d % 2 === 0 ? '#ffe600' : '#00f0ff';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1.4;
+            ctx.beginPath();
+            ctx.moveTo(0, -14);
+            ctx.lineTo(4, 2);
+            ctx.lineTo(1.5, 9);
+            ctx.lineTo(-1.5, 9);
+            ctx.lineTo(-4, 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            ctx.restore();
           }
         }
 
@@ -5296,11 +5566,14 @@
         this.maxLife = maxLife;
         this.active = true;
         this.rot = 0;
+        this.refractionTimer = 0;
+        this.refractionAngle = 0;
       }
 
       update() {
         this.life--;
         this.rot += 0.025;
+        if (this.refractionTimer > 0) this.refractionTimer--;
         const dmgTick = frameCount % 12 === 0;
         const dmgMult = 1 + (player.level - 1) * 0.12;
         const tickDmg = (18 + player.chronoLevel * 7) * dmgMult;
@@ -5446,6 +5719,11 @@
           );
         }
 
+        // Leave behind a persistent Gravitational Shard Vacuum at the shatter epicenter!
+        if (typeof spatialRifts !== 'undefined') {
+          spatialRifts.push(new SpatialRift(this.x, this.y, 0, 150, true, '#d946ef'));
+        }
+
         if (hitCount > 0 || convertedShots > 0) {
           spawnFloatingText(
             this.x,
@@ -5479,6 +5757,59 @@
         ctx.beginPath();
         ctx.arc(0, 0, r, 0, Math.PI * 2);
         ctx.fill();
+
+        // Rotating Chrono-Astrolabe Gear Teeth
+        ctx.save();
+        ctx.rotate(-this.rot * 0.6);
+        ctx.strokeStyle = 'rgba(217, 70, 239, 0.45)';
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        for (let g = 0; g < 24; g++) {
+          const ga = (g * Math.PI) / 12;
+          const gr1 = r - 2;
+          const gr2 = r + 6;
+          ctx.moveTo(Math.cos(ga) * gr1, Math.sin(ga) * gr1);
+          ctx.lineTo(Math.cos(ga) * gr2, Math.sin(ga) * gr2);
+        }
+        ctx.stroke();
+        ctx.restore();
+
+        // Swirling glowing accretion disk trails for captured bullets
+        for (let i = 0; i < enemyProjectiles.length; i++) {
+          const ep = enemyProjectiles[i];
+          if (!ep.active) continue;
+          const edx = ep.x - this.x;
+          const edy = ep.y - this.y;
+          if (edx * edx + edy * edy < r * r) {
+            ctx.drawImage(getGlowSprite('#d946ef'), edx - 14, edy - 14, 28, 28);
+          }
+        }
+
+        // PRISMATIC MEGA-LASER REFRACTION (When struck by [R] Omega Ion Beam!)
+        if (this.refractionTimer > 0) {
+          const refColors = ['#ff0077', '#00f0ff', '#ffe600', '#00ff88', '#d946ef'];
+          for (let rb = 0; rb < 5; rb++) {
+            const refAng = (this.refractionAngle || 0) + (rb - 2) * 0.32;
+            const refLen = 780;
+            ctx.save();
+            ctx.rotate(refAng);
+            ctx.strokeStyle = refColors[rb];
+            ctx.lineWidth = 5.5 + Math.sin(frameCount * 0.5 + rb) * 2;
+            ctx.globalAlpha = 0.82;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(refLen, 0);
+            ctx.stroke();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(refLen, 0);
+            ctx.stroke();
+            ctx.restore();
+          }
+          ctx.drawImage(getGlowSprite('#ffffff'), -45, -45, 90, 90);
+        }
 
         // Draw Temporal Tether Chains from the central clock core to trapped enemies!
         ctx.strokeStyle = 'rgba(0, 240, 255, 0.45)';
@@ -5687,18 +6018,27 @@
 
         // Draw Voltaic Laser Tether between Player and Phantom Clone
         const distToPlayer = Math.hypot(player.x - this.x, player.y - this.y);
-        if (distToPlayer < 720) {
+        if (distToPlayer < 750) {
           ctx.save();
           ctx.beginPath();
           ctx.moveTo(this.x, this.y);
           ctx.lineTo(player.x, player.y);
-          ctx.strokeStyle = 'rgba(255, 230, 0, 0.32)';
+          ctx.strokeStyle = 'rgba(255, 230, 0, 0.35)';
           ctx.lineWidth = 6;
           ctx.stroke();
           ctx.strokeStyle = '#00f0ff';
-          ctx.lineWidth = 2;
+          ctx.lineWidth = 2.4;
           ctx.setLineDash([8, 6]);
           ctx.stroke();
+          ctx.setLineDash([]);
+
+          // High-voltage lightning sparks arcing across the tether
+          if (frameCount % 4 === 0) {
+            const tRatio = Math.random();
+            const tx = this.x + (player.x - this.x) * tRatio;
+            const ty = this.y + (player.y - this.y) * tRatio;
+            spawnParticle(tx, ty, (Math.random() - 0.5) * 3, (Math.random() - 0.5) * 3, '#ffe600', 8, 2.2);
+          }
           ctx.restore();
         }
 
@@ -5750,6 +6090,19 @@
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
+
+        // Holographic Glitch Scanlines
+        ctx.beginPath();
+        ctx.rect(-16, -16, 32, 32);
+        ctx.clip();
+        for (let sl = -16; sl < 16; sl += 4) {
+          ctx.strokeStyle = 'rgba(0, 240, 255, 0.35)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(-16, sl);
+          ctx.lineTo(16, sl);
+          ctx.stroke();
+        }
         ctx.restore();
 
         // Remaining duration arc & label
@@ -5763,6 +6116,150 @@
         ctx.textAlign = 'center';
         ctx.fillStyle = this.hasSwapped ? '#00f0ff' : '#ffe600';
         ctx.fillText(this.hasSwapped ? 'PHANTOM CLONE // TETHERED' : 'PHANTOM CLONE // [X] PHASE-SWAP', 0, -this.radius - 12);
+
+        ctx.restore();
+      }
+    }
+
+    // === SPATIAL RIFT: PERSISTENT DIMENSIONAL TEARS (GRAVITATIONAL VORTEX + RAPID SLICE DAMAGE) ===
+    class SpatialRift {
+      constructor(x, y, angle, maxLife = 120, isCross = false, color = '#00ff88') {
+        this.x = x;
+        this.y = y;
+        this.angle = angle;
+        this.life = maxLife;
+        this.maxLife = maxLife;
+        this.isCross = isCross;
+        this.color = color;
+        this.radius = isCross ? 85 : 62;
+        this.active = true;
+        this.pulse = 0;
+      }
+
+      update() {
+        this.life--;
+        this.pulse += 0.18;
+        const dmgMult = 1 + (player.level - 1) * 0.12;
+        const tickDmg = (this.isCross ? 34 : 22) * dmgMult;
+
+        // Gravitational vortex: suck nearby enemies inward toward the dimensional tear
+        for (let i = 0; i < enemies.length; i++) {
+          const e = enemies[i];
+          if (!e.active) continue;
+          const dx = this.x - e.x;
+          const dy = this.y - e.y;
+          const d = Math.hypot(dx, dy);
+          const pullR = this.radius * 2.3 + e.radius;
+          if (d < pullR) {
+            if (d > 14 && e.type !== 'boss') {
+              const pull = (1 - d / pullR) * 3.8;
+              e.x += (dx / d) * pull;
+              e.y += (dy / d) * pull;
+            }
+            if (frameCount % 5 === 0 && d <= this.radius + e.radius) {
+              e.takeDamage(tickDmg, false);
+              spawnParticle(e.x, e.y, (Math.random() - 0.5) * 4, (Math.random() - 0.5) * 4, this.color, 8, 2.4);
+            }
+          }
+        }
+
+        // Rapid vacuum pull on nearby collectible shards
+        for (let i = 0; i < shards.length; i++) {
+          const s = shards[i];
+          if (!s.active) continue;
+          const dx = this.x - s.x;
+          const dy = this.y - s.y;
+          const d = Math.hypot(dx, dy);
+          if (d < this.radius * 2.8) {
+            s.magnetized = true;
+            s.vx += (dx / (d || 1)) * 1.8;
+            s.vy += (dy / (d || 1)) * 1.8;
+          }
+        }
+
+        // Ambient dimensional distortion particles
+        if (frameCount % 3 === 0) {
+          const off = (Math.random() - 0.5) * this.radius * 1.3;
+          const pAng = this.angle + (Math.random() - 0.5) * 0.4;
+          spawnParticle(
+            this.x + Math.cos(pAng) * off,
+            this.y + Math.sin(pAng) * off,
+            -Math.sin(pAng) * (Math.random() - 0.5) * 3.5,
+            Math.cos(pAng) * (Math.random() - 0.5) * 3.5,
+            this.color,
+            14,
+            2.2
+          );
+        }
+
+        // Collapse detonation
+        if (this.life <= 0) {
+          this.active = false;
+          sound.parryDeflect();
+          screenShake = Math.max(screenShake, 8);
+          addGridRipple(this.x, this.y, this.radius * 2.0, 26, this.color);
+          const burstDmg = (this.isCross ? 115 : 75) * dmgMult;
+          for (let i = 0; i < enemies.length; i++) {
+            const e = enemies[i];
+            if (e.active && Math.hypot(e.x - this.x, e.y - this.y) <= this.radius * 1.6 + e.radius) {
+              e.takeDamage(burstDmg, true);
+            }
+          }
+          for (let k = 0; k < 12; k++) {
+            const a = (k * Math.PI * 2) / 12;
+            spawnParticle(this.x, this.y, Math.cos(a) * 6, Math.sin(a) * 6, this.color, 16, 3.2);
+          }
+        }
+      }
+
+      draw() {
+        const lifeRatio = Math.max(0, this.life / this.maxLife);
+        const alpha = Math.min(1, lifeRatio * 1.4);
+        const len = this.radius * 1.35 * (0.88 + Math.sin(this.pulse) * 0.12);
+
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.globalAlpha = alpha;
+
+        const drawTear = (rot, col) => {
+          ctx.save();
+          ctx.rotate(rot);
+
+          // Deep dark cosmic void
+          ctx.beginPath();
+          ctx.moveTo(-len, 0);
+          ctx.quadraticCurveTo(0, -12, len, 0);
+          ctx.quadraticCurveTo(0, 12, -len, 0);
+          ctx.fillStyle = '#020208';
+          ctx.fill();
+
+          // Jagged glowing distortion perimeter
+          ctx.beginPath();
+          ctx.moveTo(-len, 0);
+          for (let step = -len; step <= len; step += 10) {
+            const jitter = Math.sin(step * 0.22 + frameCount * 0.32) * 5.5;
+            ctx.lineTo(step, jitter);
+          }
+          ctx.strokeStyle = col;
+          ctx.lineWidth = 2.4;
+          ctx.stroke();
+
+          // Blinding white dimensional seam
+          ctx.beginPath();
+          ctx.moveTo(-len * 0.88, 0);
+          ctx.lineTo(len * 0.88, 0);
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 1.4;
+          ctx.stroke();
+
+          ctx.restore();
+        };
+
+        drawTear(0, this.color);
+        if (this.isCross) {
+          drawTear(Math.PI * 0.5, '#00f0ff');
+        }
 
         ctx.restore();
       }
@@ -8357,6 +8854,7 @@
 
       enemyProjectiles = [];
       enemies = [];
+      spatialRifts = [];
       chronoFields = [];
       phantomDecoys = [];
       waveSpawnQueue = [];
@@ -8375,6 +8873,7 @@
     let enemyProjectiles = [];
     let missiles = [];
     let blackHoles = [];
+    let spatialRifts = [];
     let chronoFields = [];
     let phantomDecoys = [];
     let shards = [];
@@ -8408,6 +8907,7 @@
       enemyProjectiles = [];
       missiles = [];
       blackHoles = [];
+      spatialRifts = [];
       chronoFields = [];
       phantomDecoys = [];
       shards = [];
@@ -9353,7 +9853,12 @@
         }
         wingmen = wingmen.filter(w => w.active);
 
-        // Update Active Chrono-Stasis Singularity Domes [F] & Phantom Holo-Decoy Clones [X]
+        // Update Spatial Rifts, Chrono-Stasis Singularity Domes [F] & Phantom Holo-Decoy Clones [X]
+        for (let i = 0; i < spatialRifts.length; i++) {
+          spatialRifts[i].update();
+        }
+        spatialRifts = spatialRifts.filter(sr => sr.active);
+
         for (let i = 0; i < chronoFields.length; i++) {
           chronoFields[i].update();
         }
@@ -9553,7 +10058,8 @@
       // Render Live Cyber-Contract Objectives (Slalom Gates, Orbital Payload Core & Neural Tether)
       drawLiveContract();
 
-      // Render Chrono-Stasis Singularity Domes [F] & Black Holes & Shards
+      // Render Spatial Rifts, Chrono-Stasis Singularity Domes [F] & Black Holes & Shards
+      for (let i = 0; i < spatialRifts.length; i++) spatialRifts[i].draw();
       for (let i = 0; i < chronoFields.length; i++) chronoFields[i].draw();
       for (let i = 0; i < blackHoles.length; i++) blackHoles[i].draw();
       for (let i = 0; i < shards.length; i++) shards[i].draw();
