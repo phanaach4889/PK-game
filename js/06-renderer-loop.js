@@ -1191,6 +1191,10 @@ function loop() {
     }
   }
 
+  // Guarantee clean 2D matrix & alpha at frame start (prevents any transform leak)
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.globalAlpha = 1.0;
+
   ctx.save();
   if (screenShake > 0) {
     const sx = (Math.random() - 0.5) * screenShake;

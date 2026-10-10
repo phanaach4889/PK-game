@@ -428,6 +428,10 @@ class Enemy {
       this.tier = 6;
     }
 
+    if (this.isBoss && !this.bossTitle) {
+      this.bossTitle = this.bossName || 'APEX OVERLORD';
+    }
+
     // Overclocked Elite Variant Promotion (Higher frequency & stronger Overclock stats!)
     const distFromCenter = Math.hypot(this.x - WORLD_W / 2, this.y - WORLD_H / 2);
     const outerBiomeBonus = distFromCenter > 1800 ? 0.14 : 0.05;
@@ -3315,9 +3319,10 @@ class Enemy {
       ctx.font = "900 10px 'Segoe UI', sans-serif";
       ctx.textAlign = 'center';
       ctx.fillStyle = pCol;
+      const shortBossName = String(this.bossName || this.bossTitle || 'APEX TITAN').split(' //')[0];
       const phaseTag = this.bossPhase >= 3
         ? '[PHASE III // APEX BERSERK • 32% ARMOR]'
-        : (this.bossPhase === 2 ? '[PHASE II // OVERCLOCKED • 18% ARMOR]' : `[PHASE I // ${this.bossTitle.split(' //')[0]}]`);
+        : (this.bossPhase === 2 ? '[PHASE II // OVERCLOCKED • 18% ARMOR]' : `[PHASE I // ${shortBossName}]`);
       ctx.fillText(phaseTag, 0, by - 5);
     }
     // HP bar & Elite Badge above regular enemies (drawn in unrotated camera-world space)

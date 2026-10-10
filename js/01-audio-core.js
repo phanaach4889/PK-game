@@ -759,6 +759,27 @@ class SoundEngine {
       osc.stop(t + idx * 0.06 + 0.3);
     });
   }
+
+  bossSpawn() {
+    if (!this.enabled || !this.ctx) return;
+    try {
+      const t = this.ctx.currentTime;
+      // Deep dreadnought war-horn + warning siren
+      [110, 82.41, 55].forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq * 1.25, t + idx * 0.08);
+        osc.frequency.exponentialRampToValueAtTime(freq, t + idx * 0.08 + 0.55);
+        gain.gain.setValueAtTime(0.16, t + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + idx * 0.08 + 0.6);
+        osc.connect(gain);
+        gain.connect(this.sfxBus);
+        osc.start(t + idx * 0.08);
+        osc.stop(t + idx * 0.08 + 0.62);
+      });
+    } catch (e) {}
+  }
 }
 
 const sound = new SoundEngine();

@@ -92,6 +92,99 @@ try {
   hasError = true;
 }
 
+// Headless VM Runtime & Canvas Transform Balance Check (Tests all 27 Enemies & Bosses)
+try {
+  const vm = require('vm');
+  let saveStack = 0;
+  const mockCtx = new Proxy({}, {
+    get(t, prop) {
+      if (prop === 'save') return () => { saveStack++; };
+      if (prop === 'restore') return () => { saveStack--; };
+      if (prop === 'createRadialGradient' || prop === 'createLinearGradient') {
+        return () => ({ addColorStop: () => {} });
+      }
+      if (prop === 'measureText') return () => ({ width: 50 });
+      return () => {};
+    },
+    set() { return true; }
+  });
+
+  const makeMockEl = () => ({
+    width: 1920,
+    height: 1080,
+    getContext: () => mockCtx,
+    addEventListener: () => {},
+    classList: { add: () => {}, remove: () => {}, toggle: () => {}, contains: () => false },
+    style: { setProperty: () => {} },
+    appendChild: () => {},
+    querySelectorAll: () => [],
+    querySelector: () => ({ style: {} }),
+    dataset: {}
+  });
+
+  const sandbox = {
+    getSaveStack: () => saveStack,
+    window: { innerWidth: 1920, innerHeight: 1080, addEventListener: () => {}, devicePixelRatio: 1 },
+    document: {
+      getElementById: () => makeMockEl(),
+      querySelectorAll: () => [],
+      querySelector: () => makeMockEl(),
+      createElement: () => makeMockEl(),
+      body: makeMockEl()
+    },
+    localStorage: { getItem: () => null, setItem: () => {} },
+    performance: { now: () => 1000 },
+    requestAnimationFrame: () => {},
+    AudioContext: function() {},
+    webkitAudioContext: function() {},
+    Math, Number, String, Object, Array, Set, Map, console, parseInt, parseFloat, isNaN, setTimeout: () => {}, clearTimeout: () => {}
+  };
+  sandbox.window.document = sandbox.document;
+  sandbox.window.localStorage = sandbox.localStorage;
+  sandbox.window.performance = sandbox.performance;
+
+  vm.createContext(sandbox);
+  vm.runInContext(combinedJs, sandbox);
+
+  const simCode = `
+    const types = [
+      'drone_bit', 'scout', 'mini', 'striker', 'splitter', 'cruiser',
+      'aegis', 'sniper', 'phantom', 'weaver', 'juggernaut', 'nemesis',
+      'boss_colossus', 'boss_seraphim', 'boss_leviathan', 'boss_architect',
+      'boss_ignis', 'boss_tempest', 'boss_chronos', 'boss_reaper',
+      'boss_behemoth', 'boss_pulsar', 'boss_valkyrie_zero', 'boss_hivemind',
+      'boss_banshee', 'boss_glacier', 'boss_oblivion'
+    ];
+    for (const t of types) {
+      for (const elite of [false, true]) {
+        const e = new Enemy(t, player.x + 220, player.y - 220, elite);
+        for (let step = 0; step < 25; step++) {
+          frameCount++;
+          e.update();
+          const s0 = getSaveStack();
+          e.draw();
+          const s1 = getSaveStack();
+          if (s0 !== s1) throw new Error('Canvas save/restore mismatch on ' + t + ': delta=' + (s1 - s0));
+        }
+        for (let hit = 0; hit < 14; hit++) {
+          e.takeDamage(e.maxHp * 0.08, true);
+          e.update();
+          const s0 = getSaveStack();
+          e.draw();
+          const s1 = getSaveStack();
+          if (s0 !== s1) throw new Error('Canvas save/restore mismatch on damaged ' + t + ': delta=' + (s1 - s0));
+        }
+        e.die();
+      }
+    }
+  `;
+  vm.runInContext(simCode, sandbox);
+  console.log('[SIM-OK] All 27 Enemy & Boss Archetypes (Phase I/II/III + Canvas Stack) Verified!');
+} catch (e) {
+  console.error('[SIM-ERROR] Runtime simulation failed:', e.stack || e.message);
+  hasError = true;
+}
+
 console.log('============================================================================');
 if (hasError) {
   console.error('[FAIL] One or more checks failed.');
@@ -99,4 +192,5 @@ if (hasError) {
 } else {
   console.log('[PASS] All modular HTML/CSS/JS files & standalone bundle are 100% healthy!');
 }
+
 
