@@ -2992,7 +2992,7 @@
         const leadFreq = track.lead[step32];
         const playLeadPhrase = (Math.floor(this.step / 32) % 2 === 1) ||
                                (typeof player !== 'undefined' && player.overdriveActive > 0) ||
-                               (typeof enemies !== 'undefined' && enemies.some(e => e.type === 'boss'));
+                               (typeof enemies !== 'undefined' && enemies.some(e => e.isBoss || e.type === 'boss'));
         if (leadFreq && playLeadPhrase) {
           this.playLead(t, leadFreq, stepDur * 1.8);
         }
@@ -3434,9 +3434,9 @@
     window.addEventListener('resize', resize);
     resize();
 
-    // Open-World Sector Dimensions & Smooth Follow-Camera
-    const WORLD_W = 4200;
-    const WORLD_H = 4200;
+    // Open-World Sector Dimensions & Smooth Follow-Camera (Massive 8400x8400 Cyber-Metropolis!)
+    const WORLD_W = 8400;
+    const WORLD_H = 8400;
     let camX = WORLD_W / 2 - canvas.width / 2;
     let camY = WORLD_H / 2 - canvas.height / 2;
 
@@ -3504,11 +3504,13 @@
     }
 
     const BIOME_ZONES = [
-      { id: 'nexus', name: 'NEXUS CORE // CITADEL HUB', shortName: 'NEXUS CORE', x: 2100, y: 2100, r: 780, color: '#00f0ff', rgb: '0, 240, 255' },
-      { id: 'foundry', name: 'CRIMSON FOUNDRY // WEAPON FORGE', shortName: 'CRIMSON FOUNDRY', x: 920, y: 920, r: 720, color: '#ff0055', rgb: '255, 0, 85' },
-      { id: 'vault', name: 'QUANTUM VAULT // DATA ARCHIVE', shortName: 'QUANTUM VAULT', x: 3280, y: 920, r: 720, color: '#ffe600', rgb: '255, 230, 0' },
-      { id: 'nebula', name: 'ION NEBULA // NANITE SANCTUARY', shortName: 'ION NEBULA', x: 920, y: 3280, r: 720, color: '#00ff88', rgb: '0, 255, 136' },
-      { id: 'void', name: 'VOID SINGULARITY // DARK SECTOR', shortName: 'VOID SINGULARITY', x: 3280, y: 3280, r: 740, color: '#d946ef', rgb: '217, 70, 239' }
+      { id: 'nexus', name: 'NEXUS CORE // CITADEL HUB', shortName: 'NEXUS CORE', x: 4200, y: 4200, r: 1500, color: '#00f0ff', rgb: '0, 240, 255' },
+      { id: 'skyline', name: 'CYBER-MEGAPOLIS // SKYLINE SECTOR', shortName: 'SKYLINE SECTOR', x: 4200, y: 1550, r: 1350, color: '#38bdf8', rgb: '56, 189, 248' },
+      { id: 'foundry', name: 'CRIMSON FOUNDRY // WEAPON FORGE', shortName: 'CRIMSON FOUNDRY', x: 1800, y: 1800, r: 1400, color: '#ff0055', rgb: '255, 0, 85' },
+      { id: 'vault', name: 'QUANTUM VAULT // DATA ARCHIVE', shortName: 'QUANTUM VAULT', x: 6600, y: 1800, r: 1400, color: '#ffe600', rgb: '255, 230, 0' },
+      { id: 'nebula', name: 'ION NEBULA // NANITE SANCTUARY', shortName: 'ION NEBULA', x: 1800, y: 6600, r: 1400, color: '#00ff88', rgb: '0, 255, 136' },
+      { id: 'void', name: 'VOID SINGULARITY // DARK SECTOR', shortName: 'VOID SINGULARITY', x: 6600, y: 6600, r: 1450, color: '#d946ef', rgb: '217, 70, 239' },
+      { id: 'abyss', name: 'ABYSSAL MECHA // TITAN CRATER', shortName: 'TITAN CRATER', x: 4200, y: 6850, r: 1350, color: '#f97316', rgb: '249, 115, 22' }
     ];
 
     function getActiveBiome(wx, wy) {
@@ -4363,6 +4365,8 @@
 
         this.x += this.vx;
         this.y += this.vy;
+
+        resolveBuildingCollision(this, this.radius);
 
         this.x = Math.max(36, Math.min(WORLD_W - 36, this.x));
         this.y = Math.max(36, Math.min(WORLD_H - 36, this.y));
@@ -5514,7 +5518,7 @@
           if (!e.active) continue;
           const dist = Math.hypot(this.x - e.x, this.y - e.y);
           if (dist < this.pullRadius && dist > 5) {
-            const pull = (e.type === 'boss') ? 0.8 : 2.8;
+            const pull = (e.isBoss || e.type === 'boss') ? 0.8 : 2.8;
             const ang = Math.atan2(this.y - e.y, this.x - e.x);
             e.x += Math.cos(ang) * pull;
             e.y += Math.sin(ang) * pull;
@@ -5596,7 +5600,7 @@
           const d = Math.hypot(dx, dy);
           if (d < this.radius + e.radius) {
             e.chronoSlowTimer = 5;
-            const pullStrength = e.type === 'boss' ? 0.38 : 1.25;
+            const pullStrength = (e.isBoss || e.type === 'boss') ? 0.38 : 1.25;
             if (d > 14) {
               e.x += (dx / d) * pullStrength;
               e.y += (dy / d) * pullStrength;
@@ -6515,24 +6519,79 @@
           this.dashTimer = 95;
           this.isElite = true;
           this.tier = 5;
-        } else if (type === 'boss') {
-          this.hp = 2400 * waveScale;
+        } else if (type === 'boss' || type === 'boss_seraphim') {
+          this.isBoss = true;
+          this.bossType = 'seraphim';
+          this.bossName = 'OMEGA SERAPHIM DREADNOUGHT';
+          this.bossSubtitle = 'DIVINE ARBITER // APEX CELESTIAL WAR-MECH';
+          this.hp = 3400 * waveScale;
           this.maxHp = this.hp;
           this.speed = 1.65 * spdScale;
-          this.radius = 56;
+          this.radius = 62;
           this.color = '#9d4edd';
-          this.scoreVal = 6000;
-          this.xpVal = 400;
-          this.shotCooldown = Math.floor(36 / this.fireScale);
+          this.scoreVal = 7500;
+          this.xpVal = 480;
+          this.shotCooldown = Math.floor(32 / this.fireScale);
           this.patternStep = 0;
+          this.orbitalStrikeTimer = 220;
+          this.tier = 6;
+        } else if (type === 'boss_colossus') {
+          this.isBoss = true;
+          this.bossType = 'colossus';
+          this.bossName = 'TITAN GOLIATH // SIEGE BATTLESHIP';
+          this.bossSubtitle = 'IRON JUGGERNAUT // QUAD-VULCAN FORTRESS';
+          this.hp = 4400 * waveScale;
+          this.maxHp = this.hp;
+          this.speed = 1.35 * spdScale;
+          this.radius = 70;
+          this.color = '#ff2a55';
+          this.scoreVal = 8500;
+          this.xpVal = 520;
+          this.shotCooldown = Math.floor(16 / this.fireScale);
+          this.patternStep = 0;
+          this.shockwaveCooldown = 180;
+          this.tier = 6;
+        } else if (type === 'boss_leviathan') {
+          this.isBoss = true;
+          this.bossType = 'leviathan';
+          this.bossName = 'VOID LEVIATHAN // APEX SINGULARITY';
+          this.bossSubtitle = 'COSMIC HYDRA // EVENT HORIZON ENTITY';
+          this.hp = 5000 * waveScale;
+          this.maxHp = this.hp;
+          this.speed = 1.85 * spdScale;
+          this.radius = 66;
+          this.color = '#d946ef';
+          this.scoreVal = 9500;
+          this.xpVal = 560;
+          this.shotCooldown = Math.floor(28 / this.fireScale);
+          this.patternStep = 0;
+          this.vortexCooldown = 240;
+          this.tier = 6;
+        } else if (type === 'boss_architect') {
+          this.isBoss = true;
+          this.bossType = 'architect';
+          this.bossName = 'KAIROS HYPER-CORE // AI CONSTRUCT';
+          this.bossSubtitle = 'SENTIENT MAINFRAME // ROTATING TRIPWIRE MATRIX';
+          this.hp = 5600 * waveScale;
+          this.maxHp = this.hp;
+          this.speed = 1.5 * spdScale;
+          this.radius = 62;
+          this.color = '#00f0ff';
+          this.scoreVal = 11000;
+          this.xpVal = 620;
+          this.shotCooldown = Math.floor(20 / this.fireScale);
+          this.patternStep = 0;
+          this.laserGridAngle = 0;
+          this.empCooldown = 220;
           this.tier = 6;
         }
 
         // Overclocked Elite Variant Promotion (Active right from Sector 1!)
         const distFromCenter = Math.hypot(this.x - WORLD_W / 2, this.y - WORLD_H / 2);
-        const outerBiomeBonus = distFromCenter > 1100 ? 0.10 : 0;
+        const outerBiomeBonus = distFromCenter > 1800 ? 0.10 : 0;
         const eliteChance = Math.min(0.55, threatCfg.eliteBonus + (wave - 1) * 0.045 + outerBiomeBonus);
         if (
+          !this.isBoss &&
           type !== 'boss' &&
           type !== 'nemesis' &&
           type !== 'mini' &&
@@ -6572,6 +6631,16 @@
           );
         }
 
+        // Titan Goliath heavy front armor plating absorbs 50% of frontal non-crit damage
+        if (this.bossType === 'colossus' && !isCrit) {
+          const hitAngle = Math.atan2(player.y - this.y, player.x - this.x);
+          const angleDiff = Math.abs(Math.atan2(Math.sin(hitAngle - this.angle), Math.cos(hitAngle - this.angle)));
+          if (angleDiff < 0.9) {
+            finalDmg *= 0.5;
+            spawnParticle(this.x + Math.cos(this.angle) * this.radius, this.y + Math.sin(this.angle) * this.radius, 0, 0, '#ffe600', 8, 2.5);
+          }
+        }
+
         this.hp -= finalDmg;
         this.hitFlash = 4;
 
@@ -6601,7 +6670,7 @@
           recordContractAction('kill', 1, this.type);
         }
 
-        const isBoss = this.type === 'boss';
+        const isBoss = this.isBoss || this.type === 'boss';
         const isNemesis = this.type === 'nemesis';
         const isHeavy = isBoss || isNemesis || this.type === 'juggernaut' || this.isElite;
         sound.explosion(isBoss || isNemesis);
@@ -6609,7 +6678,7 @@
         if (isBoss) {
           hitStopFrames = 6;
           chromaticFlash = 16;
-          announce('// OMEGA DREADNOUGHT OBLITERATED //', '#ffe600');
+          announce(`// ${this.bossName || 'OMEGA APEX BOSS'} OBLITERATED //`, '#ffe600');
         } else if (isNemesis) {
           hitStopFrames = 4;
           chromaticFlash = 12;
@@ -6869,8 +6938,12 @@
           this.y += Math.sin(this.angle) * this.speed * timeScale;
         }
 
+        if (!this.isBoss && this.type !== 'boss') {
+          resolveBuildingCollision(this, this.radius);
+        }
+
         // Soft separation so enemies don't clump on the exact same pixel
-        if (this.type !== 'boss') {
+        if (!this.isBoss && this.type !== 'boss') {
           for (let i = 0; i < enemies.length; i++) {
             const other = enemies[i];
             if (other === this || !other.active) continue;
@@ -6889,29 +6962,129 @@
           }
         }
 
-        // Cruiser & Boss firing patterns
-        if (this.type === 'cruiser' || this.type === 'boss') {
+        // Multi-Apex Boss Special Abilities & Attacks
+        if (this.isBoss || this.type === 'boss') {
+          const enraged = this.hp < this.maxHp * 0.55;
+
+          // Titan Colossus: Seismic Shockwaves & Rocket Pods
+          if (this.bossType === 'colossus') {
+            if (this.shockwaveCooldown) this.shockwaveCooldown--;
+            if (this.shockwaveCooldown <= 0) {
+              this.shockwaveCooldown = enraged ? 120 : 180;
+              sound.explosion(true);
+              screenShake = Math.max(screenShake, 18);
+              addGridRipple(this.x, this.y, 440, 36, '#ff2a55');
+              for (let a = 0; a < Math.PI * 2; a += Math.PI / 10) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, a, '#ff7b00', 7.2, 20 * this.dmgScale));
+              }
+              spawnFloatingText(this.x, this.y - 45, '// SEISMIC QUAKE SLAM //', '#ff2a55', 1.3);
+            }
+          }
+
+          // Void Leviathan: Event Horizon Singularity & Dimensional Rifts
+          else if (this.bossType === 'leviathan') {
+            if (this.vortexCooldown) this.vortexCooldown--;
+            if (this.vortexCooldown <= 0) {
+              this.vortexCooldown = enraged ? 180 : 250;
+              if (typeof spatialRifts !== 'undefined') {
+                spatialRifts.push(new SpatialRift(player.x, player.y, 0, 150, true, '#d946ef'));
+                sound.parryDeflect();
+                spawnFloatingText(this.x, this.y - 45, '// EVENT HORIZON SINGULARITY //', '#d946ef', 1.3);
+              }
+            }
+          }
+
+          // Kairos Architect: Rotating Laser Tripwires & Nanite EMP Disruption
+          else if (this.bossType === 'architect') {
+            this.laserGridAngle = (this.laserGridAngle || 0) + (enraged ? 0.024 : 0.015);
+            if (this.empCooldown) this.empCooldown--;
+            if (this.empCooldown <= 0) {
+              this.empCooldown = enraged ? 160 : 220;
+              sound.dash();
+              addGridRipple(this.x, this.y, 420, 38, '#00f0ff');
+              screenShake = Math.max(screenShake, 14);
+              spawnFloatingText(this.x, this.y - 45, '// NANITE EMP DISRUPTION //', '#00f0ff', 1.3);
+              if (distToPlayer < 420) {
+                player.takeDamage(24 * this.dmgScale);
+                player.vx += Math.cos(this.angle) * 14;
+                player.vy += Math.sin(this.angle) * 14;
+              }
+            }
+          }
+
+          // Omega Seraphim: Orbital Celestial Strikes
+          else {
+            if (this.orbitalStrikeTimer) this.orbitalStrikeTimer--;
+            if (this.orbitalStrikeTimer <= 0) {
+              this.orbitalStrikeTimer = enraged ? 150 : 220;
+              sound.parryDeflect();
+              screenShake = Math.max(screenShake, 14);
+              spawnFloatingText(this.x, this.y - 45, '// ORBITAL CELESTIAL STRIKE //', '#ffe600', 1.3);
+              lightningBolts.push({ x1: player.x, y1: player.y - 500, x2: player.x, y2: player.y, color: '#ffe600', life: 16 });
+              lightningBolts.push({ x1: player.x - 20, y1: player.y - 500, x2: player.x + 20, y2: player.y, color: '#ff0077', life: 14 });
+              player.takeDamage(28 * this.dmgScale);
+              addGridRipple(player.x, player.y, 220, 24, '#ffe600');
+            }
+          }
+        }
+
+        // Cruiser & Multi-Boss firing patterns
+        if (this.type === 'cruiser' || this.isBoss || this.type === 'boss') {
           this.shotCooldown -= cdTick;
           if (this.shotCooldown <= 0) {
             this.recoil = 5;
-            if (this.type === 'boss') {
+            if (this.isBoss || this.type === 'boss') {
               const enraged = this.hp < this.maxHp * 0.55;
-              this.shotCooldown = Math.floor((enraged ? 24 : 34) / this.fireScale);
               this.patternStep++;
-              if (this.patternStep % 3 === 0) {
-                // 16-way Spiral Nova Ring
-                for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
-                  enemyProjectiles.push(new Projectile(this.x, this.y, a + this.patternStep * 0.18, '#ff0077', 6.6, 17 * this.dmgScale));
+
+              if (this.bossType === 'colossus') {
+                // TITAN GOLIATH: Dual Heavy Rotary Gatling & Heavy Shells
+                this.shotCooldown = Math.floor((enraged ? 12 : 16) / this.fireScale);
+                const spreadA = (Math.random() - 0.5) * 0.22;
+                enemyProjectiles.push(new Projectile(this.x + Math.cos(this.angle + 0.3) * 36, this.y + Math.sin(this.angle + 0.3) * 36, this.angle + spreadA, '#ff7b00', 9.5, 14 * this.dmgScale));
+                enemyProjectiles.push(new Projectile(this.x + Math.cos(this.angle - 0.3) * 36, this.y + Math.sin(this.angle - 0.3) * 36, this.angle - spreadA, '#ff7b00', 9.5, 14 * this.dmgScale));
+                if (this.patternStep % 5 === 0) {
+                  enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ff2a55', 13.0, 24 * this.dmgScale, 1));
                 }
-              } else if (this.patternStep % 3 === 1) {
-                // 7-way Aimed Dreadnought Fan
-                for (let a = -0.54; a <= 0.54; a += 0.18) {
-                  enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + a, '#9d4edd', 8.0, 18 * this.dmgScale));
+              } else if (this.bossType === 'leviathan') {
+                // VOID LEVIATHAN: 24-way Spiral Nebula & 5-way Void Bolts
+                this.shotCooldown = Math.floor((enraged ? 22 : 30) / this.fireScale);
+                if (this.patternStep % 3 === 0) {
+                  for (let a = 0; a < Math.PI * 2; a += Math.PI / 12) {
+                    const ang = a + this.patternStep * 0.24;
+                    enemyProjectiles.push(new Projectile(this.x, this.y, ang, '#d946ef', 6.8, 16 * this.dmgScale));
+                  }
+                } else {
+                  for (let a = -0.44; a <= 0.44; a += 0.22) {
+                    enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + a, '#00f0ff', 8.5, 18 * this.dmgScale));
+                  }
+                }
+              } else if (this.bossType === 'architect') {
+                // KAIROS HYPER-CORE: Tripwire Pulses & Focus Rail Lance
+                this.shotCooldown = Math.floor((enraged ? 16 : 22) / this.fireScale);
+                if (this.patternStep % 2 === 0) {
+                  for (let q = 0; q < 4; q++) {
+                    const qAng = (this.laserGridAngle || 0) + (q * Math.PI) / 2;
+                    enemyProjectiles.push(new Projectile(this.x, this.y, qAng, '#00f0ff', 7.6, 15 * this.dmgScale));
+                  }
+                } else {
+                  enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ffe600', 14.5, 24 * this.dmgScale));
                 }
               } else {
-                // Twin High-Velocity Rail Lances
-                enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - 0.08, '#ff0055', 14.0, 22 * this.dmgScale));
-                enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + 0.08, '#ff0055', 14.0, 22 * this.dmgScale));
+                // OMEGA SERAPHIM: 16-way Spiral Nova, 7-way Dreadnought Fan, Twin Rail Lances
+                this.shotCooldown = Math.floor((enraged ? 22 : 32) / this.fireScale);
+                if (this.patternStep % 3 === 0) {
+                  for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
+                    enemyProjectiles.push(new Projectile(this.x, this.y, a + this.patternStep * 0.18, '#ff0077', 6.6, 17 * this.dmgScale));
+                  }
+                } else if (this.patternStep % 3 === 1) {
+                  for (let a = -0.54; a <= 0.54; a += 0.18) {
+                    enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + a, '#9d4edd', 8.0, 18 * this.dmgScale));
+                  }
+                } else {
+                  enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - 0.08, '#ff0055', 14.0, 22 * this.dmgScale));
+                  enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + 0.08, '#ff0055', 14.0, 22 * this.dmgScale));
+                }
               }
             } else {
               this.shotCooldown = Math.floor(68 / this.fireScale);
@@ -6927,12 +7100,12 @@
 
         // Collision with player
         if (distToPlayer < this.radius + player.radius) {
-          const baseContact = this.type === 'boss' ? 34 : (this.type === 'juggernaut' || this.type === 'nemesis' ? 26 : 18);
+          const baseContact = (this.isBoss || this.type === 'boss') ? 36 : (this.type === 'juggernaut' || this.type === 'nemesis' ? 26 : 18);
           player.takeDamage(baseContact * this.dmgScale);
-          if (this.type !== 'boss' && this.type !== 'juggernaut' && this.type !== 'nemesis') {
+          if (!this.isBoss && this.type !== 'boss' && this.type !== 'juggernaut' && this.type !== 'nemesis') {
             this.takeDamage(999);
           }
-        } else if (this.type !== 'boss' && this.type !== 'nemesis' && distToPlayer > 1250) {
+        } else if (!this.isBoss && this.type !== 'boss' && this.type !== 'nemesis' && distToPlayer > 1250) {
           const pt = randomEdgePoint();
           this.x = pt.x;
           this.y = pt.y;
@@ -7601,97 +7774,270 @@
         }
 
         /* -------------------------------------------------------------------
-           TIER 6: BOSS -> "OMEGA SERAPHIM DREADNOUGHT" (Multi-Tiered War-Mech)
+           TIER 6: MULTI-APEX MEGA-BOSSES (Hardware-Accelerated Vector Renders)
            ------------------------------------------------------------------- */
-        else if (this.type === 'boss') {
+        else if (this.isBoss || this.type === 'boss') {
           const enraged = this.hp < this.maxHp * 0.5;
-          const bossAccent = enraged ? '#ff0055' : '#00f0ff';
 
-          // Layer 1: Outer Rotating Halo & 4 Heavy Weapon Wing-Pylons
-          ctx.save();
-          ctx.rotate(frameCount * 0.015);
-          for (let i = 0; i < 4; i++) {
+          // 1. TITAN GOLIATH SIEGE BATTLESHIP (Colossus)
+          if (this.bossType === 'colossus') {
             ctx.save();
-            ctx.rotate((i * Math.PI) / 2);
-            ctx.fillStyle = isHit ? '#ffffff' : '#180726';
-            ctx.strokeStyle = primary;
-            ctx.lineWidth = 2.5;
+            ctx.rotate(this.angle);
+
+            // Heavy Dual Tank Tread Assemblies
+            ctx.fillStyle = isHit ? '#ffffff' : '#1a050d';
+            ctx.strokeStyle = '#ff2a55';
+            ctx.lineWidth = 2.4;
+            ctx.strokeRect(-55, -42, 110, 16);
+            ctx.fillRect(-55, -42, 110, 16);
+            ctx.strokeRect(-55, 26, 110, 16);
+            ctx.fillRect(-55, 26, 110, 16);
+
+            // Rolling tread links
+            ctx.strokeStyle = 'rgba(255, 123, 0, 0.4)';
+            ctx.lineWidth = 1.2;
+            for (let tr = -45; tr <= 45; tr += 15) {
+              ctx.beginPath();
+              ctx.moveTo(tr, -42); ctx.lineTo(tr, -26);
+              ctx.moveTo(tr, 26); ctx.lineTo(tr, 42);
+              ctx.stroke();
+            }
+
+            // Main Hexagonal Iron Armor Glacis Plate
+            ctx.fillStyle = isHit ? '#ffffff' : '#0d0206';
+            ctx.strokeStyle = enraged ? '#ffe600' : '#ff2a55';
+            ctx.lineWidth = 3;
             ctx.beginPath();
-            ctx.moveTo(38, -14);
-            ctx.lineTo(66 + pulse * 6, -22);
-            ctx.lineTo(58 + pulse * 6, 0);
-            ctx.lineTo(66 + pulse * 6, 22);
-            ctx.lineTo(38, 14);
+            ctx.moveTo(48, 0);
+            ctx.lineTo(24, -32);
+            ctx.lineTo(-44, -32);
+            ctx.lineTo(-52, 0);
+            ctx.lineTo(-44, 32);
+            ctx.lineTo(24, 32);
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
 
-            // Weapon emitter node on pylon tip
+            // Hazard Warning Stripes on front bumper
+            ctx.strokeStyle = '#ffe600';
+            ctx.lineWidth = 2.2;
             ctx.beginPath();
-            ctx.arc(54, 0, 4.5, 0, Math.PI * 2);
-            ctx.fillStyle = bossAccent;
-            ctx.fill();
-            ctx.restore();
-          }
-          ctx.restore();
-
-          // Layer 2: 6 Segmented Armor Plates (Flare outward when enraged/beating)
-          ctx.save();
-          ctx.rotate(-frameCount * 0.022);
-          const flare = (enraged ? 6 : 0) + pulse * 4;
-          for (let i = 0; i < 6; i++) {
-            ctx.save();
-            ctx.rotate((i * Math.PI) / 3);
-            ctx.translate(flare, 0);
-            ctx.beginPath();
-            ctx.arc(0, 0, 44, -0.42, 0.42);
-            ctx.arc(0, 0, 30, 0.42, -0.42, true);
-            ctx.closePath();
-            ctx.fillStyle = isHit ? '#fff' : 'rgba(157, 78, 221, 0.32)';
-            ctx.strokeStyle = enraged ? '#ff0077' : primary;
-            ctx.lineWidth = 2.5;
-            ctx.fill();
+            ctx.moveTo(14, -18); ctx.lineTo(32, -6);
+            ctx.moveTo(14, 18); ctx.lineTo(32, 6);
             ctx.stroke();
+
+            // Twin Heavy Rotary Vulcan Cannon Barrels
+            ctx.fillStyle = '#ff7b00';
+            ctx.fillRect(20, -12, 38, 6);
+            ctx.fillRect(20, 6, 38, 6);
+
+            // Central Kinetic Core / Red Reactor Eye
+            ctx.beginPath();
+            ctx.arc(0, 0, 16 + pulse * 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = enraged ? '#ffe600' : '#ff0055';
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
             ctx.restore();
           }
-          ctx.restore();
 
-          // Layer 3: Inner Sacred-Geometry Octagram Reactor Ring
-          ctx.save();
-          ctx.rotate(frameCount * 0.04);
-          ctx.strokeStyle = bossAccent;
-          ctx.lineWidth = 1.8;
-          ctx.strokeRect(-20, -20, 40, 40);
-          ctx.rotate(Math.PI / 4);
-          ctx.strokeRect(-20, -20, 40, 40);
-          ctx.restore();
+          // 2. VOID LEVIATHAN APEX SINGULARITY (Leviathan)
+          else if (this.bossType === 'leviathan') {
+            // 8 Undulating Dark Matter Tentacles
+            ctx.save();
+            for (let t = 0; t < 8; t++) {
+              const baseA = (t * Math.PI) / 4 + frameCount * 0.01;
+              const flex = Math.sin(frameCount * 0.08 + t * 1.2) * 22;
+              const tipX = Math.cos(baseA) * (65 + flex) - Math.sin(baseA) * flex;
+              const tipY = Math.sin(baseA) * (65 + flex) + Math.cos(baseA) * flex;
+              ctx.beginPath();
+              ctx.moveTo(0, 0);
+              ctx.quadraticCurveTo(Math.cos(baseA) * 35, Math.sin(baseA) * 35, tipX, tipY);
+              ctx.strokeStyle = t % 2 === 0 ? '#d946ef' : '#00f0ff';
+              ctx.lineWidth = 3.5;
+              ctx.stroke();
+            }
 
-          // Layer 4: Central Singularity Core & Player-Tracking Cyber Eye
-          ctx.beginPath();
-          ctx.arc(0, 0, 15, 0, Math.PI * 2);
-          ctx.fillStyle = '#090214';
-          ctx.fill();
-          ctx.lineWidth = 3;
-          ctx.strokeStyle = '#ffe600';
-          ctx.stroke();
+            // Counter-Rotating Singularity Accretion Rings
+            ctx.rotate(-frameCount * 0.025);
+            ctx.strokeStyle = 'rgba(217, 70, 239, 0.45)';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(0, 0, 48 + pulse * 5, 0, Math.PI * 2);
+            ctx.stroke();
 
-          const eyeX = Math.cos(this.angle) * 5;
-          const eyeY = Math.sin(this.angle) * 5;
-          ctx.beginPath();
-          ctx.arc(eyeX, eyeY, 6 + pulse * 2, 0, Math.PI * 2);
-          ctx.fillStyle = enraged ? '#ff0055' : '#ffe600';
-          ctx.fill();
+            ctx.rotate(frameCount * 0.05);
+            ctx.strokeStyle = '#00f0ff';
+            ctx.lineWidth = 1.8;
+            ctx.strokeRect(-26, -26, 52, 52);
 
-          ctx.beginPath();
-          ctx.arc(eyeX, eyeY, 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = '#ffffff';
-          ctx.fill();
+            // Central Event Horizon Black Hole Core
+            ctx.beginPath();
+            ctx.arc(0, 0, 18, 0, Math.PI * 2);
+            ctx.fillStyle = '#020008';
+            ctx.fill();
+            ctx.strokeStyle = '#d946ef';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(0, 0, 6 + pulse * 2, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+
+            ctx.restore();
+          }
+
+          // 3. KAIROS HYPER-CORE AI CONSTRUCT (Architect)
+          else if (this.bossType === 'architect') {
+            ctx.save();
+            const rotA = this.laserGridAngle || (frameCount * 0.02);
+
+            // 4 Rotating Laser Grid Tripwire Emitters
+            ctx.save();
+            ctx.rotate(rotA);
+            for (let q = 0; q < 4; q++) {
+              ctx.save();
+              ctx.rotate((q * Math.PI) / 2);
+              ctx.beginPath();
+              ctx.moveTo(0, 0); ctx.lineTo(120, 0);
+              ctx.strokeStyle = enraged ? 'rgba(255, 0, 119, 0.45)' : 'rgba(0, 240, 255, 0.35)';
+              ctx.lineWidth = 2.5;
+              ctx.stroke();
+              ctx.restore();
+            }
+            ctx.restore();
+
+            // Nested 3D-Effect Hyper-Cube Wireframes
+            ctx.rotate(frameCount * 0.02);
+            ctx.strokeStyle = '#00f0ff';
+            ctx.lineWidth = 2.4;
+            ctx.strokeRect(-32, -32, 64, 64);
+
+            ctx.rotate(-frameCount * 0.04);
+            ctx.strokeStyle = '#ffe600';
+            ctx.lineWidth = 2.0;
+            ctx.strokeRect(-22, -22, 44, 44);
+
+            // 4 Orbiting Satellite Prism Mirrors
+            for (let s = 0; s < 4; s++) {
+              const sa = rotA * 1.5 + (s * Math.PI) / 2;
+              const sx = Math.cos(sa) * 54;
+              const sy = Math.sin(sa) * 54;
+              ctx.fillStyle = '#00f0ff';
+              ctx.fillRect(sx - 5, sy - 5, 10, 10);
+              ctx.strokeStyle = '#ffffff';
+              ctx.strokeRect(sx - 5, sy - 5, 10, 10);
+            }
+
+            // Inner Quantum Matrix AI Core
+            ctx.beginPath();
+            ctx.arc(0, 0, 15, 0, Math.PI * 2);
+            ctx.fillStyle = '#020e18';
+            ctx.fill();
+            ctx.strokeStyle = '#00ff88';
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+
+            ctx.fillStyle = enraged ? '#ff0055' : '#00ff88';
+            ctx.beginPath();
+            ctx.arc(0, 0, 5 + pulse * 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+          }
+
+          // 4. OMEGA SERAPHIM DREADNOUGHT (Seraphim / Default)
+          else {
+            const bossAccent = enraged ? '#ff0055' : '#00f0ff';
+
+            // Layer 1: Outer Rotating Halo & 4 Heavy Weapon Wing-Pylons
+            ctx.save();
+            ctx.rotate(frameCount * 0.015);
+            for (let i = 0; i < 4; i++) {
+              ctx.save();
+              ctx.rotate((i * Math.PI) / 2);
+              ctx.fillStyle = isHit ? '#ffffff' : '#180726';
+              ctx.strokeStyle = primary;
+              ctx.lineWidth = 2.5;
+              ctx.beginPath();
+              ctx.moveTo(38, -14);
+              ctx.lineTo(66 + pulse * 6, -22);
+              ctx.lineTo(58 + pulse * 6, 0);
+              ctx.lineTo(66 + pulse * 6, 22);
+              ctx.lineTo(38, 14);
+              ctx.closePath();
+              ctx.fill();
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.arc(54, 0, 4.5, 0, Math.PI * 2);
+              ctx.fillStyle = bossAccent;
+              ctx.fill();
+              ctx.restore();
+            }
+            ctx.restore();
+
+            // Layer 2: 6 Segmented Armor Plates
+            ctx.save();
+            ctx.rotate(-frameCount * 0.022);
+            const flare = (enraged ? 6 : 0) + pulse * 4;
+            for (let i = 0; i < 6; i++) {
+              ctx.save();
+              ctx.rotate((i * Math.PI) / 3);
+              ctx.translate(flare, 0);
+              ctx.beginPath();
+              ctx.arc(0, 0, 44, -0.42, 0.42);
+              ctx.arc(0, 0, 30, 0.42, -0.42, true);
+              ctx.closePath();
+              ctx.fillStyle = isHit ? '#fff' : 'rgba(157, 78, 221, 0.32)';
+              ctx.strokeStyle = enraged ? '#ff0077' : primary;
+              ctx.lineWidth = 2.5;
+              ctx.fill();
+              ctx.stroke();
+              ctx.restore();
+            }
+            ctx.restore();
+
+            // Layer 3: Inner Sacred-Geometry Octagram Reactor Ring
+            ctx.save();
+            ctx.rotate(frameCount * 0.04);
+            ctx.strokeStyle = bossAccent;
+            ctx.lineWidth = 1.8;
+            ctx.strokeRect(-20, -20, 40, 40);
+            ctx.rotate(Math.PI / 4);
+            ctx.strokeRect(-20, -20, 40, 40);
+            ctx.restore();
+
+            // Layer 4: Central Singularity Core & Eye
+            ctx.beginPath();
+            ctx.arc(0, 0, 15, 0, Math.PI * 2);
+            ctx.fillStyle = '#090214';
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#ffe600';
+            ctx.stroke();
+
+            const eyeX = Math.cos(this.angle) * 5;
+            const eyeY = Math.sin(this.angle) * 5;
+            ctx.beginPath();
+            ctx.arc(eyeX, eyeY, 6 + pulse * 2, 0, Math.PI * 2);
+            ctx.fillStyle = enraged ? '#ff0055' : '#ffe600';
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(eyeX, eyeY, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+          }
         }
 
         ctx.restore();
 
         // HP bar & Elite Badge above regular enemies (drawn in unrotated camera-world space)
-        if (this.type !== 'boss' && (this.hp < this.maxHp || this.isElite || this.type === 'juggernaut' || this.type === 'nemesis')) {
+        if (!this.isBoss && this.type !== 'boss' && (this.hp < this.maxHp || this.isElite || this.type === 'juggernaut' || this.type === 'nemesis')) {
           const w = this.radius * 2.1;
           ctx.fillStyle = 'rgba(10, 15, 30, 0.8)';
           ctx.fillRect(-w / 2, -this.radius - 14, w, 4.5);
@@ -8311,71 +8657,289 @@
     }
 
     let worldProps = [];
+    let buildings = [];
+
+    // === CYBER-SKYSCRAPERS & MEGAPOLIS ARCHITECTURE (TACTICAL SOLID COVER) ===
+    function generateBuildings() {
+      buildings = [
+        // 1. NEXUS CORE // CITADEL PROMENADE
+        { x: 3600, y: 3600, w: 200, h: 200, style: 'monolith', color: '#00f0ff', label: 'NEXUS TOWER 01', bannerText: 'KAIROS // HQ', roofType: 'helipad' },
+        { x: 4800, y: 3600, w: 200, h: 200, style: 'monolith', color: '#00f0ff', label: 'NEXUS TOWER 02', bannerText: 'OVERDRIVE LABS', roofType: 'satellite' },
+        { x: 3600, y: 4800, w: 200, h: 200, style: 'monolith', color: '#00f0ff', label: 'NEXUS TOWER 03', bannerText: 'CYBERDYNE-07', roofType: 'solar' },
+        { x: 4800, y: 4800, w: 200, h: 200, style: 'monolith', color: '#00f0ff', label: 'NEXUS TOWER 04', bannerText: 'AEROSPACE PRIME', roofType: 'helipad' },
+        { x: 4200, y: 3350, w: 260, h: 160, style: 'monolith', color: '#38bdf8', label: 'CENTRAL CITADEL', bannerText: 'CENTRAL MAINFRAME', roofType: 'satellite' },
+        { x: 4200, y: 5050, w: 260, h: 160, style: 'monolith', color: '#38bdf8', label: 'DEFENSE BARRACKS', bannerText: 'SECURITY GRID // 01', roofType: 'vent' },
+        { x: 3350, y: 4200, w: 160, h: 260, style: 'monolith', color: '#00f0ff', label: 'WEST ARCHIVE', bannerText: 'WEST TERMINAL', roofType: 'vent' },
+        { x: 5050, y: 4200, w: 160, h: 260, style: 'monolith', color: '#00f0ff', label: 'EAST ARCHIVE', bannerText: 'EAST TERMINAL', roofType: 'helipad' },
+
+        // 2. CYBER-MEGAPOLIS // SKYLINE SECTOR (High-Density Towers)
+        { x: 3750, y: 1250, w: 220, h: 240, style: 'monolith', color: '#38bdf8', label: 'SKYLINE TOWER A', bannerText: 'NEO-TOKYO COMMERCE', roofType: 'helipad' },
+        { x: 4650, y: 1250, w: 220, h: 240, style: 'monolith', color: '#38bdf8', label: 'SKYLINE TOWER B', bannerText: 'KAIROS FINANCE', roofType: 'satellite' },
+        { x: 3750, y: 1850, w: 210, h: 200, style: 'monolith', color: '#38bdf8', label: 'STRATOS MONOLITH', bannerText: 'ORBITAL COMMS TOWER', roofType: 'satellite' },
+        { x: 4650, y: 1850, w: 210, h: 200, style: 'monolith', color: '#38bdf8', label: 'ZENITH SPIRE', bannerText: 'HYPER-NET APEX', roofType: 'helipad' },
+        { x: 4200, y: 2250, w: 190, h: 180, style: 'monolith', color: '#00f0ff', label: 'METRO COMMERCE', bannerText: 'AVENUE TRANSIT HUB', roofType: 'solar' },
+        { x: 3300, y: 1550, w: 180, h: 220, style: 'monolith', color: '#38bdf8', label: 'NEXUS MEDIA RIG', bannerText: 'HOLO-BROADCAST', roofType: 'vent' },
+        { x: 5100, y: 1550, w: 180, h: 220, style: 'monolith', color: '#38bdf8', label: 'CYBER-VENTURES', bannerText: 'VENTURE CAPITAL', roofType: 'satellite' },
+
+        // 3. CRIMSON FOUNDRY // WEAPON FORGE & HEAVY INDUSTRY
+        { x: 1450, y: 1450, w: 260, h: 240, style: 'foundry', color: '#ff0055', label: 'MAGMA REFINERY 01', bannerText: 'VULCAN SMELTING', roofType: 'vent' },
+        { x: 2150, y: 1450, w: 240, h: 220, style: 'foundry', color: '#ff0055', label: 'HEAVY FORGE RIG', bannerText: 'WEAPONS CORP', roofType: 'vent' },
+        { x: 1450, y: 2150, w: 220, h: 240, style: 'foundry', color: '#ff7b00', label: 'ASSEMBLY DOCK 04', bannerText: 'WAR-ENGINE ASSEMBLY', roofType: 'vent' },
+        { x: 2150, y: 2150, w: 250, h: 250, style: 'foundry', color: '#ff7b00', label: 'BLAST FURNACE CORE', bannerText: 'CRITICAL CORE // 1200C', roofType: 'vent' },
+        { x: 1800, y: 1150, w: 200, h: 180, style: 'foundry', color: '#ff0055', label: 'MUNITIONS SILO', bannerText: 'ORDNANCE STORAGE', roofType: 'vent' },
+        { x: 2550, y: 1800, w: 190, h: 200, style: 'foundry', color: '#ff7b00', label: 'EXHAUST CHIMNEY', bannerText: 'PLASMA EMISSION // 09', roofType: 'vent' },
+
+        // 4. QUANTUM VAULT // DATA ARCHIVE
+        { x: 6250, y: 1450, w: 240, h: 220, style: 'vault', color: '#ffe600', label: 'QUANTUM VAULT A', bannerText: 'ENCRYPTED ARCHIVE', roofType: 'satellite' },
+        { x: 6950, y: 1450, w: 220, h: 240, style: 'vault', color: '#ffe600', label: 'SYNAPSE ARCHIVE', bannerText: 'NEURAL DATA BANK', roofType: 'satellite' },
+        { x: 6250, y: 2150, w: 240, h: 240, style: 'vault', color: '#ffe600', label: 'STORAGE SILO 07', bannerText: 'DEEP MEMORY STORAGE', roofType: 'helipad' },
+        { x: 6950, y: 2150, w: 230, h: 220, style: 'vault', color: '#ffe600', label: 'QUANTUM CITADEL', bannerText: 'ALGO CORP HQ', roofType: 'satellite' },
+        { x: 6600, y: 1150, w: 210, h: 180, style: 'vault', color: '#ffe600', label: 'OPTICAL RELAY RIG', bannerText: 'RELAY BEACON ALPHA', roofType: 'satellite' },
+        { x: 5850, y: 1800, w: 180, h: 210, style: 'vault', color: '#ffe600', label: 'CRYPTOGRAPHIC ARRAY', bannerText: 'CRYPTO MATRIX', roofType: 'solar' },
+
+        // 5. ION NEBULA // NANITE SANCTUARY (Biotech Domes)
+        { x: 1450, y: 6250, w: 230, h: 230, style: 'nanite', color: '#00ff88', label: 'NANITE BIO-DOME A', bannerText: 'NANITE SYNTHESIS', roofType: 'solar' },
+        { x: 2150, y: 6250, w: 230, h: 230, style: 'nanite', color: '#00ff88', label: 'BIO-LAB 09', bannerText: 'GENOMIC STORAGE', roofType: 'helipad' },
+        { x: 1450, y: 6950, w: 240, h: 220, style: 'nanite', color: '#00ff88', label: 'CELLULAR MATRIX', bannerText: 'ORGANIC TECH LAB', roofType: 'solar' },
+        { x: 2150, y: 6950, w: 220, h: 240, style: 'nanite', color: '#00ff88', label: 'NANITE FACTORY', bannerText: 'BIO-DEFENSE CORP', roofType: 'satellite' },
+        { x: 1800, y: 7350, w: 200, h: 180, style: 'nanite', color: '#00ff88', label: 'PURIFICATION RIG', bannerText: 'TOXIN REMOVAL VENTS', roofType: 'vent' },
+        { x: 2550, y: 6600, w: 180, h: 210, style: 'nanite', color: '#00ff88', label: 'BIO-HYDROPONICS', bannerText: 'SUSTAINMENT LAB', roofType: 'solar' },
+
+        // 6. VOID SINGULARITY // DARK SECTOR (Obsidian Megastructures)
+        { x: 6250, y: 6250, w: 240, h: 240, style: 'void', color: '#d946ef', label: 'VOID MONOLITH I', bannerText: 'DARK MATTER LAB', roofType: 'satellite' },
+        { x: 6950, y: 6250, w: 220, h: 240, style: 'void', color: '#d946ef', label: 'EVENT HORIZON LAB', bannerText: 'GRAVITATIONAL HUB', roofType: 'vent' },
+        { x: 6250, y: 6950, w: 240, h: 220, style: 'void', color: '#d946ef', label: 'SINGULARITY CORE', bannerText: 'ANTIMATTER VAULT', roofType: 'satellite' },
+        { x: 6950, y: 6950, w: 230, h: 230, style: 'void', color: '#d946ef', label: 'VOID MONOLITH II', bannerText: 'RIFT CONTAINMENT', roofType: 'helipad' },
+        { x: 6600, y: 7350, w: 200, h: 180, style: 'void', color: '#d946ef', label: 'TELEPORT BEACON', bannerText: 'INTER-DIMENSIONAL', roofType: 'satellite' },
+        { x: 5850, y: 6600, w: 180, h: 210, style: 'void', color: '#d946ef', label: 'DARK AURA GENERATOR', bannerText: 'EVENT SHIELDING', roofType: 'vent' },
+
+        // 7. ABYSSAL MECHA // TITAN CRATER (Heavy Warship Gantries)
+        { x: 3750, y: 6500, w: 250, h: 230, style: 'foundry', color: '#f97316', label: 'MECHA GANTRY 01', bannerText: 'TITAN SHIPYARD', roofType: 'vent' },
+        { x: 4650, y: 6500, w: 250, h: 230, style: 'foundry', color: '#f97316', label: 'MECHA GANTRY 02', bannerText: 'COLOSSUS DOCK', roofType: 'vent' },
+        { x: 3750, y: 7150, w: 230, h: 210, style: 'foundry', color: '#f97316', label: 'HEAVY FABRICATION', bannerText: 'CHASSIS WELDING', roofType: 'helipad' },
+        { x: 4650, y: 7150, w: 230, h: 210, style: 'foundry', color: '#f97316', label: 'WEAPONS TESTING', bannerText: 'ORDNANCE FACILITY', roofType: 'vent' },
+        { x: 4200, y: 6150, w: 190, h: 170, style: 'foundry', color: '#f97316', label: 'SHIPYARD COMMAND', bannerText: 'CONTROL TOWER', roofType: 'satellite' },
+        { x: 4200, y: 7450, w: 220, h: 180, style: 'foundry', color: '#f97316', label: 'REACTOR COOLING', bannerText: 'HEAT EXCHANGER', roofType: 'vent' }
+      ];
+    }
+
+    // Physical Circle-AABB Collision Resolution against Building Perimeters (Smooth sliding physics!)
+    function resolveBuildingCollision(entity, radius) {
+      if (!buildings || buildings.length === 0) return;
+      for (let i = 0; i < buildings.length; i++) {
+        const b = buildings[i];
+        const halfW = b.w / 2;
+        const halfH = b.h / 2;
+        if (Math.abs(entity.x - b.x) > halfW + radius + 15 || Math.abs(entity.y - b.y) > halfH + radius + 15) continue;
+        const nearestX = Math.max(b.x - halfW, Math.min(b.x + halfW, entity.x));
+        const nearestY = Math.max(b.y - halfH, Math.min(b.y + halfH, entity.y));
+        const dx = entity.x - nearestX;
+        const dy = entity.y - nearestY;
+        const distSq = dx * dx + dy * dy;
+        if (distSq < radius * radius && distSq > 0.0001) {
+          const dist = Math.sqrt(distSq);
+          const push = radius - dist;
+          entity.x += (dx / dist) * push;
+          entity.y += (dy / dist) * push;
+        }
+      }
+    }
+
+    // Tactical Projectile Cover Absorption against Building Walls
+    function checkBuildingProjectileCollision(proj) {
+      if (!buildings || buildings.length === 0) return false;
+      for (let i = 0; i < buildings.length; i++) {
+        const b = buildings[i];
+        const halfW = b.w / 2;
+        const halfH = b.h / 2;
+        if (Math.abs(proj.x - b.x) > halfW + 15 || Math.abs(proj.y - b.y) > halfH + 15) continue;
+        if (proj.x >= b.x - halfW && proj.x <= b.x + halfW &&
+            proj.y >= b.y - halfH && proj.y <= b.y + halfH) {
+          proj.active = false;
+          if (Math.random() < 0.35) {
+            spawnParticle(proj.x, proj.y, (Math.random() - 0.5) * 4, (Math.random() - 0.5) * 4, b.color, 9, 2.2);
+          }
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // Camera-Culled Cyber-Building Renderer (Isometric Depth + Rooftop Infrastructure + Zero Emojis)
+    function drawBuildings() {
+      if (!buildings || buildings.length === 0) return;
+      const minX = camX - 180;
+      const maxX = camX + canvas.width + 180;
+      const minY = camY - 180;
+      const maxY = camY + canvas.height + 180;
+
+      for (let i = 0; i < buildings.length; i++) {
+        const b = buildings[i];
+        if (b.x + b.w / 2 < minX || b.x - b.w / 2 > maxX || b.y + b.h / 2 < minY || b.y - b.h / 2 > maxY) continue;
+
+        const left = b.x - b.w / 2;
+        const top = b.y - b.h / 2;
+
+        // 1. Isometric Deep Ground Shadow
+        ctx.fillStyle = 'rgba(2, 4, 10, 0.65)';
+        ctx.fillRect(left + 16, top + 20, b.w, b.h);
+
+        // 2. Main Cyber-Structure Footprint
+        ctx.fillStyle = '#060a14';
+        ctx.fillRect(left, top, b.w, b.h);
+
+        // 3. Neon Trim Outline
+        ctx.strokeStyle = b.color;
+        ctx.lineWidth = 2.2;
+        ctx.strokeRect(left, top, b.w, b.h);
+
+        // 4. Subtle Structural Floor Beams & Window Grid
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let gx = left + 28; gx < left + b.w - 14; gx += 32) {
+          ctx.moveTo(gx, top); ctx.lineTo(gx, top + b.h);
+        }
+        for (let gy = top + 28; gy < top + b.h - 14; gy += 32) {
+          ctx.moveTo(left, gy); ctx.lineTo(left + b.w, gy);
+        }
+        ctx.stroke();
+
+        // 5. Rooftop Infrastructure (Helipad, Satellite Dish, Vent, or Solar Grid)
+        if (b.roofType === 'helipad') {
+          const hr = Math.min(32, b.w * 0.26);
+          ctx.beginPath();
+          ctx.arc(b.x, b.y, hr, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(255, 230, 0, 0.55)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          ctx.font = "900 13px 'Segoe UI', sans-serif";
+          ctx.fillStyle = '#ffe600';
+          ctx.textAlign = 'center';
+          ctx.fillText('H', b.x, b.y + 4.5);
+        } else if (b.roofType === 'satellite') {
+          const dishAng = frameCount * 0.015 + i;
+          ctx.save();
+          ctx.translate(b.x, b.y);
+          ctx.rotate(dishAng);
+          ctx.beginPath();
+          ctx.arc(0, 0, 16, -Math.PI * 0.6, Math.PI * 0.6);
+          ctx.strokeStyle = b.color;
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(0, 0); ctx.lineTo(14, 0);
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 1.8;
+          ctx.stroke();
+          ctx.restore();
+        } else if (b.roofType === 'vent') {
+          ctx.fillStyle = 'rgba(255, 0, 85, 0.18)';
+          ctx.fillRect(b.x - 24, b.y - 14, 48, 28);
+          ctx.strokeStyle = '#ff0055';
+          ctx.lineWidth = 1.5;
+          ctx.strokeRect(b.x - 24, b.y - 14, 48, 28);
+        } else if (b.roofType === 'solar') {
+          ctx.strokeStyle = 'rgba(0, 255, 136, 0.4)';
+          ctx.lineWidth = 1.5;
+          ctx.strokeRect(b.x - 22, b.y - 16, 44, 32);
+        }
+
+        // 6. Blinking Aviation Warning Beacons on Building Corners
+        const blink = (frameCount + i * 15) % 45 < 15;
+        if (blink) {
+          ctx.fillStyle = '#ff0055';
+          ctx.beginPath();
+          ctx.arc(left + 5, top + 5, 2.5, 0, Math.PI * 2);
+          ctx.arc(left + b.w - 5, top + 5, 2.5, 0, Math.PI * 2);
+          ctx.arc(left + 5, top + b.h - 5, 2.5, 0, Math.PI * 2);
+          ctx.arc(left + b.w - 5, top + b.h - 5, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // 7. Holographic Rooftop Corporate Billboard
+        ctx.font = "800 10px Orbitron, monospace";
+        ctx.textAlign = 'center';
+        ctx.fillStyle = b.color;
+        ctx.fillText(b.bannerText || b.label, b.x, top + 16);
+      }
+    }
 
     function generateWorldProps() {
       worldProps = [];
+      generateBuildings();
 
-      // 1. Spawn 5 Cyber Augmentation Shrines (1 in each outer biome + 1 near Nexus border)
+      // 1. Spawn 10 Cyber Augmentation Shrines across the 7 biomes
       const shrineSpots = [
-        { x: 900, y: 900 },
-        { x: 3300, y: 900 },
-        { x: 900, y: 3300 },
-        { x: 3300, y: 3300 },
-        { x: 2100, y: 1320 }
+        { x: 4200, y: 3100 }, // Nexus North
+        { x: 4200, y: 1100 }, // Skyline Apex
+        { x: 1800, y: 1800 }, // Crimson Foundry Core
+        { x: 1150, y: 2450 }, // Crimson Foundry West
+        { x: 6600, y: 1800 }, // Quantum Vault Core
+        { x: 7250, y: 2450 }, // Quantum Vault East
+        { x: 1800, y: 6600 }, // Ion Nebula Core
+        { x: 1150, y: 5950 }, // Ion Nebula West
+        { x: 6600, y: 6600 }, // Void Singularity Core
+        { x: 4200, y: 6050 }  // Titan Crater North
       ];
       shrineSpots.forEach(pt => {
-        worldProps.push(new WorldProp('shrine', pt.x + (Math.random() - 0.5) * 180, pt.y + (Math.random() - 0.5) * 180));
+        worldProps.push(new WorldProp('shrine', pt.x + (Math.random() - 0.5) * 160, pt.y + (Math.random() - 0.5) * 160));
       });
 
-      // 2. Spawn 2 Dimensional Warp Gates in deep sectors
-      worldProps.push(new WorldProp('warp_gate', 2100, 420));
-      worldProps.push(new WorldProp('warp_gate', 2100, 3780));
+      // 2. Spawn 4 Dimensional Warp Gates at cardinal extremes
+      worldProps.push(new WorldProp('warp_gate', 4200, 850));
+      worldProps.push(new WorldProp('warp_gate', 4200, 7550));
+      worldProps.push(new WorldProp('warp_gate', 850, 4200));
+      worldProps.push(new WorldProp('warp_gate', 7550, 4200));
 
-      // 3. Spawn 4 Neon Jackpot Spin Obelisks around the Central Nexus crossroads
+      // 3. Spawn 6 Neon Jackpot Spin Obelisks around major avenues
       const slotSpots = [
-        { x: 1760, y: 2100 },
-        { x: 2440, y: 2100 },
-        { x: 2100, y: 1740 },
-        { x: 2100, y: 2460 }
+        { x: 3500, y: 4200 },
+        { x: 4900, y: 4200 },
+        { x: 4200, y: 3500 },
+        { x: 4200, y: 4900 },
+        { x: 4200, y: 2100 },
+        { x: 4200, y: 6300 }
       ];
       slotSpots.forEach(pt => {
         worldProps.push(new WorldProp('slot_obelisk', pt.x + (Math.random() - 0.5) * 80, pt.y + (Math.random() - 0.5) * 80));
       });
 
-      // 4. Spawn 6 Hackable Allied Ion Turrets
+      // 4. Spawn 12 Hackable Allied Ion Turrets
       const turretSpots = [
-        { x: 1650, y: 1750 },
-        { x: 2550, y: 1750 },
-        { x: 1650, y: 2450 },
-        { x: 2550, y: 2450 },
-        { x: 1150, y: 2100 },
-        { x: 3050, y: 2100 }
+        { x: 3300, y: 3500 }, { x: 5100, y: 3500 },
+        { x: 3300, y: 4900 }, { x: 5100, y: 4900 },
+        { x: 2300, y: 4200 }, { x: 6100, y: 4200 },
+        { x: 4200, y: 2300 }, { x: 4200, y: 6100 },
+        { x: 2300, y: 2300 }, { x: 6100, y: 2300 },
+        { x: 2300, y: 6100 }, { x: 6100, y: 6100 }
       ];
       turretSpots.forEach(pt => {
         worldProps.push(new WorldProp('turret', pt.x + (Math.random() - 0.5) * 120, pt.y + (Math.random() - 0.5) * 120));
       });
 
-      // 5. Spawn 8 Hyper-Slipstream Boost Gates along highways between biomes
-      for (let i = 0; i < 8; i++) {
-        const ang = (i * Math.PI) / 4;
-        const dist = 560 + (i % 2) * 520;
+      // 5. Spawn 16 Hyper-Slipstream Boost Gates along highways between biomes
+      for (let i = 0; i < 16; i++) {
+        const ang = (i * Math.PI) / 8;
+        const dist = 950 + (i % 2) * 850;
         const bx = WORLD_W / 2 + Math.cos(ang) * dist;
         const by = WORLD_H / 2 + Math.sin(ang) * dist;
         worldProps.push(new WorldProp('boost_ring', bx, by, ang));
       }
 
-      // 6. Spawn 14 Quantum Data Vaults & 10 Volatile EMP Pylons across the world
-      for (let i = 0; i < 14; i++) {
-        const x = 280 + Math.random() * (WORLD_W - 560);
-        const y = 280 + Math.random() * (WORLD_H - 560);
-        if (Math.hypot(x - WORLD_W / 2, y - WORLD_H / 2) > 260) {
+      // 6. Spawn 28 Quantum Data Vaults & 20 Volatile EMP Pylons across the world
+      for (let i = 0; i < 28; i++) {
+        const x = 350 + Math.random() * (WORLD_W - 700);
+        const y = 350 + Math.random() * (WORLD_H - 700);
+        if (Math.hypot(x - WORLD_W / 2, y - WORLD_H / 2) > 350) {
           worldProps.push(new WorldProp('cache', x, y));
         }
       }
-      for (let i = 0; i < 10; i++) {
-        const x = 300 + Math.random() * (WORLD_W - 600);
-        const y = 300 + Math.random() * (WORLD_H - 600);
-        if (Math.hypot(x - WORLD_W / 2, y - WORLD_H / 2) > 240) {
+      for (let i = 0; i < 20; i++) {
+        const x = 380 + Math.random() * (WORLD_W - 760);
+        const y = 380 + Math.random() * (WORLD_H - 760);
+        if (Math.hypot(x - WORLD_W / 2, y - WORLD_H / 2) > 320) {
           worldProps.push(new WorldProp('emp_pylon', x, y));
         }
       }
@@ -9011,9 +9575,37 @@
       waveSpawnQueue = [];
 
       if (isBossWave) {
-        announce(`// SECTOR ${wave}: OMEGA SERAPHIM DREADNOUGHT & ESCORT FLEET DETECTED //`, '#ff0077');
-        const bossY = Math.max(120, player.y - 460);
-        enemies.push(new Enemy('boss', player.x, bossY));
+        let bType = 'boss_colossus';
+        let bTitle = 'TITAN GOLIATH SIEGE BATTLESHIP';
+        let bCol = '#ff2a55';
+        if (wave === 3) {
+          bType = 'boss_colossus';
+          bTitle = 'TITAN GOLIATH SIEGE BATTLESHIP';
+          bCol = '#ff2a55';
+        } else if (wave === 5) {
+          bType = 'boss_seraphim';
+          bTitle = 'OMEGA SERAPHIM CELESTIAL WAR-MECH';
+          bCol = '#9d4edd';
+        } else if (wave === 7) {
+          bType = 'boss_leviathan';
+          bTitle = 'VOID LEVIATHAN APEX SINGULARITY';
+          bCol = '#d946ef';
+        } else if (wave === 9) {
+          bType = 'boss_architect';
+          bTitle = 'KAIROS HYPER-CORE AI CONSTRUCT';
+          bCol = '#00f0ff';
+        } else {
+          const bossTypes = ['boss_colossus', 'boss_seraphim', 'boss_leviathan', 'boss_architect'];
+          bType = bossTypes[Math.floor(Math.random() * bossTypes.length)];
+          bTitle = bType === 'boss_colossus' ? 'TITAN GOLIATH APEX' : (bType === 'boss_seraphim' ? 'OMEGA SERAPHIM APEX' : (bType === 'boss_leviathan' ? 'VOID LEVIATHAN APEX' : 'KAIROS HYPER-CORE APEX'));
+          bCol = bType === 'boss_colossus' ? '#ff2a55' : (bType === 'boss_seraphim' ? '#9d4edd' : (bType === 'boss_leviathan' ? '#d946ef' : '#00f0ff'));
+        }
+        announce(`// SECTOR ${wave} CRITICAL ALERT: ${bTitle} INBOUND //`, bCol);
+        sound.explosion(true);
+        screenShake = Math.max(screenShake, 22);
+        chromaticFlash = Math.max(chromaticFlash, 16);
+        const bossY = Math.max(120, player.y - 480);
+        enemies.push(new Enemy(bType, player.x, bossY));
       } else if (wave === 1) {
         announce(`// SECTOR 1 (${threatCfg.name}) — ARMED VANGUARD, STRIKERS & ELITE HUNTERS INBOUND //`, '#ff2a55');
       } else if (wave === 2) {
@@ -9487,8 +10079,8 @@
       for (let i = 0; i < enemies.length; i++) {
         const e = enemies[i];
         if (!e.active) continue;
-        if (e.type === 'boss') {
-          targets.push({ x: e.x, y: e.y, color: '#ff0055', label: 'BOSS' });
+        if (e.isBoss || e.type === 'boss' || e.type.startsWith('boss')) {
+          targets.push({ x: e.x, y: e.y, color: e.color || '#ff0055', label: 'BOSS' });
         } else if (e.type === 'nemesis') {
           targets.push({ x: e.x, y: e.y, color: '#ffe600', label: 'VIP' });
         }
@@ -9508,13 +10100,13 @@
 
       // Add nearest Shrine, Warp Gate, Jackpot Obelisk, and Data Vault
       let nearestShrine = null;
-      let nearestShrineDist = 1650;
+      let nearestShrineDist = 3200;
       let nearestGate = null;
-      let nearestGateDist = 1650;
+      let nearestGateDist = 3200;
       let nearestCache = null;
-      let nearestCacheDist = 1450;
+      let nearestCacheDist = 2400;
       let nearestSlot = null;
-      let nearestSlotDist = 1450;
+      let nearestSlotDist = 2400;
 
       for (let i = 0; i < worldProps.length; i++) {
         const wp = worldProps[i];
@@ -9669,12 +10261,22 @@
         }
       }
 
-      // Enemies
+      // Cyber-Buildings on Radar Minimap
+      if (buildings && buildings.length > 0) {
+        rCtx.fillStyle = 'rgba(0, 240, 255, 0.22)';
+        for (let i = 0; i < buildings.length; i++) {
+          const b = buildings[i];
+          rCtx.fillRect((b.x - b.w / 2) * scaleX, (b.y - b.h / 2) * scaleY, b.w * scaleX, b.h * scaleY);
+        }
+      }
+
+      // Enemies & Apex Mega-Bosses
       for (let i = 0; i < enemies.length; i++) {
         const e = enemies[i];
         if (!e.active) continue;
-        rCtx.fillStyle = (e.type === 'boss' || e.type === 'nemesis') ? '#ffe600' : '#ff0055';
-        const s = (e.type === 'boss' || e.type === 'nemesis') ? 5 : 2.2;
+        const isB = e.isBoss || e.type === 'boss' || e.type.startsWith('boss');
+        rCtx.fillStyle = isB ? (e.color || '#ffe600') : (e.type === 'nemesis' ? '#ffe600' : '#ff0055');
+        const s = isB ? 6 : (e.type === 'nemesis' ? 4 : 2.2);
         rCtx.fillRect(e.x * scaleX - s / 2, e.y * scaleY - s / 2, s, s);
       }
 
@@ -9748,6 +10350,7 @@
       lvlText: document.getElementById('lvlText'),
       score: document.getElementById('scoreDisplay'),
       bossHud: document.getElementById('bossHud'),
+      bossName: document.getElementById('bossName'),
       bossBar: document.getElementById('bossHpBar'),
       bossText: document.getElementById('bossHpText'),
       contractTracker: document.getElementById('contractTracker'),
@@ -9860,6 +10463,7 @@
           const p = projectiles[i];
           p.update();
           if (!p.active) continue;
+          if (checkBuildingProjectileCollision(p)) continue;
 
           // Check collision with destructible World Props (Quantum Vaults & EMP Pylons)
           for (let w = 0; w < worldProps.length; w++) {
@@ -9937,6 +10541,7 @@
           const m = missiles[i];
           m.update();
           if (!m.active) continue;
+          if (checkBuildingProjectileCollision(m)) continue;
           for (let j = 0; j < enemies.length; j++) {
             const e = enemies[j];
             if (e.active && Math.hypot(m.x - e.x, m.y - e.y) < 14 + e.radius) {
@@ -9960,6 +10565,8 @@
         for (let i = 0; i < enemyProjectiles.length; i++) {
           const ep = enemyProjectiles[i];
           ep.update();
+          if (!ep.active) continue;
+          if (checkBuildingProjectileCollision(ep)) continue;
           const dx = ep.x - player.x;
           const dy = ep.y - player.y;
           const rSum = ep.radius + player.radius;
@@ -10028,6 +10635,9 @@
 
       // Warping Cyber-Grid & Biome Borders
       drawCyberGrid();
+
+      // Cyber-Skyscrapers & Megastructure Architecture (Solid tactical cover, rooftop helipads, beacons)
+      drawBuildings();
 
       // Render Interactive Open-World Structures (Shrines, Vaults, Turrets, Boost Gates, Warp Gates, Jackpot Obelisks)
       for (let i = 0; i < worldProps.length; i++) worldProps[i].draw();
@@ -10292,7 +10902,7 @@
       setHudText('score', score.toLocaleString());
 
       // Boss HUD
-      const activeBoss = enemies.find(e => e.type === 'boss' && e.active);
+      const activeBoss = enemies.find(e => (e.isBoss || e.type === 'boss' || (e.type && e.type.startsWith('boss'))) && e.active);
       const hasBoss = !!activeBoss;
       if (hudCache.hasBoss !== hasBoss) {
         hudCache.hasBoss = hasBoss;
@@ -10302,6 +10912,16 @@
         const bPct = Math.max(0, (activeBoss.hp / activeBoss.maxHp) * 100);
         setHudWidth('bossBar', bPct);
         setHudText('bossText', `${Math.ceil(bPct)}%`);
+        const enraged = activeBoss.phase >= 2 || (activeBoss.hp / activeBoss.maxHp < 0.4);
+        const nameText = `${activeBoss.bossName || activeBoss.name || 'APEX OVERLORD'}${enraged ? ' // ENRAGED //' : ''}`;
+        if (hudEls.bossName && hudCache.bossNameText !== nameText) {
+          hudCache.bossNameText = nameText;
+          const bColor = activeBoss.color || '#ff0055';
+          hudEls.bossName.innerHTML = `<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="${bColor}" stroke-width="1.8"><polygon points="8,1.5 15,14 1,14"/><line x1="8" y1="6" x2="8" y2="10" stroke="#ffe600"/><circle cx="8" cy="12" r="0.8" fill="#ffe600"/></svg> <span style="color:${bColor}">${nameText}</span>`;
+          if (hudEls.bossBar) {
+            hudEls.bossBar.style.background = `linear-gradient(90deg, ${bColor}, #ff0077)`;
+          }
+        }
       }
 
       // Live Cyber-Contract Tracker HUD
