@@ -7439,144 +7439,149 @@ class Enemy {
     this.chronoSlowTimer = 0;
 
     const threatCfg = getThreatConfig();
-    const waveScale = (1 + (wave - 1) * 0.22) * threatCfg.hpMult;
-    const spdScale = threatCfg.speedMult;
-    this.fireScale = threatCfg.fireMult;
-    this.dmgScale = threatCfg.dmgMult;
+    const waveScale = (1 + (wave - 1) * 0.28) * threatCfg.hpMult;
+    const spdScale = threatCfg.speedMult * 1.12;
+    this.fireScale = threatCfg.fireMult * 1.18;
+    this.dmgScale = threatCfg.dmgMult * 1.15;
+    this.bossPhase = 1;
+    this.reflectCooldown = 0;
+    this.evadeTimer = 60 + Math.floor(Math.random() * 50);
 
-    // TIER 1: HARDENED VANGUARD ENEMIES (Stronger & armed right from Sector 1!)
+    // TIER 1: HARDENED VANGUARD ENEMIES (Faster, tougher & deadlier right from Sector 1!)
     if (type === 'drone_bit') {
-      this.hp = 42 * waveScale;
+      this.hp = 64 * waveScale;
       this.maxHp = this.hp;
-      this.speed = (3.55 + Math.min(1.1, wave * 0.06)) * spdScale;
+      this.speed = (3.85 + Math.min(1.4, wave * 0.07)) * spdScale;
       this.radius = 12;
       this.color = '#38bdf8';
-      this.scoreVal = 95;
-      this.xpVal = 16;
-      this.shotCooldown = Math.floor((75 + Math.random() * 35) / this.fireScale);
+      this.scoreVal = 120;
+      this.xpVal = 18;
+      this.shotCooldown = Math.floor((62 + Math.random() * 28) / this.fireScale);
       this.tier = 1;
     } else if (type === 'scout') {
-      this.hp = 60 * waveScale;
+      this.hp = 92 * waveScale;
       this.maxHp = this.hp;
-      this.speed = (4.25 + Math.min(1.5, wave * 0.08)) * spdScale;
+      this.speed = (4.55 + Math.min(1.7, wave * 0.08)) * spdScale;
       this.radius = 14;
       this.color = '#ff0077';
-      this.scoreVal = 135;
-      this.xpVal = 20;
-      this.lungeCooldown = 70 + Math.floor(Math.random() * 35);
+      this.scoreVal = 165;
+      this.xpVal = 24;
+      this.lungeCooldown = 55 + Math.floor(Math.random() * 28);
       this.lunging = 0;
       this.tier = 1;
     } else if (type === 'mini') {
-      this.hp = 34 * waveScale;
+      this.hp = 52 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 5.35 * spdScale;
+      this.speed = 5.75 * spdScale;
       this.radius = 10;
       this.color = '#00ff88';
-      this.scoreVal = 80;
-      this.xpVal = 12;
+      this.scoreVal = 95;
+      this.xpVal = 14;
+      this.shotCooldown = Math.floor((65 + Math.random() * 25) / this.fireScale);
       this.tier = 1;
     }
     // TIER 2: ASSAULT SKIRMISHERS
     else if (type === 'striker') {
-      this.hp = 92 * waveScale;
+      this.hp = 145 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 3.15 * spdScale;
+      this.speed = 3.45 * spdScale;
       this.radius = 16;
       this.color = '#ff7b00';
-      this.scoreVal = 210;
-      this.xpVal = 28;
-      this.shotCooldown = Math.floor((62 + Math.random() * 28) / this.fireScale);
+      this.scoreVal = 260;
+      this.xpVal = 32;
+      this.shotCooldown = Math.floor((52 + Math.random() * 22) / this.fireScale);
       this.tier = 2;
     } else if (type === 'splitter') {
-      this.hp = 140 * waveScale;
+      this.hp = 220 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 2.85 * spdScale;
+      this.speed = 3.1 * spdScale;
       this.radius = 22;
       this.color = '#00ff88';
-      this.scoreVal = 310;
-      this.xpVal = 36;
-      this.shotCooldown = Math.floor((78 + Math.random() * 30) / this.fireScale);
+      this.scoreVal = 360;
+      this.xpVal = 42;
+      this.shotCooldown = Math.floor((64 + Math.random() * 24) / this.fireScale);
+      this.spawnTimer = 150;
       this.tier = 2;
     }
     // TIER 3: HEAVY ARMORED FLEET
     else if (type === 'cruiser') {
-      this.hp = 200 * waveScale;
+      this.hp = 320 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 2.3 * spdScale;
+      this.speed = 2.55 * spdScale;
       this.radius = 24;
       this.color = '#ffe600';
-      this.scoreVal = 380;
-      this.xpVal = 46;
-      this.shotCooldown = Math.floor((60 + Math.random() * 30) / this.fireScale);
+      this.scoreVal = 460;
+      this.xpVal = 54;
+      this.shotCooldown = Math.floor((50 + Math.random() * 22) / this.fireScale);
       this.tier = 3;
     } else if (type === 'aegis') {
-      this.hp = 235 * waveScale;
+      this.hp = 370 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 2.15 * spdScale;
+      this.speed = 2.38 * spdScale;
       this.radius = 23;
       this.color = '#00f0ff';
-      this.scoreVal = 440;
-      this.xpVal = 52;
-      this.shotCooldown = Math.floor(78 / this.fireScale);
+      this.scoreVal = 520;
+      this.xpVal = 60;
+      this.shotCooldown = Math.floor(64 / this.fireScale);
       this.tier = 3;
     }
     // TIER 4: SPEC-OPS HUNTERS
     else if (type === 'sniper') {
-      this.hp = 128 * waveScale;
+      this.hp = 205 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 2.75 * spdScale;
+      this.speed = 3.05 * spdScale;
       this.radius = 17;
       this.color = '#00f0ff';
-      this.scoreVal = 460;
-      this.xpVal = 54;
-      this.shotCooldown = Math.floor(88 / this.fireScale);
+      this.scoreVal = 550;
+      this.xpVal = 64;
+      this.shotCooldown = Math.floor(74 / this.fireScale);
       this.aimAngle = 0;
       this.tier = 4;
     } else if (type === 'phantom') {
-      this.hp = 175 * waveScale;
+      this.hp = 275 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 3.55 * spdScale;
+      this.speed = 3.9 * spdScale;
       this.radius = 18;
       this.color = '#a855f7';
-      this.scoreVal = 520;
-      this.xpVal = 62;
-      this.shotCooldown = Math.floor(75 / this.fireScale);
-      this.blinkCooldown = Math.floor(105 / this.fireScale);
+      this.scoreVal = 620;
+      this.xpVal = 72;
+      this.shotCooldown = Math.floor(62 / this.fireScale);
+      this.blinkCooldown = Math.floor(85 / this.fireScale);
       this.tier = 4;
     }
     // TIER 5: APEX WAR-MACHINES & VIP NEMESIS
     else if (type === 'weaver') {
-      this.hp = 210 * waveScale;
+      this.hp = 340 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 2.6 * spdScale;
+      this.speed = 2.9 * spdScale;
       this.radius = 21;
       this.color = '#d946ef';
-      this.scoreVal = 580;
-      this.xpVal = 68;
-      this.shotCooldown = Math.floor(68 / this.fireScale);
+      this.scoreVal = 690;
+      this.xpVal = 78;
+      this.shotCooldown = Math.floor(56 / this.fireScale);
       this.tier = 5;
     } else if (type === 'juggernaut') {
-      this.hp = 460 * waveScale;
+      this.hp = 740 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.85 * spdScale;
-      this.radius = 31;
+      this.speed = 2.15 * spdScale;
+      this.radius = 32;
       this.color = '#ff2a55';
-      this.scoreVal = 950;
-      this.xpVal = 115;
-      this.shotCooldown = Math.floor(84 / this.fireScale);
-      this.chargeCooldown = 145;
+      this.scoreVal = 1250;
+      this.xpVal = 135;
+      this.shotCooldown = Math.floor(68 / this.fireScale);
+      this.chargeCooldown = 115;
       this.charging = 0;
       this.tier = 5;
     } else if (type === 'nemesis') {
-      this.hp = 420 * waveScale;
+      this.hp = 680 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 3.45 * spdScale;
-      this.radius = 25;
+      this.speed = 3.85 * spdScale;
+      this.radius = 26;
       this.color = '#ffe600';
-      this.scoreVal = 2200;
-      this.xpVal = 165;
-      this.shotCooldown = Math.floor(52 / this.fireScale);
-      this.dashTimer = 95;
+      this.scoreVal = 2800;
+      this.xpVal = 210;
+      this.shotCooldown = Math.floor(42 / this.fireScale);
+      this.dashTimer = 70;
       this.isElite = true;
       this.tier = 5;
     } else if (type === 'boss' || type === 'boss_seraphim') {
@@ -7584,99 +7589,99 @@ class Enemy {
       this.bossType = 'seraphim';
       this.bossName = 'OMEGA SERAPHIM DREADNOUGHT';
       this.bossSubtitle = 'DIVINE ARBITER // APEX CELESTIAL WAR-MECH';
-      this.hp = 3600 * waveScale;
+      this.hp = 6400 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.65 * spdScale;
-      this.radius = 62;
+      this.speed = 1.95 * spdScale;
+      this.radius = 64;
       this.color = '#9d4edd';
-      this.scoreVal = 7500;
-      this.xpVal = 480;
-      this.shotCooldown = Math.floor(30 / this.fireScale);
+      this.scoreVal = 9500;
+      this.xpVal = 580;
+      this.shotCooldown = Math.floor(24 / this.fireScale);
       this.patternStep = 0;
-      this.orbitalStrikeTimer = 220;
+      this.orbitalStrikeTimer = 170;
       this.tier = 6;
     } else if (type === 'boss_colossus') {
       this.isBoss = true;
       this.bossType = 'colossus';
       this.bossName = 'TITAN GOLIATH // SIEGE BATTLESHIP';
       this.bossSubtitle = 'IRON JUGGERNAUT // QUAD-VULCAN FORTRESS';
-      this.hp = 4400 * waveScale;
+      this.hp = 7800 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.35 * spdScale;
-      this.radius = 70;
+      this.speed = 1.62 * spdScale;
+      this.radius = 72;
       this.color = '#ff2a55';
-      this.scoreVal = 8500;
-      this.xpVal = 520;
-      this.shotCooldown = Math.floor(16 / this.fireScale);
+      this.scoreVal = 11000;
+      this.xpVal = 640;
+      this.shotCooldown = Math.floor(13 / this.fireScale);
       this.patternStep = 0;
-      this.shockwaveCooldown = 180;
+      this.shockwaveCooldown = 140;
       this.tier = 6;
     } else if (type === 'boss_leviathan') {
       this.isBoss = true;
       this.bossType = 'leviathan';
       this.bossName = 'VOID LEVIATHAN // APEX SINGULARITY';
       this.bossSubtitle = 'COSMIC HYDRA // EVENT HORIZON ENTITY';
-      this.hp = 5000 * waveScale;
+      this.hp = 8600 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.85 * spdScale;
-      this.radius = 66;
+      this.speed = 2.15 * spdScale;
+      this.radius = 68;
       this.color = '#d946ef';
-      this.scoreVal = 9500;
-      this.xpVal = 560;
-      this.shotCooldown = Math.floor(28 / this.fireScale);
+      this.scoreVal = 12000;
+      this.xpVal = 680;
+      this.shotCooldown = Math.floor(22 / this.fireScale);
       this.patternStep = 0;
-      this.vortexCooldown = 240;
+      this.vortexCooldown = 185;
       this.tier = 6;
     } else if (type === 'boss_architect') {
       this.isBoss = true;
       this.bossType = 'architect';
       this.bossName = 'KAIROS HYPER-CORE // AI CONSTRUCT';
       this.bossSubtitle = 'SENTIENT MAINFRAME // ROTATING TRIPWIRE MATRIX';
-      this.hp = 5400 * waveScale;
+      this.hp = 9200 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.5 * spdScale;
-      this.radius = 62;
+      this.speed = 1.8 * spdScale;
+      this.radius = 64;
       this.color = '#00f0ff';
-      this.scoreVal = 11000;
-      this.xpVal = 620;
-      this.shotCooldown = Math.floor(20 / this.fireScale);
+      this.scoreVal = 13500;
+      this.xpVal = 740;
+      this.shotCooldown = Math.floor(16 / this.fireScale);
       this.patternStep = 0;
       this.laserGridAngle = 0;
-      this.empCooldown = 220;
+      this.empCooldown = 175;
       this.tier = 6;
     } else if (type === 'boss_ignis') {
       this.isBoss = true;
       this.bossType = 'ignis';
       this.bossName = 'SOLAR VULCAN // PYROCLASTIC MEGATANK';
       this.bossSubtitle = 'HELLFIRE CITADEL // THERMAL INFERNO ENGINE';
-      this.hp = 5200 * waveScale;
+      this.hp = 8900 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.38 * spdScale;
-      this.radius = 68;
+      this.speed = 1.68 * spdScale;
+      this.radius = 70;
       this.color = '#ff6600';
-      this.scoreVal = 9000;
-      this.xpVal = 540;
-      this.shotCooldown = Math.floor(14 / this.fireScale);
+      this.scoreVal = 11500;
+      this.xpVal = 660;
+      this.shotCooldown = Math.floor(11 / this.fireScale);
       this.patternStep = 0;
-      this.mortarCooldown = 150;
-      this.overheatWaveCooldown = 260;
+      this.mortarCooldown = 115;
+      this.overheatWaveCooldown = 200;
       this.tier = 6;
     } else if (type === 'boss_tempest') {
       this.isBoss = true;
       this.bossType = 'tempest';
       this.bossName = 'ZEPHYR TEMPEST // THUNDERBIRD CARRIER';
       this.bossSubtitle = 'VOLTAIC HURRICANE // MACH-4 IONIC STRIKER';
-      this.hp = 4200 * waveScale;
+      this.hp = 7400 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 2.25 * spdScale;
-      this.radius = 58;
+      this.speed = 2.6 * spdScale;
+      this.radius = 60;
       this.color = '#38bdf8';
-      this.scoreVal = 8800;
-      this.xpVal = 510;
-      this.shotCooldown = Math.floor(24 / this.fireScale);
+      this.scoreVal = 11200;
+      this.xpVal = 630;
+      this.shotCooldown = Math.floor(18 / this.fireScale);
       this.patternStep = 0;
-      this.lightningStormTimer = 180;
-      this.machDashTimer = 160;
+      this.lightningStormTimer = 140;
+      this.machDashTimer = 125;
       this.isMachDashing = 0;
       this.tier = 6;
     } else if (type === 'boss_chronos') {
@@ -7684,16 +7689,16 @@ class Enemy {
       this.bossType = 'chronos';
       this.bossName = 'OUROBOROS // CHRONO-LORD WEAVER';
       this.bossSubtitle = 'ETERNAL TEMPORAL ENTROPY // TIME MATRIX ARCHON';
-      this.hp = 4800 * waveScale;
+      this.hp = 8400 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.5 * spdScale;
-      this.radius = 64;
+      this.speed = 1.82 * spdScale;
+      this.radius = 66;
       this.color = '#eab308';
-      this.scoreVal = 10500;
-      this.xpVal = 580;
-      this.shotCooldown = Math.floor(28 / this.fireScale);
+      this.scoreVal = 13000;
+      this.xpVal = 710;
+      this.shotCooldown = Math.floor(21 / this.fireScale);
       this.patternStep = 0;
-      this.timeDilationTimer = 200;
+      this.timeDilationTimer = 155;
       this.gearAngle = 0;
       this.hasRewound = false;
       this.tier = 6;
@@ -7702,53 +7707,53 @@ class Enemy {
       this.bossType = 'reaper';
       this.bossName = 'THANATOS // PHANTOM DREAD-STALKER';
       this.bossSubtitle = 'SPECTRAL HARVESTER // CLOAKED VOID ASSASSIN';
-      this.hp = 3900 * waveScale;
+      this.hp = 6900 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 2.15 * spdScale;
-      this.radius = 56;
+      this.speed = 2.5 * spdScale;
+      this.radius = 58;
       this.color = '#10b981';
-      this.scoreVal = 9800;
-      this.xpVal = 550;
-      this.shotCooldown = Math.floor(26 / this.fireScale);
+      this.scoreVal = 12200;
+      this.xpVal = 690;
+      this.shotCooldown = Math.floor(19 / this.fireScale);
       this.patternStep = 0;
-      this.stealthTimer = 180;
+      this.stealthTimer = 140;
       this.isCloaked = false;
       this.cloakDuration = 0;
-      this.scytheDashTimer = 130;
+      this.scytheDashTimer = 95;
       this.tier = 6;
     } else if (type === 'boss_behemoth') {
       this.isBoss = true;
       this.bossType = 'behemoth';
       this.bossName = 'TERRA GORGON // CYBER-HYDRA DREDGER';
       this.bossSubtitle = 'TRI-CORE APEX EXCAVATOR // BIO-MECHANICAL GORGON';
-      this.hp = 6200 * waveScale;
+      this.hp = 10600 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.25 * spdScale;
-      this.radius = 72;
+      this.speed = 1.52 * spdScale;
+      this.radius = 74;
       this.color = '#84cc16';
-      this.scoreVal = 12000;
-      this.xpVal = 650;
-      this.shotCooldown = Math.floor(18 / this.fireScale);
+      this.scoreVal = 15000;
+      this.xpVal = 790;
+      this.shotCooldown = Math.floor(14 / this.fireScale);
       this.patternStep = 0;
-      this.acidVolleyTimer = 160;
-      this.convergeTimer = 240;
+      this.acidVolleyTimer = 125;
+      this.convergeTimer = 185;
       this.tier = 6;
     } else if (type === 'boss_pulsar') {
       this.isBoss = true;
       this.bossType = 'pulsar';
       this.bossName = 'ASTRON PULSAR // NEUTRON STAR CORE';
       this.bossSubtitle = 'COLLAPSED STELLAR ENGINE // RELATIVISTIC BEAM MATRIX';
-      this.hp = 4600 * waveScale;
+      this.hp = 8200 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.45 * spdScale;
-      this.radius = 60;
+      this.speed = 1.75 * spdScale;
+      this.radius = 62;
       this.color = '#f43f5e';
-      this.scoreVal = 11500;
-      this.xpVal = 630;
-      this.shotCooldown = Math.floor(22 / this.fireScale);
+      this.scoreVal = 14200;
+      this.xpVal = 760;
+      this.shotCooldown = Math.floor(17 / this.fireScale);
       this.patternStep = 0;
       this.pulsarBeamAngle = 0;
-      this.gammaBurstTimer = 260;
+      this.gammaBurstTimer = 195;
       this.gammaCharging = 0;
       this.tier = 6;
     } else if (type === 'boss_valkyrie_zero') {
@@ -7756,35 +7761,35 @@ class Enemy {
       this.bossType = 'valkyrie_zero';
       this.bossName = 'SHADOW VALKYRIE ZERO // ROGUE PROTOTYPE';
       this.bossSubtitle = 'CORRUPTED EXPERIMENTAL FIGHTER // SHADOW MIRROR';
-      this.hp = 4300 * waveScale;
+      this.hp = 7600 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 2.4 * spdScale;
-      this.radius = 52;
+      this.speed = 2.75 * spdScale;
+      this.radius = 54;
       this.color = '#e11d48';
-      this.scoreVal = 13000;
-      this.xpVal = 680;
-      this.shotCooldown = Math.floor(16 / this.fireScale);
+      this.scoreVal = 16000;
+      this.xpVal = 820;
+      this.shotCooldown = Math.floor(12 / this.fireScale);
       this.patternStep = 0;
-      this.shadowDashTimer = 110;
+      this.shadowDashTimer = 85;
       this.shadowDashDuration = 0;
-      this.mirrorOverdriveTimer = 300;
+      this.mirrorOverdriveTimer = 220;
       this.tier = 6;
     } else if (type === 'boss_hivemind') {
       this.isBoss = true;
       this.bossType = 'hivemind';
       this.bossName = 'NEXUS OVERMIND // CARRIER MATRIX';
       this.bossSubtitle = 'AUTONOMOUS SWARM NEST // HEX-COMMAND MOTHERSHIP';
-      this.hp = 5800 * waveScale;
+      this.hp = 9800 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.35 * spdScale;
-      this.radius = 72;
+      this.speed = 1.62 * spdScale;
+      this.radius = 74;
       this.color = '#14b8a6';
-      this.scoreVal = 12500;
-      this.xpVal = 670;
-      this.shotCooldown = Math.floor(25 / this.fireScale);
+      this.scoreVal = 15500;
+      this.xpVal = 810;
+      this.shotCooldown = Math.floor(19 / this.fireScale);
       this.patternStep = 0;
-      this.droneSpawnTimer = 170;
-      this.barrierTimer = 250;
+      this.droneSpawnTimer = 130;
+      this.barrierTimer = 195;
       this.hexBarrierActive = 0;
       this.tier = 6;
     } else if (type === 'boss_banshee') {
@@ -7792,62 +7797,62 @@ class Enemy {
       this.bossType = 'banshee';
       this.bossName = 'SIREN BANSHEE // ACOUSTIC WARCRUISER';
       this.bossSubtitle = 'SUPER-SONIC DISRUPTION DREAD // DISCORD HARMONIC CORE';
-      this.hp = 4500 * waveScale;
+      this.hp = 7900 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 2.05 * spdScale;
-      this.radius = 60;
+      this.speed = 2.38 * spdScale;
+      this.radius = 62;
       this.color = '#8b5cf6';
-      this.scoreVal = 10000;
-      this.xpVal = 570;
-      this.shotCooldown = Math.floor(20 / this.fireScale);
+      this.scoreVal = 12800;
+      this.xpVal = 700;
+      this.shotCooldown = Math.floor(15 / this.fireScale);
       this.patternStep = 0;
-      this.sonicScreechTimer = 150;
-      this.harmonicRingTimer = 220;
+      this.sonicScreechTimer = 115;
+      this.harmonicRingTimer = 175;
       this.tier = 6;
     } else if (type === 'boss_glacier') {
       this.isBoss = true;
       this.bossType = 'glacier';
       this.bossName = 'FROST JOTUNN // CRYO-AEGIS MONOLITH';
       this.bossSubtitle = 'ABSOLUTE ZERO DREADNOUGHT // CRYO-CRYSTALLINE CITADEL';
-      this.hp = 6400 * waveScale;
+      this.hp = 11200 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.2 * spdScale;
-      this.radius = 70;
+      this.speed = 1.48 * spdScale;
+      this.radius = 72;
       this.color = '#06b6d4';
-      this.scoreVal = 13500;
-      this.xpVal = 700;
-      this.shotCooldown = Math.floor(26 / this.fireScale);
+      this.scoreVal = 16500;
+      this.xpVal = 850;
+      this.shotCooldown = Math.floor(20 / this.fireScale);
       this.patternStep = 0;
       this.cryoShards = 6;
       this.cryoShardAngle = 0;
-      this.blizzardTimer = 200;
-      this.shardRegenTimer = 280;
+      this.blizzardTimer = 155;
+      this.shardRegenTimer = 210;
       this.tier = 6;
     } else if (type === 'boss_oblivion') {
       this.isBoss = true;
       this.bossType = 'oblivion';
       this.bossName = 'APEX OBLIVION // COSMIC DOOMSDAY SYSTEM';
       this.bossSubtitle = 'FINAL EXTINCTION PROTOCOL // OMNI-DEATH SINGULARITY';
-      this.hp = 8800 * waveScale;
+      this.hp = 15500 * waveScale;
       this.maxHp = this.hp;
-      this.speed = 1.6 * spdScale;
-      this.radius = 78;
+      this.speed = 1.9 * spdScale;
+      this.radius = 80;
       this.color = '#ffffff';
-      this.scoreVal = 25000;
-      this.xpVal = 1200;
-      this.shotCooldown = Math.floor(18 / this.fireScale);
+      this.scoreVal = 32000;
+      this.xpVal = 1500;
+      this.shotCooldown = Math.floor(14 / this.fireScale);
       this.patternStep = 0;
-      this.judgmentStrikeTimer = 150;
-      this.doomsdayCollapseTimer = 300;
+      this.judgmentStrikeTimer = 115;
+      this.doomsdayCollapseTimer = 220;
       this.celestialRingAngles = [0, 0, 0, 0];
       this.isCollapsing = 0;
       this.tier = 6;
     }
 
-    // Overclocked Elite Variant Promotion (Active right from Sector 1!)
+    // Overclocked Elite Variant Promotion (Higher frequency & stronger Overclock stats!)
     const distFromCenter = Math.hypot(this.x - WORLD_W / 2, this.y - WORLD_H / 2);
-    const outerBiomeBonus = distFromCenter > 1800 ? 0.10 : 0;
-    const eliteChance = Math.min(0.55, threatCfg.eliteBonus + (wave - 1) * 0.045 + outerBiomeBonus);
+    const outerBiomeBonus = distFromCenter > 1800 ? 0.14 : 0.05;
+    const eliteChance = Math.min(0.68, threatCfg.eliteBonus + (wave - 1) * 0.055 + outerBiomeBonus);
     if (
       !this.isBoss &&
       type !== 'boss' &&
@@ -7856,12 +7861,12 @@ class Enemy {
       (forceElite || Math.random() < eliteChance)
     ) {
       this.isElite = true;
-      this.hp *= 1.75;
+      this.hp *= 2.25;
       this.maxHp = this.hp;
-      this.radius = Math.round(this.radius * 1.16);
-      this.speed *= 1.12;
-      this.scoreVal = Math.round(this.scoreVal * 2.3);
-      this.xpVal = Math.round(this.xpVal * 2.1);
+      this.radius = Math.round(this.radius * 1.18);
+      this.speed *= 1.18;
+      this.scoreVal = Math.round(this.scoreVal * 2.6);
+      this.xpVal = Math.round(this.xpVal * 2.3);
     }
   }
 
@@ -7875,9 +7880,9 @@ class Enemy {
       finalDmg *= 1.5;
     }
 
-    // Aegis Phalanx Guardian front energy barrier absorbs 55% of non-crit damage
+    // Aegis Phalanx Guardian front energy barrier absorbs 68% of non-crit damage & counter-reflects!
     if (this.type === 'aegis' && !isCrit) {
-      finalDmg *= 0.45;
+      finalDmg *= 0.32;
       spawnParticle(
         this.x + Math.cos(this.angle) * (this.radius + 6),
         this.y + Math.sin(this.angle) * (this.radius + 6),
@@ -7887,14 +7892,19 @@ class Enemy {
         10,
         2.6
       );
+      if (this.reflectCooldown <= 0 && enemyProjectiles.length < 130) {
+        this.reflectCooldown = 22;
+        const toP = Math.atan2(player.y - this.y, player.x - this.x);
+        enemyProjectiles.push(new Projectile(this.x + Math.cos(toP) * 24, this.y + Math.sin(toP) * 24, toP, '#00f0ff', 11.5, 16 * this.dmgScale));
+      }
     }
 
-    // Titan Goliath heavy front armor plating absorbs 50% of frontal non-crit damage
+    // Titan Goliath heavy front armor plating absorbs 55% of frontal non-crit damage
     if (this.bossType === 'colossus' && !isCrit) {
       const hitAngle = Math.atan2(player.y - this.y, player.x - this.x);
       const angleDiff = Math.abs(Math.atan2(Math.sin(hitAngle - this.angle), Math.cos(hitAngle - this.angle)));
-      if (angleDiff < 0.9) {
-        finalDmg *= 0.5;
+      if (angleDiff < 0.95) {
+        finalDmg *= 0.45;
         spawnParticle(this.x + Math.cos(this.angle) * this.radius, this.y + Math.sin(this.angle) * this.radius, 0, 0, '#ffe600', 8, 2.5);
       }
     }
@@ -7902,13 +7912,13 @@ class Enemy {
     // Frost Jotunn Cryo-Shard Mirror Shielding
     if (this.bossType === 'glacier' && this.cryoShards > 0 && !isCrit) {
       this.cryoShards--;
-      finalDmg *= 0.4;
+      finalDmg *= 0.35;
       spawnParticle(this.x + Math.cos(this.cryoShardAngle || 0) * 55, this.y + Math.sin(this.cryoShardAngle || 0) * 55, (Math.random() - 0.5) * 5, (Math.random() - 0.5) * 5, '#06b6d4', 14, 3.2);
       spawnFloatingText(this.x, this.y - this.radius, 'CRYO SHARD ABSORB', '#06b6d4', 1.05);
     }
 
     // Thanatos Optical Camouflage Evasion
-    if (this.bossType === 'reaper' && this.isCloaked && Math.random() < 0.55) {
+    if (this.bossType === 'reaper' && this.isCloaked && Math.random() < 0.6) {
       spawnFloatingText(this.x, this.y - 25, 'PHANTOM EVADE', '#10b981', 1.15);
       spawnParticle(this.x, this.y, 0, 0, '#10b981', 10, 2.5);
       return;
@@ -7916,28 +7926,67 @@ class Enemy {
 
     // Nexus Overmind Hex Barrier Forcefield
     if (this.bossType === 'hivemind' && this.hexBarrierActive > 0) {
-      finalDmg *= 0.28;
+      finalDmg *= 0.25;
       spawnParticle(this.x, this.y, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 6, '#14b8a6', 12, 3);
       spawnFloatingText(this.x, this.y - this.radius, 'HEX BARRIER DEFLECT', '#14b8a6', 1.0);
     }
 
-    // Ouroboros Chrono Paradox Rewind (Heals 22% once below 38% HP)
+    // Ouroboros Chrono Paradox Rewind (Heals 28% once below 38% HP)
     if (this.bossType === 'chronos' && !this.hasRewound && (this.hp - finalDmg < this.maxHp * 0.38)) {
       this.hasRewound = true;
-      this.hp = Math.min(this.maxHp, this.hp + this.maxHp * 0.22);
+      this.hp = Math.min(this.maxHp, this.hp + this.maxHp * 0.28);
       sound.chronoField(true);
       screenShake = Math.max(screenShake, 18);
       chromaticFlash = Math.max(chromaticFlash, 14);
       addGridRipple(this.x, this.y, 480, -36, '#eab308');
       spawnFloatingText(this.x, this.y - 45, '// CHRONO PARADOX REWIND //', '#eab308', 1.4);
-      for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
-        spawnParticle(this.x, this.y, Math.cos(a) * 6, Math.sin(a) * 6, '#eab308', 22, 3.8);
+      for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
+        enemyProjectiles.push(new Projectile(this.x, this.y, a, '#eab308', 9.0, 18 * this.dmgScale));
       }
       return;
     }
 
+    // Boss Adaptive Phase Armor & Multi-Phase Evolution!
+    if (this.isBoss) {
+      if (this.bossPhase === 2) finalDmg *= 0.82;
+      else if (this.bossPhase === 3) finalDmg *= 0.68;
+      // Prevent 1-shot burst skips so every Boss fights through all 3 phases!
+      finalDmg = Math.min(finalDmg, this.maxHp * 0.085);
+    }
+
     this.hp -= finalDmg;
     this.hitFlash = 4;
+
+    // Trigger Boss Phase II (<65% HP) and Phase III Berserk (<30% HP) Evolutions!
+    if (this.isBoss && this.hp > 0) {
+      const hpRatio = this.hp / this.maxHp;
+      if (this.bossPhase < 2 && hpRatio <= 0.65) {
+        this.bossPhase = 2;
+        sound.bossSpawn();
+        screenShake = Math.max(screenShake, 22);
+        chromaticFlash = Math.max(chromaticFlash, 14);
+        addGridRipple(this.x, this.y, 560, 46, this.color || '#ff0077');
+        spawnFloatingText(this.x, this.y - this.radius - 20, '// PHASE II: OVERCLOCKED FURY //', '#ffe600', 1.45);
+        for (let i = 0; i < 16; i++) {
+          const a = (i * Math.PI * 2) / 16;
+          enemyProjectiles.push(new Projectile(this.x, this.y, a, this.color || '#ff0077', 9.2, 20 * this.dmgScale));
+        }
+      } else if (this.bossPhase < 3 && hpRatio <= 0.30) {
+        this.bossPhase = 3;
+        this.hp = Math.min(this.maxHp, this.hp + this.maxHp * 0.08);
+        sound.overdrive();
+        screenShake = Math.max(screenShake, 28);
+        chromaticFlash = Math.max(chromaticFlash, 20);
+        addGridRipple(this.x, this.y, 720, 62, '#ff0055');
+        spawnFloatingText(this.x, this.y - this.radius - 24, '// PHASE III: APEX BERSERK PROTOCOL //', '#ff0055', 1.6);
+        announce(`// WARNING: ${this.bossName || 'APEX BOSS'} ENTERED PHASE III BERSERK! //`, '#ff0055');
+        for (let i = 0; i < 24; i++) {
+          const a = (i * Math.PI * 2) / 24;
+          enemyProjectiles.push(new Projectile(this.x, this.y, a, i % 2 === 0 ? '#ff0055' : '#ffe600', 10.5, 24 * this.dmgScale));
+        }
+      }
+    }
+
     if (typeof player !== 'undefined' && player) {
       player.reticleHitTimer = Math.max(player.reticleHitTimer || 0, critRoll ? 9 : 5);
       player.reticleHitCrit = critRoll;
@@ -7996,6 +8045,14 @@ class Enemy {
       announce('// COLOSSUS JUGGERNAUT DESTROYED //', '#ff2a55');
     }
 
+    // Overclocked Elites & Juggernauts unleash a 6-way Golden Revenge Shrapnel Burst on death!
+    if ((this.isElite || this.type === 'juggernaut') && !isBoss && enemyProjectiles.length < 130) {
+      for (let r = 0; r < 6; r++) {
+        const ra = this.hullRot + (r * Math.PI) / 3;
+        enemyProjectiles.push(new Projectile(this.x, this.y, ra, '#ffe600', 7.8, 15 * this.dmgScale));
+      }
+    }
+
     if (isHeavy || gridRipples.length < 3) {
       addGridRipple(this.x, this.y, isBoss ? 480 : (isHeavy ? 240 : 130), isBoss ? 45 : 18, this.color);
     }
@@ -8027,12 +8084,17 @@ class Enemy {
       shards.push(new DataShard(this.x, this.y, 0, 'magnet'));
     }
 
-    // Splitter spawns 4 mini drones on death (5 if Elite!)
+    // Splitter spawns 5-6 mini drones + 8-way bio-plasma burst on death!
     if (this.type === 'splitter') {
-      const miniCnt = this.isElite ? 5 : 4;
+      const miniCnt = this.isElite ? 6 : 5;
       for (let m = 0; m < miniCnt; m++) {
         const ang = this.hullRot + (m * Math.PI * 2) / miniCnt;
         enemies.push(new Enemy('mini', this.x + Math.cos(ang) * 18, this.y + Math.sin(ang) * 18));
+      }
+      if (enemyProjectiles.length < 130) {
+        for (let b = 0; b < 8; b++) {
+          enemyProjectiles.push(new Projectile(this.x, this.y, (b * Math.PI) / 4, '#00ff88', 7.2, 14 * this.dmgScale));
+        }
       }
     }
 
@@ -8063,13 +8125,14 @@ class Enemy {
   update() {
     const chronoMult = this.chronoSlowTimer > 0 ? 0.18 : 1.0;
     if (this.chronoSlowTimer > 0) this.chronoSlowTimer--;
-    const timeScale = (player.overdriveActive > 0 ? 0.65 : 1.0) * chronoMult;
-    const cdTick = chronoMult;
+    if (this.reflectCooldown > 0) this.reflectCooldown--;
+    const timeScale = (player.overdriveActive > 0 ? 0.72 : 1.0) * chronoMult;
+    const cdTick = chronoMult * (this.isBoss ? (this.bossPhase === 3 ? 1.55 : (this.bossPhase === 2 ? 1.25 : 1.0)) : (this.isElite ? 1.2 : 1.0));
 
     // Phantom Decoy Clone Taunt: non-boss enemies within 460px target the holographic clone!
     let targetX = player.x;
     let targetY = player.y;
-    if (typeof phantomDecoys !== 'undefined' && phantomDecoys.length > 0 && this.type !== 'boss') {
+    if (typeof phantomDecoys !== 'undefined' && phantomDecoys.length > 0 && !this.isBoss && this.type !== 'boss') {
       for (let d = 0; d < phantomDecoys.length; d++) {
         const dec = phantomDecoys[d];
         if (dec.active && Math.hypot(dec.x - this.x, dec.y - this.y) < 460) {
@@ -8086,157 +8149,223 @@ class Enemy {
     const dxP = player.x - this.x;
     const dyP = player.y - this.y;
     this.angle = Math.atan2(dyT, dxT);
-    this.hullRot += 0.028 * timeScale;
+
+    // Predictive Ballistic Lead Aiming (aims ahead of player's movement vector!)
+    const leadFrames = Math.min(20, distToTarget / 11.5);
+    const predX = targetX + (player.vx || 0) * leadFrames * 0.75;
+    const predY = targetY + (player.vy || 0) * leadFrames * 0.75;
+    this.leadAngle = Math.atan2(predY - this.y, predX - this.x);
+
+    this.hullRot += 0.034 * timeScale;
     if (this.recoil > 0) this.recoil *= 0.82;
     const distToPlayer = Math.hypot(dxP, dyP);
+    const canFire = enemyProjectiles.length < 135;
 
     if (this.type === 'drone_bit') {
-      // Aggressive sine-wave swarm + plasma micro-pulse fire
-      const weave = this.angle + Math.sin(frameCount * 0.08 + this.id) * 0.36;
+      // Aggressive sine-wave swarm + twin/triple plasma needle burst
+      const weave = this.angle + Math.sin(frameCount * 0.1 + this.id) * 0.42;
       this.x += Math.cos(weave) * this.speed * timeScale;
       this.y += Math.sin(weave) * this.speed * timeScale;
       this.shotCooldown -= cdTick;
-      if (this.shotCooldown <= 0 && distToTarget < 470) {
-        this.shotCooldown = Math.floor(88 / this.fireScale);
-        enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#38bdf8', 6.4, 11 * this.dmgScale));
+      if (this.shotCooldown <= 0 && distToTarget < 520 && canFire) {
+        this.shotCooldown = Math.floor(72 / this.fireScale);
+        enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle - 0.06, '#38bdf8', 7.6, 12 * this.dmgScale));
+        enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + 0.06, '#38bdf8', 7.6, 12 * this.dmgScale));
+        if (this.isElite) {
+          enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle, '#ffe600', 8.4, 14 * this.dmgScale));
+        }
       }
     } else if (this.type === 'scout') {
-      // Predator Interceptor: bursts into a high-speed afterburner lunge + razor dart!
+      // Predator Interceptor: bursts into a Mach-2.3 afterburner lunge + 3-dagger spread!
       this.lungeCooldown -= cdTick;
-      if (this.lungeCooldown <= 0 && distToTarget < 310) {
-        this.lungeCooldown = Math.floor(85 / this.fireScale);
-        this.lunging = 18;
-        enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ff0077', 7.8, 12 * this.dmgScale));
+      if (this.lungeCooldown <= 0 && distToTarget < 360) {
+        this.lungeCooldown = Math.floor(68 / this.fireScale);
+        this.lunging = 22;
+        if (canFire) {
+          for (let k = -1; k <= 1; k++) {
+            enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + k * 0.14, '#ff0077', 9.0, 13 * this.dmgScale));
+          }
+        }
       }
-      const lungeMult = this.lunging > 0 ? 1.95 : 1.0;
+      const lungeMult = this.lunging > 0 ? 2.25 : 1.0;
       if (this.lunging > 0) this.lunging--;
       this.x += Math.cos(this.angle) * this.speed * lungeMult * timeScale;
       this.y += Math.sin(this.angle) * this.speed * lungeMult * timeScale;
+    } else if (this.type === 'mini') {
+      // Hydra Razor-Swarmer: high-speed pursuit + close-range venom dart
+      this.x += Math.cos(this.angle) * this.speed * timeScale;
+      this.y += Math.sin(this.angle) * this.speed * timeScale;
+      if (this.shotCooldown !== undefined) {
+        this.shotCooldown -= cdTick;
+        if (this.shotCooldown <= 0 && distToTarget < 260 && canFire) {
+          this.shotCooldown = Math.floor(68 / this.fireScale);
+          enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle, '#00ff88', 8.2, 10 * this.dmgScale));
+        }
+      }
     } else if (this.type === 'striker') {
-      // Assault Skirmisher: strafes at midrange & fires twin angled plasma bolts (3-way if Elite)
-      const moveAng = distToTarget < 250 ? this.angle + Math.PI * 0.4 : this.angle;
+      // Assault Skirmisher: evasive side-step dash + 3-way (5-way if Elite) predictive plasma fan
+      this.evadeTimer -= cdTick;
+      if (this.evadeTimer <= 0) {
+        this.evadeTimer = 75;
+        const sideA = this.angle + (this.id % 2 === 0 ? Math.PI / 2 : -Math.PI / 2);
+        this.x += Math.cos(sideA) * 36;
+        this.y += Math.sin(sideA) * 36;
+      }
+      const moveAng = distToTarget < 260 ? this.angle + Math.PI * 0.42 : this.angle;
       this.x += Math.cos(moveAng) * this.speed * timeScale;
       this.y += Math.sin(moveAng) * this.speed * timeScale;
       this.shotCooldown -= cdTick;
-      if (this.shotCooldown <= 0) {
-        this.shotCooldown = Math.floor(72 / this.fireScale);
-        this.recoil = 4.5;
-        enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - 0.11, '#ff7b00', 7.2, 13 * this.dmgScale));
-        enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + 0.11, '#ff7b00', 7.2, 13 * this.dmgScale));
-        if (this.isElite) {
-          enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ffe600', 7.8, 14 * this.dmgScale));
+      if (this.shotCooldown <= 0 && canFire) {
+        this.shotCooldown = Math.floor(60 / this.fireScale);
+        this.recoil = 5;
+        const cnt = this.isElite ? 2 : 1;
+        for (let k = -cnt; k <= cnt; k++) {
+          enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + k * 0.12, k === 0 ? '#ffe600' : '#ff7b00', 8.4, 14 * this.dmgScale));
         }
       }
     } else if (this.type === 'splitter') {
-      // Hydra Carrier: advances steadily while lobbing bio-plasma orbs
+      // Hydra Bio-Swarm Carrier: advances while firing 3-way bio-plasma & deploying live mini swarmers!
       this.x += Math.cos(this.angle) * this.speed * timeScale;
       this.y += Math.sin(this.angle) * this.speed * timeScale;
       this.shotCooldown -= cdTick;
-      if (this.shotCooldown <= 0 && distToTarget < 520) {
-        this.shotCooldown = Math.floor(82 / this.fireScale);
-        enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#00ff88', 6.4, 13 * this.dmgScale));
+      if (this.shotCooldown <= 0 && distToTarget < 560 && canFire) {
+        this.shotCooldown = Math.floor(68 / this.fireScale);
+        for (let k = -1; k <= 1; k++) {
+          enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + k * 0.16, '#00ff88', 7.5, 14 * this.dmgScale));
+        }
+      }
+      if (this.spawnTimer !== undefined) {
+        this.spawnTimer -= cdTick;
+        if (this.spawnTimer <= 0 && enemies.length < 42) {
+          this.spawnTimer = 165;
+          enemies.push(new Enemy('mini', this.x + Math.cos(this.angle) * 20, this.y + Math.sin(this.angle) * 20));
+        }
       }
     } else if (this.type === 'aegis') {
-      // Shielded Phalanx Guardian: steady advance + 3-bolt cyan phalanx arc
+      // Shielded Phalanx Guardian: steady advance + 5-bolt cyan phalanx crescent wall
       this.x += Math.cos(this.angle) * this.speed * timeScale;
       this.y += Math.sin(this.angle) * this.speed * timeScale;
       this.shotCooldown -= cdTick;
-      if (this.shotCooldown <= 0) {
-        this.shotCooldown = Math.floor(82 / this.fireScale);
-        this.recoil = 4.5;
-        for (let k = -1; k <= 1; k++) {
-          enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + k * 0.16, '#00f0ff', 6.8, 14 * this.dmgScale));
+      if (this.shotCooldown <= 0 && canFire) {
+        this.shotCooldown = Math.floor(68 / this.fireScale);
+        this.recoil = 5;
+        for (let k = -2; k <= 2; k++) {
+          enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + k * 0.13, k === 0 ? '#ffffff' : '#00f0ff', 8.0, 15 * this.dmgScale));
         }
       }
     } else if (this.type === 'sniper') {
-      // Keep distance and telegraph high-velocity rail shot
-      if (distToTarget > 360) {
+      // Wraith Rail-Stalker: predictive lead lock-on + 3-lance (5-lance if Elite) high-velocity railgun burst!
+      if (distToTarget > 380) {
         this.x += Math.cos(this.angle) * this.speed * timeScale;
         this.y += Math.sin(this.angle) * this.speed * timeScale;
-      } else if (distToTarget < 240) {
-        this.x -= Math.cos(this.angle) * this.speed * 0.85 * timeScale;
-        this.y -= Math.sin(this.angle) * this.speed * 0.85 * timeScale;
+      } else if (distToTarget < 250) {
+        this.x -= Math.cos(this.angle) * this.speed * 0.9 * timeScale;
+        this.y -= Math.sin(this.angle) * this.speed * 0.9 * timeScale;
       }
       this.shotCooldown -= cdTick;
-      if (this.shotCooldown > 22) {
-        this.aimAngle = this.angle;
-      } else if (this.shotCooldown <= 0) {
-        this.shotCooldown = Math.floor(92 / this.fireScale);
-        this.recoil = 6;
-        enemyProjectiles.push(new Projectile(this.x + Math.cos(this.aimAngle) * 20, this.y + Math.sin(this.aimAngle) * 20, this.aimAngle, '#ff0055', 16.0, 22 * this.dmgScale));
-        if (this.isElite) {
-          enemyProjectiles.push(new Projectile(this.x + Math.cos(this.aimAngle) * 20, this.y + Math.sin(this.aimAngle) * 20, this.aimAngle - 0.12, '#ff0055', 15.0, 18 * this.dmgScale));
-          enemyProjectiles.push(new Projectile(this.x + Math.cos(this.aimAngle) * 20, this.y + Math.sin(this.aimAngle) * 20, this.aimAngle + 0.12, '#ff0055', 15.0, 18 * this.dmgScale));
+      if (this.shotCooldown > 18) {
+        this.aimAngle = this.leadAngle;
+      } else if (this.shotCooldown <= 0 && canFire) {
+        this.shotCooldown = Math.floor(76 / this.fireScale);
+        this.recoil = 7;
+        const cnt = this.isElite ? 2 : 1;
+        for (let k = -cnt; k <= cnt; k++) {
+          enemyProjectiles.push(new Projectile(
+            this.x + Math.cos(this.aimAngle) * 20,
+            this.y + Math.sin(this.aimAngle) * 20,
+            this.aimAngle + k * 0.08,
+            k === 0 ? '#ffffff' : '#ff0055',
+            17.5 - Math.abs(k) * 0.8,
+            24 * this.dmgScale
+          ));
         }
       }
     } else if (this.type === 'phantom') {
-      // Phase-Stalker: phase-blinks toward player flank & fires 8-way shuriken ring
+      // Phase-Stalker: aggressive flank blink + 12-way shuriken ring + 3 aimed void lances!
       this.x += Math.cos(this.angle) * this.speed * timeScale;
       this.y += Math.sin(this.angle) * this.speed * timeScale;
       this.blinkCooldown -= cdTick;
-      if (this.blinkCooldown <= 0 && distToTarget > 140 && distToTarget < 600) {
-        this.blinkCooldown = Math.floor(105 / this.fireScale);
+      if (this.blinkCooldown <= 0 && distToTarget > 120 && distToTarget < 640) {
+        this.blinkCooldown = Math.floor(85 / this.fireScale);
         const oldX = this.x;
         const oldY = this.y;
-        const blinkAng = this.angle + (Math.random() < 0.5 ? 0.52 : -0.52);
-        this.x = Math.max(60, Math.min(WORLD_W - 60, this.x + Math.cos(blinkAng) * 145));
-        this.y = Math.max(60, Math.min(WORLD_H - 60, this.y + Math.sin(blinkAng) * 145));
-        lightningBolts.push({ x1: oldX, y1: oldY, x2: this.x, y2: this.y, color: '#a855f7', life: 10 });
-        for (let k = 0; k < 8; k++) {
-          enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + (k * Math.PI) / 4, '#a855f7', 7.0, 15 * this.dmgScale));
+        const blinkAng = this.angle + (Math.random() < 0.5 ? 0.48 : -0.48);
+        this.x = Math.max(60, Math.min(WORLD_W - 60, this.x + Math.cos(blinkAng) * 165));
+        this.y = Math.max(60, Math.min(WORLD_H - 60, this.y + Math.sin(blinkAng) * 165));
+        lightningBolts.push({ x1: oldX, y1: oldY, x2: this.x, y2: this.y, color: '#a855f7', life: 12 });
+        if (canFire) {
+          for (let k = 0; k < 12; k++) {
+            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + (k * Math.PI) / 6, '#a855f7', 8.0, 16 * this.dmgScale));
+          }
+          const newAim = Math.atan2(targetY - this.y, targetX - this.x);
+          for (let s = -1; s <= 1; s++) {
+            enemyProjectiles.push(new Projectile(this.x, this.y, newAim + s * 0.1, '#f0abfc', 11.5, 18 * this.dmgScale));
+          }
         }
       }
     } else if (this.type === 'weaver') {
-      // Orbiting strafe movement + 5-way psionic crescent waves
-      const strafeAngle = this.angle + (distToTarget < 270 ? Math.PI * 0.44 : Math.PI * 0.2);
+      // Chrono-Seraph Gyro-Sentinel: orbiting strafe + 7-way psionic crescent + 6-way spiral!
+      const strafeAngle = this.angle + (distToTarget < 280 ? Math.PI * 0.45 : Math.PI * 0.22);
       this.x += Math.cos(strafeAngle) * this.speed * timeScale;
       this.y += Math.sin(strafeAngle) * this.speed * timeScale;
       this.shotCooldown -= cdTick;
-      if (this.shotCooldown <= 0) {
-        this.shotCooldown = Math.floor(68 / this.fireScale);
-        for (let k = -2; k <= 2; k++) {
-          enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + k * 0.2, '#d946ef', 7.0, 16 * this.dmgScale));
+      if (this.shotCooldown <= 0 && canFire) {
+        this.shotCooldown = Math.floor(56 / this.fireScale);
+        for (let k = -3; k <= 3; k++) {
+          enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + k * 0.15, k === 0 ? '#00f0ff' : '#d946ef', 8.2, 17 * this.dmgScale));
+        }
+        for (let s = 0; s < 6; s++) {
+          enemyProjectiles.push(new Projectile(this.x, this.y, this.hullRot + (s * Math.PI) / 3, '#f0abfc', 6.4, 15 * this.dmgScale));
         }
       }
     } else if (this.type === 'juggernaut') {
-      // Colossus Siege Juggernaut: ferocious thruster charge + 12-way magma nova
+      // Colossus Siege Juggernaut: 3.2x bull-charge + 16-way magma nova + 3 aimed siege shells!
       this.chargeCooldown -= cdTick;
-      if (this.chargeCooldown <= 0 && distToTarget < 520) {
-        this.chargeCooldown = 145;
-        this.charging = 32;
+      if (this.chargeCooldown <= 0 && distToTarget < 580) {
+        this.chargeCooldown = 115;
+        this.charging = 36;
+        addGridRipple(this.x, this.y, 220, 24, '#ff2a55');
       }
-      const mult = this.charging > 0 ? 2.9 : 1.0;
+      const mult = this.charging > 0 ? 3.2 : 1.0;
       if (this.charging > 0) this.charging--;
       this.x += Math.cos(this.angle) * this.speed * mult * timeScale;
       this.y += Math.sin(this.angle) * this.speed * mult * timeScale;
 
       this.shotCooldown -= cdTick;
-      if (this.shotCooldown <= 0) {
-        this.shotCooldown = Math.floor(84 / this.fireScale);
-        this.recoil = 6;
-        for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
-          enemyProjectiles.push(new Projectile(this.x, this.y, a + this.hullRot, '#ff2a55', 6.4, 18 * this.dmgScale));
+      if (this.shotCooldown <= 0 && canFire) {
+        this.shotCooldown = Math.floor(68 / this.fireScale);
+        this.recoil = 7;
+        for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
+          enemyProjectiles.push(new Projectile(this.x, this.y, a + this.hullRot, '#ff2a55', 7.6, 20 * this.dmgScale));
+        }
+        for (let s = -1; s <= 1; s++) {
+          enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + s * 0.12, '#ffe600', 11.5, 22 * this.dmgScale));
         }
       }
     } else if (this.type === 'nemesis') {
-      // VIP Crimson Nemesis Gunship: high-speed orbit + lateral phase-dash + 5-way golden salvo
-      const orbitAng = this.angle + (distToTarget < 280 ? Math.PI * 0.52 : Math.PI * 0.26);
+      // VIP Crimson Nemesis Ace: high-speed orbit + lateral phase-dash burst + 7-way golden/crimson salvo!
+      const orbitAng = this.angle + (distToTarget < 290 ? Math.PI * 0.52 : Math.PI * 0.26);
       this.x += Math.cos(orbitAng) * this.speed * timeScale;
       this.y += Math.sin(orbitAng) * this.speed * timeScale;
       this.dashTimer -= cdTick;
       if (this.dashTimer <= 0) {
-        this.dashTimer = 85;
+        this.dashTimer = 68;
         const sideAng = this.angle + (Math.random() < 0.5 ? Math.PI / 2 : -Math.PI / 2);
-        this.x = Math.max(80, Math.min(WORLD_W - 80, this.x + Math.cos(sideAng) * 110));
-        this.y = Math.max(80, Math.min(WORLD_H - 80, this.y + Math.sin(sideAng) * 110));
-        addGridRipple(this.x, this.y, 180, 18, '#ffe600');
+        this.x = Math.max(80, Math.min(WORLD_W - 80, this.x + Math.cos(sideAng) * 135));
+        this.y = Math.max(80, Math.min(WORLD_H - 80, this.y + Math.sin(sideAng) * 135));
+        addGridRipple(this.x, this.y, 210, 22, '#ffe600');
+        if (canFire) {
+          for (let d = 0; d < 8; d++) {
+            enemyProjectiles.push(new Projectile(this.x, this.y, (d * Math.PI) / 4, '#ffe600', 8.5, 17 * this.dmgScale));
+          }
+        }
       }
       this.shotCooldown -= cdTick;
-      if (this.shotCooldown <= 0) {
-        this.shotCooldown = Math.floor(52 / this.fireScale);
-        this.recoil = 5;
-        for (let k = -2; k <= 2; k++) {
-          enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + k * 0.15, k % 2 === 0 ? '#ffe600' : '#ff0055', 8.2, 16 * this.dmgScale));
+      if (this.shotCooldown <= 0 && canFire) {
+        this.shotCooldown = Math.floor(42 / this.fireScale);
+        this.recoil = 6;
+        for (let k = -3; k <= 3; k++) {
+          enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + k * 0.12, k % 2 === 0 ? '#ffe600' : '#ff0055', 9.8, 18 * this.dmgScale));
         }
       }
     } else {
@@ -8268,22 +8397,29 @@ class Enemy {
       }
     }
 
-    // Multi-Apex Boss Special Abilities & Attacks
+    // =========================================================================
+    // 15 APEX MEGA-BOSSES — MULTI-PHASE SPECIAL ABILITIES & HAZARDS
+    // =========================================================================
     if (this.isBoss || this.type === 'boss') {
-      const enraged = this.hp < this.maxHp * 0.55;
+      const enraged = this.bossPhase >= 2 || this.hp < this.maxHp * 0.65;
+      const berserk = this.bossPhase >= 3 || this.hp < this.maxHp * 0.30;
 
       // 1. Titan Colossus: Seismic Shockwaves & Rocket Pods
       if (this.bossType === 'colossus') {
         if (this.shockwaveCooldown) this.shockwaveCooldown--;
         if (this.shockwaveCooldown <= 0) {
-          this.shockwaveCooldown = enraged ? 120 : 180;
+          this.shockwaveCooldown = berserk ? 75 : (enraged ? 105 : 150);
           sound.explosion(true);
-          screenShake = Math.max(screenShake, 18);
-          addGridRipple(this.x, this.y, 440, 36, '#ff2a55');
-          for (let a = 0; a < Math.PI * 2; a += Math.PI / 10) {
-            enemyProjectiles.push(new Projectile(this.x, this.y, a, '#ff7b00', 7.2, 20 * this.dmgScale));
+          screenShake = Math.max(screenShake, 20);
+          addGridRipple(this.x, this.y, 480, 40, '#ff2a55');
+          if (canFire) {
+            const count = berserk ? 28 : 20;
+            for (let i = 0; i < count; i++) {
+              const a = (i * Math.PI * 2) / count;
+              enemyProjectiles.push(new Projectile(this.x, this.y, a, i % 2 === 0 ? '#ff2a55' : '#ff7b00', 8.8, 22 * this.dmgScale));
+            }
           }
-          spawnFloatingText(this.x, this.y - 45, '// SEISMIC QUAKE SLAM //', '#ff2a55', 1.3);
+          spawnFloatingText(this.x, this.y - 45, '// SEISMIC QUAKE SLAM //', '#ff2a55', 1.35);
         }
       }
 
@@ -8291,29 +8427,37 @@ class Enemy {
       else if (this.bossType === 'leviathan') {
         if (this.vortexCooldown) this.vortexCooldown--;
         if (this.vortexCooldown <= 0) {
-          this.vortexCooldown = enraged ? 180 : 250;
+          this.vortexCooldown = berserk ? 110 : (enraged ? 145 : 200);
           if (typeof spatialRifts !== 'undefined') {
-            spatialRifts.push(new SpatialRift(player.x, player.y, 0, 150, true, '#d946ef'));
+            spatialRifts.push(new SpatialRift(player.x, player.y, 0, 165, true, '#d946ef'));
+            if (berserk) {
+              spatialRifts.push(new SpatialRift(this.x + Math.cos(this.leadAngle) * 180, this.y + Math.sin(this.leadAngle) * 180, 0, 140, true, '#00f0ff'));
+            }
             sound.parryDeflect();
-            spawnFloatingText(this.x, this.y - 45, '// EVENT HORIZON SINGULARITY //', '#d946ef', 1.3);
+            spawnFloatingText(this.x, this.y - 45, '// EVENT HORIZON SINGULARITY //', '#d946ef', 1.35);
           }
         }
       }
 
       // 3. Kairos Architect: Rotating Laser Tripwires & Nanite EMP Disruption
       else if (this.bossType === 'architect') {
-        this.laserGridAngle = (this.laserGridAngle || 0) + (enraged ? 0.024 : 0.015);
+        this.laserGridAngle = (this.laserGridAngle || 0) + (berserk ? 0.038 : (enraged ? 0.028 : 0.018));
         if (this.empCooldown) this.empCooldown--;
         if (this.empCooldown <= 0) {
-          this.empCooldown = enraged ? 160 : 220;
+          this.empCooldown = berserk ? 105 : (enraged ? 140 : 190);
           sound.dash();
-          addGridRipple(this.x, this.y, 420, 38, '#00f0ff');
-          screenShake = Math.max(screenShake, 14);
-          spawnFloatingText(this.x, this.y - 45, '// NANITE EMP DISRUPTION //', '#00f0ff', 1.3);
-          if (distToPlayer < 420) {
-            player.takeDamage(24 * this.dmgScale);
-            player.vx += Math.cos(this.angle) * 14;
-            player.vy += Math.sin(this.angle) * 14;
+          addGridRipple(this.x, this.y, 460, 42, '#00f0ff');
+          screenShake = Math.max(screenShake, 16);
+          spawnFloatingText(this.x, this.y - 45, '// NANITE EMP DISRUPTION //', '#00f0ff', 1.35);
+          if (canFire) {
+            for (let i = 0; i < 16; i++) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, (i * Math.PI) / 8 + this.laserGridAngle, '#00f0ff', 9.5, 19 * this.dmgScale));
+            }
+          }
+          if (distToPlayer < 440) {
+            player.takeDamage(26 * this.dmgScale);
+            player.vx += Math.cos(this.angle) * 15;
+            player.vy += Math.sin(this.angle) * 15;
           }
         }
       }
@@ -8322,25 +8466,32 @@ class Enemy {
       else if (this.bossType === 'ignis') {
         if (this.mortarCooldown) this.mortarCooldown--;
         if (this.mortarCooldown <= 0) {
-          this.mortarCooldown = enraged ? 100 : 150;
+          this.mortarCooldown = berserk ? 70 : (enraged ? 95 : 130);
           sound.explosion(false);
-          screenShake = Math.max(screenShake, 14);
-          addGridRipple(player.x, player.y, 280, 26, '#ff6600');
-          spawnFloatingText(this.x, this.y - 45, '// PYROCLASTIC MORTAR BARRAGE //', '#ff6600', 1.3);
-          for (let m = 0; m < 8; m++) {
-            const a = (m * Math.PI) / 4;
-            enemyProjectiles.push(new Projectile(player.x + (Math.random() - 0.5) * 80, player.y + (Math.random() - 0.5) * 80, a, '#ff3300', 4.5, 18 * this.dmgScale));
+          screenShake = Math.max(screenShake, 16);
+          addGridRipple(player.x, player.y, 310, 30, '#ff6600');
+          spawnFloatingText(this.x, this.y - 45, '// PYROCLASTIC MORTAR BARRAGE //', '#ff6600', 1.35);
+          if (canFire) {
+            for (let m = 0; m < 12; m++) {
+              const a = (m * Math.PI) / 6;
+              enemyProjectiles.push(new Projectile(player.x + (Math.random() - 0.5) * 90, player.y + (Math.random() - 0.5) * 90, a, '#ff3300', 6.2, 20 * this.dmgScale));
+            }
           }
         }
         if (this.overheatWaveCooldown) this.overheatWaveCooldown--;
         if (this.overheatWaveCooldown <= 0) {
-          this.overheatWaveCooldown = enraged ? 170 : 250;
+          this.overheatWaveCooldown = berserk ? 120 : (enraged ? 155 : 220);
           sound.explosion(true);
-          screenShake = Math.max(screenShake, 20);
-          addGridRipple(this.x, this.y, 500, 42, '#ff6600');
-          spawnFloatingText(this.x, this.y - 45, '// THERMAL INFERNO OVERHEAT //', '#ff7b00', 1.4);
-          if (distToPlayer < 450) {
-            player.takeDamage(22 * this.dmgScale);
+          screenShake = Math.max(screenShake, 22);
+          addGridRipple(this.x, this.y, 540, 46, '#ff6600');
+          spawnFloatingText(this.x, this.y - 45, '// THERMAL INFERNO OVERHEAT //', '#ff7b00', 1.45);
+          if (canFire) {
+            for (let i = 0; i < 20; i++) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, (i * Math.PI) / 10, '#ffe600', 9.2, 21 * this.dmgScale));
+            }
+          }
+          if (distToPlayer < 470) {
+            player.takeDamage(25 * this.dmgScale);
             player.vx += Math.cos(this.angle) * 16;
             player.vy += Math.sin(this.angle) * 16;
           }
@@ -8351,33 +8502,38 @@ class Enemy {
       else if (this.bossType === 'tempest') {
         if (this.lightningStormTimer) this.lightningStormTimer--;
         if (this.lightningStormTimer <= 0) {
-          this.lightningStormTimer = enraged ? 110 : 170;
+          this.lightningStormTimer = berserk ? 75 : (enraged ? 100 : 145);
           sound.ionBeam();
-          screenShake = Math.max(screenShake, 16);
+          screenShake = Math.max(screenShake, 18);
           spawnFloatingText(this.x, this.y - 45, '// TESLA CHAIN LIGHTNING STORM //', '#38bdf8', 1.35);
-          for (let l = 0; l < 3; l++) {
-            const lx = player.x + (Math.random() - 0.5) * 120;
-            const ly = player.y + (Math.random() - 0.5) * 120;
-            lightningBolts.push({ x1: lx, y1: ly - 500, x2: lx, y2: ly, color: '#38bdf8', life: 14 });
+          const boltCnt = berserk ? 5 : 3;
+          for (let l = 0; l < boltCnt; l++) {
+            const lx = player.x + (Math.random() - 0.5) * 130;
+            const ly = player.y + (Math.random() - 0.5) * 130;
+            lightningBolts.push({ x1: lx, y1: ly - 520, x2: lx, y2: ly, color: '#38bdf8', life: 15 });
           }
-          player.takeDamage(22 * this.dmgScale);
-          addGridRipple(player.x, player.y, 240, 25, '#38bdf8');
+          player.takeDamage(24 * this.dmgScale);
+          addGridRipple(player.x, player.y, 260, 28, '#38bdf8');
         }
         if (this.machDashTimer) this.machDashTimer--;
         if (this.machDashTimer <= 0) {
-          this.machDashTimer = enraged ? 120 : 170;
-          this.isMachDashing = 20;
+          this.machDashTimer = berserk ? 85 : (enraged ? 110 : 150);
+          this.isMachDashing = 24;
           sound.dash();
-          screenShake = Math.max(screenShake, 15);
-          spawnFloatingText(this.x, this.y - 45, '// MACH-4 IONIC RAM DASH //', '#00f0ff', 1.3);
+          screenShake = Math.max(screenShake, 16);
+          spawnFloatingText(this.x, this.y - 45, '// MACH-4 IONIC RAM DASH //', '#00f0ff', 1.35);
         }
         if (this.isMachDashing > 0) {
           this.isMachDashing--;
-          this.x += Math.cos(this.angle) * 14 * spdScale;
-          this.y += Math.sin(this.angle) * 14 * spdScale;
+          this.x += Math.cos(this.leadAngle) * 16 * timeScale;
+          this.y += Math.sin(this.leadAngle) * 16 * timeScale;
           spawnParticle(this.x, this.y, 0, 0, '#38bdf8', 14, 3.5);
-          if (distToPlayer < this.radius + player.radius + 15) {
-            player.takeDamage(26 * this.dmgScale);
+          if (this.isMachDashing % 4 === 0 && canFire) {
+            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + Math.PI / 2, '#38bdf8', 8.5, 16 * this.dmgScale));
+            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - Math.PI / 2, '#38bdf8', 8.5, 16 * this.dmgScale));
+          }
+          if (distToPlayer < this.radius + player.radius + 18) {
+            player.takeDamage(28 * this.dmgScale);
             player.vx += Math.cos(this.angle) * 18;
             player.vy += Math.sin(this.angle) * 18;
           }
@@ -8386,16 +8542,21 @@ class Enemy {
 
       // 6. Ouroboros: Chrono Stasis Distortion
       else if (this.bossType === 'chronos') {
-        this.gearAngle = (this.gearAngle || 0) + (enraged ? 0.035 : 0.02);
+        this.gearAngle = (this.gearAngle || 0) + (berserk ? 0.05 : (enraged ? 0.036 : 0.022));
         if (this.timeDilationTimer) this.timeDilationTimer--;
         if (this.timeDilationTimer <= 0) {
-          this.timeDilationTimer = enraged ? 140 : 200;
+          this.timeDilationTimer = berserk ? 95 : (enraged ? 125 : 175);
           sound.chronoField(false);
-          screenShake = Math.max(screenShake, 12);
-          addGridRipple(this.x, this.y, 420, -32, '#eab308');
+          screenShake = Math.max(screenShake, 14);
+          addGridRipple(this.x, this.y, 460, -36, '#eab308');
           spawnFloatingText(this.x, this.y - 45, '// TEMPORAL STASIS DISTORTION //', '#eab308', 1.35);
-          if (distToPlayer < 420) {
-            player.slowTimer = 90;
+          if (canFire) {
+            for (let i = 0; i < 16; i++) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, (i * Math.PI) / 8 + this.gearAngle, '#eab308', 8.6, 19 * this.dmgScale));
+            }
+          }
+          if (distToPlayer < 450) {
+            player.slowTimer = 105;
             spawnFloatingText(player.x, player.y - 25, 'TIME DILATED (-38% SPD)', '#f0abfc', 1.15);
           }
         }
@@ -8409,31 +8570,35 @@ class Enemy {
             this.isCloaked = false;
             sound.katanaSlash();
             spawnFloatingText(this.x, this.y - 45, '// UNCLOAK SURPRISE STRIKE //', '#10b981', 1.35);
-            for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
-              enemyProjectiles.push(new Projectile(this.x, this.y, a, '#10b981', 8.2, 17 * this.dmgScale));
+            if (canFire) {
+              for (let a = 0; a < Math.PI * 2; a += Math.PI / 10) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, a, '#10b981', 9.8, 19 * this.dmgScale));
+              }
             }
           }
         } else {
           if (this.stealthTimer) this.stealthTimer--;
           if (this.stealthTimer <= 0) {
-            this.stealthTimer = enraged ? 140 : 190;
+            this.stealthTimer = berserk ? 95 : (enraged ? 125 : 170);
             this.isCloaked = true;
-            this.cloakDuration = 80;
+            this.cloakDuration = 75;
             sound.dash();
             spawnFloatingText(this.x, this.y - 45, '// OPTICAL STEALTH CLOAK //', '#10b981', 1.3);
-            addGridRipple(this.x, this.y, 300, 20, '#10b981');
+            addGridRipple(this.x, this.y, 320, 24, '#10b981');
           }
         }
         if (this.scytheDashTimer) this.scytheDashTimer--;
         if (this.scytheDashTimer <= 0) {
-          this.scytheDashTimer = enraged ? 100 : 150;
+          this.scytheDashTimer = berserk ? 68 : (enraged ? 90 : 130);
           sound.katanaSlash();
-          const toP = Math.atan2(player.y - this.y, player.x - this.x);
-          this.vx = Math.cos(toP) * 12;
-          this.vy = Math.sin(toP) * 12;
-          spawnFloatingText(this.x, this.y - 45, '// GRIM SCYTHE CLEAVE //', '#10b981', 1.25);
-          for (let s = -0.5; s <= 0.5; s += 0.25) {
-            enemyProjectiles.push(new Projectile(this.x, this.y, toP + s, '#10b981', 9.5, 19 * this.dmgScale));
+          const toP = this.leadAngle;
+          this.x = Math.max(80, Math.min(WORLD_W - 80, this.x + Math.cos(toP) * 95));
+          this.y = Math.max(80, Math.min(WORLD_H - 80, this.y + Math.sin(toP) * 95));
+          spawnFloatingText(this.x, this.y - 45, '// GRIM SCYTHE CLEAVE //', '#10b981', 1.3);
+          if (canFire) {
+            for (let s = -0.6; s <= 0.6; s += 0.2) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, toP + s, '#10b981', 11.2, 21 * this.dmgScale));
+            }
           }
         }
       }
@@ -8442,56 +8607,62 @@ class Enemy {
       else if (this.bossType === 'behemoth') {
         if (this.acidVolleyTimer) this.acidVolleyTimer--;
         if (this.acidVolleyTimer <= 0) {
-          this.acidVolleyTimer = enraged ? 110 : 160;
+          this.acidVolleyTimer = berserk ? 75 : (enraged ? 100 : 140);
           sound.explosion(false);
-          screenShake = Math.max(screenShake, 14);
+          screenShake = Math.max(screenShake, 16);
           spawnFloatingText(this.x, this.y - 45, '// HYDRA ACIDIC VOLLEY //', '#84cc16', 1.35);
-          for (let h = -1; h <= 1; h++) {
-            const headAng = this.angle + h * 0.45;
-            const hx = this.x + Math.cos(headAng) * 45;
-            const hy = this.y + Math.sin(headAng) * 45;
-            const targetAng = Math.atan2(player.y - hy, player.x - hx);
-            for (let b = -0.2; b <= 0.2; b += 0.2) {
-              enemyProjectiles.push(new Projectile(hx, hy, targetAng + b, '#84cc16', 7.5, 18 * this.dmgScale));
+          if (canFire) {
+            for (let h = -1; h <= 1; h++) {
+              const headAng = this.angle + h * 0.45;
+              const hx = this.x + Math.cos(headAng) * 45;
+              const hy = this.y + Math.sin(headAng) * 45;
+              const targetAng = Math.atan2(player.y - hy, player.x - hx);
+              for (let b = -0.28; b <= 0.28; b += 0.14) {
+                enemyProjectiles.push(new Projectile(hx, hy, targetAng + b, '#84cc16', 8.8, 20 * this.dmgScale));
+              }
             }
           }
         }
         if (this.convergeTimer) this.convergeTimer--;
         if (this.convergeTimer <= 0) {
-          this.convergeTimer = enraged ? 170 : 240;
+          this.convergeTimer = berserk ? 115 : (enraged ? 150 : 210);
           sound.ionBeam();
-          screenShake = Math.max(screenShake, 16);
-          addGridRipple(this.x, this.y, 440, 34, '#84cc16');
+          screenShake = Math.max(screenShake, 18);
+          addGridRipple(this.x, this.y, 480, 38, '#84cc16');
           spawnFloatingText(this.x, this.y - 45, '// TRI-CORE BEAM CONVERGENCE //', '#84cc16', 1.4);
-          for (let c = -0.3; c <= 0.3; c += 0.3) {
-            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + c, '#a3e635', 13.5, 24 * this.dmgScale));
+          if (canFire) {
+            for (let c = -0.36; c <= 0.36; c += 0.18) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + c, '#a3e635', 15.5, 26 * this.dmgScale));
+            }
           }
         }
       }
 
       // 9. Astron Pulsar: Relativistic Pole Beams & Gamma-Ray Burst
       else if (this.bossType === 'pulsar') {
-        this.pulsarBeamAngle = (this.pulsarBeamAngle || 0) + (enraged ? 0.03 : 0.018);
+        this.pulsarBeamAngle = (this.pulsarBeamAngle || 0) + (berserk ? 0.042 : (enraged ? 0.032 : 0.02));
         const pAng1 = this.pulsarBeamAngle;
         const pAng2 = this.pulsarBeamAngle + Math.PI;
         [pAng1, pAng2].forEach(pAng => {
           const toP = Math.atan2(player.y - this.y, player.x - this.x);
           const aDiff = Math.abs(Math.atan2(Math.sin(toP - pAng), Math.cos(toP - pAng)));
-          if (aDiff < 0.12 && distToPlayer < 480) {
-            player.takeDamage(12 * this.dmgScale);
+          if (aDiff < 0.14 && distToPlayer < 520) {
+            player.takeDamage(14 * this.dmgScale);
             spawnParticle(player.x, player.y, (Math.random() - 0.5) * 4, (Math.random() - 0.5) * 4, '#f43f5e', 8, 2);
           }
         });
         if (this.gammaBurstTimer) this.gammaBurstTimer--;
         if (this.gammaBurstTimer <= 0) {
-          this.gammaBurstTimer = enraged ? 180 : 260;
+          this.gammaBurstTimer = berserk ? 120 : (enraged ? 160 : 220);
           sound.ionBeam();
-          screenShake = Math.max(screenShake, 22);
-          chromaticFlash = Math.max(chromaticFlash, 15);
-          addGridRipple(this.x, this.y, 500, 48, '#f43f5e');
-          spawnFloatingText(this.x, this.y - 45, '// GAMMA-RAY BURST //', '#f43f5e', 1.4);
-          for (let a = -0.28; a <= 0.28; a += 0.07) {
-            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + a, '#f43f5e', 15.0, 25 * this.dmgScale));
+          screenShake = Math.max(screenShake, 24);
+          chromaticFlash = Math.max(chromaticFlash, 16);
+          addGridRipple(this.x, this.y, 540, 50, '#f43f5e');
+          spawnFloatingText(this.x, this.y - 45, '// GAMMA-RAY BURST //', '#f43f5e', 1.45);
+          if (canFire) {
+            for (let a = -0.35; a <= 0.35; a += 0.07) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + a, '#f43f5e', 16.5, 26 * this.dmgScale));
+            }
           }
         }
       }
@@ -8500,30 +8671,34 @@ class Enemy {
       else if (this.bossType === 'valkyrie_zero') {
         if (this.shadowDashTimer) this.shadowDashTimer--;
         if (this.shadowDashTimer <= 0) {
-          this.shadowDashTimer = enraged ? 80 : 120;
+          this.shadowDashTimer = berserk ? 55 : (enraged ? 72 : 105);
           sound.dash();
           sound.katanaSlash();
-          const toP = Math.atan2(player.y - this.y, player.x - this.x);
-          this.x += Math.cos(toP) * 110;
-          this.y += Math.sin(toP) * 110;
-          screenShake = Math.max(screenShake, 14);
-          addGridRipple(this.x, this.y, 280, 28, '#e11d48');
-          spawnFloatingText(this.x, this.y - 45, '// SHADOW KATANA FLASH DASH //', '#e11d48', 1.3);
-          for (let a = -0.4; a <= 0.4; a += 0.2) {
-            enemyProjectiles.push(new Projectile(this.x, this.y, toP + a, '#e11d48', 11.5, 20 * this.dmgScale));
+          const toP = this.leadAngle;
+          this.x = Math.max(80, Math.min(WORLD_W - 80, this.x + Math.cos(toP) * 135));
+          this.y = Math.max(80, Math.min(WORLD_H - 80, this.y + Math.sin(toP) * 135));
+          screenShake = Math.max(screenShake, 16);
+          addGridRipple(this.x, this.y, 310, 32, '#e11d48');
+          spawnFloatingText(this.x, this.y - 45, '// SHADOW KATANA FLASH DASH //', '#e11d48', 1.35);
+          if (canFire) {
+            for (let a = -0.48; a <= 0.48; a += 0.16) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, toP + a, '#e11d48', 12.8, 22 * this.dmgScale));
+            }
           }
         }
         if (this.mirrorOverdriveTimer) this.mirrorOverdriveTimer--;
         if (this.mirrorOverdriveTimer <= 0) {
-          this.mirrorOverdriveTimer = enraged ? 200 : 290;
+          this.mirrorOverdriveTimer = berserk ? 135 : (enraged ? 175 : 240);
           sound.overdrive();
-          screenShake = Math.max(screenShake, 20);
-          chromaticFlash = Math.max(chromaticFlash, 14);
-          addGridRipple(this.x, this.y, 550, 45, '#e11d48');
-          spawnFloatingText(this.x, this.y - 45, '// OVERDRIVE MIRROR PROTOCOL //', '#ffe600', 1.4);
-          for (let i = 0; i < 14; i++) {
-            const mAng = (i * Math.PI * 2) / 14;
-            enemyProjectiles.push(new Projectile(this.x, this.y, mAng, '#e11d48', 9.0, 18 * this.dmgScale));
+          screenShake = Math.max(screenShake, 22);
+          chromaticFlash = Math.max(chromaticFlash, 16);
+          addGridRipple(this.x, this.y, 580, 48, '#e11d48');
+          spawnFloatingText(this.x, this.y - 45, '// OVERDRIVE MIRROR PROTOCOL //', '#ffe600', 1.45);
+          if (canFire) {
+            for (let i = 0; i < 18; i++) {
+              const mAng = (i * Math.PI * 2) / 18;
+              enemyProjectiles.push(new Projectile(this.x, this.y, mAng, i % 2 === 0 ? '#e11d48' : '#ffe600', 10.2, 20 * this.dmgScale));
+            }
           }
         }
       }
@@ -8533,21 +8708,22 @@ class Enemy {
         if (this.hexBarrierActive > 0) this.hexBarrierActive--;
         if (this.barrierTimer) this.barrierTimer--;
         if (this.barrierTimer <= 0) {
-          this.barrierTimer = enraged ? 180 : 250;
-          this.hexBarrierActive = 100;
+          this.barrierTimer = berserk ? 130 : (enraged ? 165 : 225);
+          this.hexBarrierActive = 110;
           sound.parryDeflect();
-          addGridRipple(this.x, this.y, 360, 32, '#14b8a6');
+          addGridRipple(this.x, this.y, 380, 34, '#14b8a6');
           spawnFloatingText(this.x, this.y - 45, '// HEX-BARRIER OVERCHARGE //', '#14b8a6', 1.35);
         }
         if (this.droneSpawnTimer) this.droneSpawnTimer--;
         if (this.droneSpawnTimer <= 0) {
-          this.droneSpawnTimer = enraged ? 120 : 170;
+          this.droneSpawnTimer = berserk ? 85 : (enraged ? 110 : 150);
           sound.dash();
-          spawnFloatingText(this.x, this.y - 45, '// AUTONOMOUS DRONE LAUNCH //', '#14b8a6', 1.3);
+          spawnFloatingText(this.x, this.y - 45, '// AUTONOMOUS DRONE LAUNCH //', '#14b8a6', 1.35);
           if (enemies.length < 45) {
-            for (let d = 0; d < 3; d++) {
-              const da = (d * Math.PI * 2) / 3;
-              const drone = new Enemy('drone_bit', this.x + Math.cos(da) * 55, this.y + Math.sin(da) * 55);
+            const cnt = berserk ? 4 : 3;
+            for (let d = 0; d < cnt; d++) {
+              const da = (d * Math.PI * 2) / cnt;
+              const drone = new Enemy(d === 0 && enraged ? 'striker' : 'drone_bit', this.x + Math.cos(da) * 58, this.y + Math.sin(da) * 58, berserk);
               enemies.push(drone);
             }
           }
@@ -8558,13 +8734,18 @@ class Enemy {
       else if (this.bossType === 'banshee') {
         if (this.sonicScreechTimer) this.sonicScreechTimer--;
         if (this.sonicScreechTimer <= 0) {
-          this.sonicScreechTimer = enraged ? 110 : 160;
+          this.sonicScreechTimer = berserk ? 75 : (enraged ? 100 : 140);
           sound.ionBeam();
-          screenShake = Math.max(screenShake, 18);
-          addGridRipple(this.x, this.y, 520, 44, '#8b5cf6');
-          spawnFloatingText(this.x, this.y - 45, '// SUPERSONIC SCREECH BLAST //', '#8b5cf6', 1.4);
-          if (distToPlayer < 480) {
-            player.takeDamage(24 * this.dmgScale);
+          screenShake = Math.max(screenShake, 20);
+          addGridRipple(this.x, this.y, 560, 48, '#8b5cf6');
+          spawnFloatingText(this.x, this.y - 45, '// SUPERSONIC SCREECH BLAST //', '#8b5cf6', 1.45);
+          if (canFire) {
+            for (let i = 0; i < 16; i++) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, (i * Math.PI) / 8, '#c4b5fd', 9.6, 19 * this.dmgScale));
+            }
+          }
+          if (distToPlayer < 490) {
+            player.takeDamage(26 * this.dmgScale);
             player.vx += Math.cos(this.angle) * 20;
             player.vy += Math.sin(this.angle) * 20;
           }
@@ -8573,10 +8754,10 @@ class Enemy {
 
       // 13. Frost Jotunn: Cryo-Aegis Shards & Absolute Zero Blizzard
       else if (this.bossType === 'glacier') {
-        this.cryoShardAngle = (this.cryoShardAngle || 0) + (enraged ? 0.035 : 0.022);
+        this.cryoShardAngle = (this.cryoShardAngle || 0) + (berserk ? 0.048 : (enraged ? 0.036 : 0.024));
         if (this.shardRegenTimer) this.shardRegenTimer--;
         if (this.shardRegenTimer <= 0) {
-          this.shardRegenTimer = enraged ? 180 : 260;
+          this.shardRegenTimer = berserk ? 120 : (enraged ? 160 : 230);
           if (this.cryoShards < 6) {
             this.cryoShards++;
             spawnParticle(this.x, this.y, 0, 0, '#06b6d4', 12, 3);
@@ -8585,14 +8766,19 @@ class Enemy {
         }
         if (this.blizzardTimer) this.blizzardTimer--;
         if (this.blizzardTimer <= 0) {
-          this.blizzardTimer = enraged ? 140 : 210;
+          this.blizzardTimer = berserk ? 95 : (enraged ? 125 : 185);
           sound.ringPass(2);
-          screenShake = Math.max(screenShake, 15);
-          addGridRipple(this.x, this.y, 480, 36, '#06b6d4');
-          spawnFloatingText(this.x, this.y - 45, '// ABSOLUTE ZERO BLIZZARD //', '#06b6d4', 1.4);
-          if (distToPlayer < 460) {
-            player.slowTimer = 110;
-            player.takeDamage(20 * this.dmgScale);
+          screenShake = Math.max(screenShake, 16);
+          addGridRipple(this.x, this.y, 500, 40, '#06b6d4');
+          spawnFloatingText(this.x, this.y - 45, '// ABSOLUTE ZERO BLIZZARD //', '#06b6d4', 1.45);
+          if (canFire) {
+            for (let i = 0; i < 18; i++) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, (i * Math.PI) / 9 + this.cryoShardAngle, '#67e8f9', 8.4, 19 * this.dmgScale));
+            }
+          }
+          if (distToPlayer < 470) {
+            player.slowTimer = 120;
+            player.takeDamage(22 * this.dmgScale);
             spawnFloatingText(player.x, player.y - 25, 'CRYO FREEZE SLOW (-38%)', '#06b6d4', 1.15);
           }
         }
@@ -8601,7 +8787,7 @@ class Enemy {
       // 14. Apex Oblivion: Quad Judgment Pillars & Cosmic Doomsday Cataclysm
       else if (this.bossType === 'oblivion') {
         this.celestialRingAngles = this.celestialRingAngles || [0, 0, 0, 0];
-        const rSpd = enraged ? 0.04 : 0.02;
+        const rSpd = berserk ? 0.055 : (enraged ? 0.04 : 0.024);
         this.celestialRingAngles[0] += rSpd;
         this.celestialRingAngles[1] -= rSpd * 1.3;
         this.celestialRingAngles[2] += rSpd * 1.7;
@@ -8609,29 +8795,31 @@ class Enemy {
 
         if (this.judgmentStrikeTimer) this.judgmentStrikeTimer--;
         if (this.judgmentStrikeTimer <= 0) {
-          this.judgmentStrikeTimer = enraged ? 100 : 150;
+          this.judgmentStrikeTimer = berserk ? 70 : (enraged ? 95 : 135);
           sound.overdrive();
-          screenShake = Math.max(screenShake, 20);
-          chromaticFlash = Math.max(chromaticFlash, 15);
+          screenShake = Math.max(screenShake, 22);
+          chromaticFlash = Math.max(chromaticFlash, 16);
           spawnFloatingText(this.x, this.y - 45, '// QUAD ORBITAL JUDGMENT PILLARS //', '#ffffff', 1.45);
-          const offsets = [{dx: 0, dy: 0}, {dx: -70, dy: 0}, {dx: 70, dy: 0}, {dx: 0, dy: -70}];
+          const offsets = [{dx: 0, dy: 0}, {dx: -70, dy: 0}, {dx: 70, dy: 0}, {dx: 0, dy: -70}, {dx: 0, dy: 70}];
           offsets.forEach(off => {
             lightningBolts.push({ x1: player.x + off.dx, y1: player.y + off.dy - 600, x2: player.x + off.dx, y2: player.y + off.dy, color: '#ffffff', life: 18 });
           });
-          player.takeDamage(32 * this.dmgScale);
-          addGridRipple(player.x, player.y, 300, 36, '#ffffff');
+          player.takeDamage(34 * this.dmgScale);
+          addGridRipple(player.x, player.y, 340, 40, '#ffffff');
         }
 
         if (this.doomsdayCollapseTimer) this.doomsdayCollapseTimer--;
         if (this.doomsdayCollapseTimer <= 0) {
-          this.doomsdayCollapseTimer = enraged ? 210 : 310;
+          this.doomsdayCollapseTimer = berserk ? 145 : (enraged ? 185 : 260);
           sound.explosion(true);
-          screenShake = Math.max(screenShake, 35);
-          chromaticFlash = Math.max(chromaticFlash, 25);
-          addGridRipple(this.x, this.y, 750, 65, '#ffffff');
+          screenShake = Math.max(screenShake, 36);
+          chromaticFlash = Math.max(chromaticFlash, 26);
+          addGridRipple(this.x, this.y, 780, 68, '#ffffff');
           spawnFloatingText(this.x, this.y - 50, '// COSMIC DOOMSDAY CATACLYSM //', '#ffe600', 1.6);
-          for (let a = 0; a < Math.PI * 2; a += Math.PI / 18) {
-            enemyProjectiles.push(new Projectile(this.x, this.y, a, a % (Math.PI / 9) === 0 ? '#ffffff' : '#ffe600', 8.2, 22 * this.dmgScale));
+          if (canFire) {
+            for (let a = 0; a < Math.PI * 2; a += Math.PI / 18) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, a, a % (Math.PI / 9) === 0 ? '#ffffff' : '#ffe600', 9.6, 25 * this.dmgScale));
+            }
           }
         }
       }
@@ -8640,202 +8828,226 @@ class Enemy {
       else {
         if (this.orbitalStrikeTimer) this.orbitalStrikeTimer--;
         if (this.orbitalStrikeTimer <= 0) {
-          this.orbitalStrikeTimer = enraged ? 150 : 220;
+          this.orbitalStrikeTimer = berserk ? 95 : (enraged ? 130 : 185);
           sound.parryDeflect();
-          screenShake = Math.max(screenShake, 14);
-          spawnFloatingText(this.x, this.y - 45, '// ORBITAL CELESTIAL STRIKE //', '#ffe600', 1.3);
+          screenShake = Math.max(screenShake, 16);
+          spawnFloatingText(this.x, this.y - 45, '// ORBITAL CELESTIAL STRIKE //', '#ffe600', 1.35);
           lightningBolts.push({ x1: player.x, y1: player.y - 500, x2: player.x, y2: player.y, color: '#ffe600', life: 16 });
-          lightningBolts.push({ x1: player.x - 20, y1: player.y - 500, x2: player.x + 20, y2: player.y, color: '#ff0077', life: 14 });
-          player.takeDamage(28 * this.dmgScale);
-          addGridRipple(player.x, player.y, 220, 24, '#ffe600');
+          lightningBolts.push({ x1: player.x - 24, y1: player.y - 500, x2: player.x + 24, y2: player.y, color: '#ff0077', life: 14 });
+          player.takeDamage(30 * this.dmgScale);
+          addGridRipple(player.x, player.y, 250, 28, '#ffe600');
+          if (canFire) {
+            for (let i = 0; i < 12; i++) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, (i * Math.PI) / 6 + this.hullRot, '#ffe600', 8.8, 19 * this.dmgScale));
+            }
+          }
         }
       }
     }
 
-    // Cruiser & Multi-Boss firing patterns
+    // Cruiser & Multi-Boss Main Weapon Patterns
     if (this.type === 'cruiser' || this.isBoss || this.type === 'boss') {
       this.shotCooldown -= cdTick;
-      if (this.shotCooldown <= 0) {
-        this.recoil = 5;
+      if (this.shotCooldown <= 0 && canFire) {
+        this.recoil = 6;
         if (this.isBoss || this.type === 'boss') {
-          const enraged = this.hp < this.maxHp * 0.55;
+          const enraged = this.bossPhase >= 2 || this.hp < this.maxHp * 0.65;
+          const berserk = this.bossPhase >= 3 || this.hp < this.maxHp * 0.30;
           this.patternStep++;
 
           if (this.bossType === 'colossus') {
-            // 1. TITAN GOLIATH: Dual Heavy Rotary Gatling & Heavy Siege Shells
-            this.shotCooldown = Math.floor((enraged ? 12 : 16) / this.fireScale);
-            const spreadA = (Math.random() - 0.5) * 0.22;
-            enemyProjectiles.push(new Projectile(this.x + Math.cos(this.angle + 0.3) * 36, this.y + Math.sin(this.angle + 0.3) * 36, this.angle + spreadA, '#ff7b00', 9.5, 14 * this.dmgScale));
-            enemyProjectiles.push(new Projectile(this.x + Math.cos(this.angle - 0.3) * 36, this.y + Math.sin(this.angle - 0.3) * 36, this.angle - spreadA, '#ff7b00', 9.5, 14 * this.dmgScale));
-            if (this.patternStep % 5 === 0) {
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ff2a55', 13.0, 24 * this.dmgScale, 1));
+            // 1. TITAN GOLIATH: Quad Heavy Rotary Gatling & Siege Shells
+            this.shotCooldown = Math.floor((berserk ? 9 : (enraged ? 11 : 15)) / this.fireScale);
+            const spreadA = (Math.random() - 0.5) * 0.2;
+            enemyProjectiles.push(new Projectile(this.x + Math.cos(this.angle + 0.3) * 38, this.y + Math.sin(this.angle + 0.3) * 38, this.leadAngle + spreadA, '#ff7b00', 10.8, 16 * this.dmgScale));
+            enemyProjectiles.push(new Projectile(this.x + Math.cos(this.angle - 0.3) * 38, this.y + Math.sin(this.angle - 0.3) * 38, this.leadAngle - spreadA, '#ff7b00', 10.8, 16 * this.dmgScale));
+            if (enraged) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle, '#ffe600', 12.2, 18 * this.dmgScale));
+            }
+            if (this.patternStep % 4 === 0) {
+              for (let s = -1; s <= 1; s++) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + s * 0.14, '#ff2a55', 14.5, 26 * this.dmgScale, 1));
+              }
             }
           } else if (this.bossType === 'leviathan') {
-            // 2. VOID LEVIATHAN: 24-way Spiral Nebula & 5-way Void Bolts
-            this.shotCooldown = Math.floor((enraged ? 22 : 30) / this.fireScale);
-            if (this.patternStep % 3 === 0) {
+            // 2. VOID LEVIATHAN: 24-way Spiral Nebula & 7-way Void Bolts
+            this.shotCooldown = Math.floor((berserk ? 16 : (enraged ? 20 : 26)) / this.fireScale);
+            if (this.patternStep % 2 === 0) {
               for (let a = 0; a < Math.PI * 2; a += Math.PI / 12) {
-                const ang = a + this.patternStep * 0.24;
-                enemyProjectiles.push(new Projectile(this.x, this.y, ang, '#d946ef', 6.8, 16 * this.dmgScale));
+                const ang = a + this.patternStep * 0.26;
+                enemyProjectiles.push(new Projectile(this.x, this.y, ang, '#d946ef', 7.8, 18 * this.dmgScale));
               }
             } else {
-              for (let a = -0.44; a <= 0.44; a += 0.22) {
-                enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + a, '#00f0ff', 8.5, 18 * this.dmgScale));
+              for (let a = -0.48; a <= 0.48; a += 0.16) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + a, '#00f0ff', 10.2, 20 * this.dmgScale));
               }
             }
           } else if (this.bossType === 'architect') {
-            // 3. KAIROS HYPER-CORE: Tripwire Pulses & Focus Rail Lance
-            this.shotCooldown = Math.floor((enraged ? 16 : 22) / this.fireScale);
+            // 3. KAIROS HYPER-CORE: Octa-Tripwire Pulses & Triple Focus Rail Lance
+            this.shotCooldown = Math.floor((berserk ? 12 : (enraged ? 15 : 20)) / this.fireScale);
             if (this.patternStep % 2 === 0) {
-              for (let q = 0; q < 4; q++) {
-                const qAng = (this.laserGridAngle || 0) + (q * Math.PI) / 2;
-                enemyProjectiles.push(new Projectile(this.x, this.y, qAng, '#00f0ff', 7.6, 15 * this.dmgScale));
+              for (let q = 0; q < 8; q++) {
+                const qAng = (this.laserGridAngle || 0) + (q * Math.PI) / 4;
+                enemyProjectiles.push(new Projectile(this.x, this.y, qAng, '#00f0ff', 8.8, 17 * this.dmgScale));
               }
             } else {
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ffe600', 14.5, 24 * this.dmgScale));
+              for (let s = -1; s <= 1; s++) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + s * 0.09, '#ffe600', 16.0, 26 * this.dmgScale));
+              }
             }
           } else if (this.bossType === 'ignis') {
             // 4. SOLAR VULCAN: Dense Conical Flame Sweeps & Magma Mortar Shells
-            this.shotCooldown = Math.floor((enraged ? 11 : 15) / this.fireScale);
-            if (this.patternStep % 4 === 0) {
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ff3300', 11.0, 26 * this.dmgScale, 1));
+            this.shotCooldown = Math.floor((berserk ? 8 : (enraged ? 10 : 14)) / this.fireScale);
+            if (this.patternStep % 3 === 0) {
+              for (let s = -1; s <= 1; s++) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + s * 0.15, '#ff3300', 12.5, 26 * this.dmgScale, 1));
+              }
             } else {
-              for (let s = -0.32; s <= 0.32; s += 0.16) {
-                const flameAng = this.angle + s + (Math.random() - 0.5) * 0.08;
-                enemyProjectiles.push(new Projectile(this.x + Math.cos(this.angle) * 35, this.y + Math.sin(this.angle) * 35, flameAng, '#ff6600', 8.5 + Math.random() * 2, 14 * this.dmgScale));
+              for (let s = -0.36; s <= 0.36; s += 0.12) {
+                const flameAng = this.leadAngle + s + (Math.random() - 0.5) * 0.06;
+                enemyProjectiles.push(new Projectile(this.x + Math.cos(this.angle) * 35, this.y + Math.sin(this.angle) * 35, flameAng, '#ff6600', 9.8 + Math.random() * 2, 16 * this.dmgScale));
               }
             }
           } else if (this.bossType === 'tempest') {
-            // 5. ZEPHYR TEMPEST: Twin Voltaic Ball Lightning & 5-way Storm Bolts
-            this.shotCooldown = Math.floor((enraged ? 18 : 25) / this.fireScale);
+            // 5. ZEPHYR TEMPEST: Triple Voltaic Ball Lightning & 7-way Storm Bolts
+            this.shotCooldown = Math.floor((berserk ? 13 : (enraged ? 16 : 22)) / this.fireScale);
             if (this.patternStep % 2 === 0) {
-              enemyProjectiles.push(new Projectile(this.x + Math.cos(this.angle + 0.4) * 32, this.y + Math.sin(this.angle + 0.4) * 32, this.angle, '#38bdf8', 12.0, 20 * this.dmgScale));
-              enemyProjectiles.push(new Projectile(this.x + Math.cos(this.angle - 0.4) * 32, this.y + Math.sin(this.angle - 0.4) * 32, this.angle, '#38bdf8', 12.0, 20 * this.dmgScale));
+              for (let s = -1; s <= 1; s++) {
+                enemyProjectiles.push(new Projectile(this.x + Math.cos(this.angle + s * 0.4) * 32, this.y + Math.sin(this.angle + s * 0.4) * 32, this.leadAngle + s * 0.06, '#38bdf8', 13.5, 22 * this.dmgScale));
+              }
             } else {
-              for (let a = -0.48; a <= 0.48; a += 0.24) {
-                enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + a, '#00f0ff', 9.2, 16 * this.dmgScale));
+              for (let a = -0.54; a <= 0.54; a += 0.18) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + a, '#00f0ff', 10.6, 18 * this.dmgScale));
               }
             }
           } else if (this.bossType === 'chronos') {
-            // 6. OUROBOROS: 12-Hour Dial Clock Needle Nova & Tachyon Darts
-            this.shotCooldown = Math.floor((enraged ? 20 : 28) / this.fireScale);
-            if (this.patternStep % 3 === 0) {
-              for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
+            // 6. OUROBOROS: 16-Hour Dial Clock Needle Nova & Tachyon Darts
+            this.shotCooldown = Math.floor((berserk ? 14 : (enraged ? 18 : 24)) / this.fireScale);
+            if (this.patternStep % 2 === 0) {
+              for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
                 const ang = a + (this.gearAngle || 0);
-                enemyProjectiles.push(new Projectile(this.x, this.y, ang, '#eab308', 7.0, 16 * this.dmgScale));
+                enemyProjectiles.push(new Projectile(this.x, this.y, ang, '#eab308', 8.4, 18 * this.dmgScale));
               }
             } else {
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ffe600', 15.0, 24 * this.dmgScale));
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + 0.15, '#eab308', 13.0, 18 * this.dmgScale));
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - 0.15, '#eab308', 13.0, 18 * this.dmgScale));
+              for (let s = -2; s <= 2; s++) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + s * 0.11, s === 0 ? '#ffe600' : '#eab308', 15.5 - Math.abs(s) * 0.8, 22 * this.dmgScale));
+              }
             }
           } else if (this.bossType === 'reaper') {
             // 7. THANATOS: Piercing Emerald Scythe Crescents & Soul Wisps
-            this.shotCooldown = Math.floor((enraged ? 18 : 26) / this.fireScale);
+            this.shotCooldown = Math.floor((berserk ? 13 : (enraged ? 16 : 22)) / this.fireScale);
             if (this.patternStep % 2 === 0) {
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - 0.18, '#10b981', 11.0, 22 * this.dmgScale, 0, true));
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + 0.18, '#10b981', 11.0, 22 * this.dmgScale, 0, true));
+              for (let s = -1; s <= 1; s++) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + s * 0.14, '#10b981', 12.8, 24 * this.dmgScale, 0, true));
+              }
             } else {
-              for (let a = -0.5; a <= 0.5; a += 0.25) {
-                enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + a, '#34d399', 8.0, 16 * this.dmgScale));
+              for (let a = -0.56; a <= 0.56; a += 0.14) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + a, '#34d399', 9.5, 18 * this.dmgScale));
               }
             }
           } else if (this.bossType === 'behemoth') {
-            // 8. TERRA GORGON: Tri-Head Independent Corrosive Artillery
-            this.shotCooldown = Math.floor((enraged ? 14 : 19) / this.fireScale);
+            // 8. TERRA GORGON: Tri-Head Simultaneous Corrosive Artillery
+            this.shotCooldown = Math.floor((berserk ? 11 : (enraged ? 14 : 18)) / this.fireScale);
             const hIdx = this.patternStep % 3;
             const hOff = (hIdx - 1) * 0.45;
             const hx = this.x + Math.cos(this.angle + hOff) * 44;
             const hy = this.y + Math.sin(this.angle + hOff) * 44;
             const toP = Math.atan2(player.y - hy, player.x - hx);
-            enemyProjectiles.push(new Projectile(hx, hy, toP - 0.12, '#84cc16', 8.5, 17 * this.dmgScale));
-            enemyProjectiles.push(new Projectile(hx, hy, toP, '#84cc16', 9.5, 20 * this.dmgScale));
-            enemyProjectiles.push(new Projectile(hx, hy, toP + 0.12, '#84cc16', 8.5, 17 * this.dmgScale));
+            for (let s = -2; s <= 2; s++) {
+              enemyProjectiles.push(new Projectile(hx, hy, toP + s * 0.1, s === 0 ? '#a3e635' : '#84cc16', 10.2, 20 * this.dmgScale));
+            }
           } else if (this.bossType === 'pulsar') {
-            // 9. ASTRON PULSAR: Relativistic Magnetic Pole Pulses & 12-way Rose Photons
-            this.shotCooldown = Math.floor((enraged ? 16 : 23) / this.fireScale);
+            // 9. ASTRON PULSAR: Relativistic Magnetic Pole Pulses & 16-way Rose Photons
+            this.shotCooldown = Math.floor((berserk ? 12 : (enraged ? 15 : 20)) / this.fireScale);
             if (this.patternStep % 2 === 0) {
-              for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
-                enemyProjectiles.push(new Projectile(this.x, this.y, a + this.patternStep * 0.12, '#f43f5e', 7.2, 16 * this.dmgScale));
+              for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, a + this.patternStep * 0.14, '#f43f5e', 8.5, 18 * this.dmgScale));
               }
             } else {
               const bA = this.pulsarBeamAngle || 0;
-              enemyProjectiles.push(new Projectile(this.x, this.y, bA, '#ff0055', 14.5, 24 * this.dmgScale));
-              enemyProjectiles.push(new Projectile(this.x, this.y, bA + Math.PI, '#ff0055', 14.5, 24 * this.dmgScale));
+              enemyProjectiles.push(new Projectile(this.x, this.y, bA, '#ff0055', 16.0, 26 * this.dmgScale));
+              enemyProjectiles.push(new Projectile(this.x, this.y, bA + Math.PI, '#ff0055', 16.0, 26 * this.dmgScale));
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle, '#ffffff', 15.0, 24 * this.dmgScale));
             }
           } else if (this.bossType === 'valkyrie_zero') {
-            // 10. SHADOW VALKYRIE ZERO: Triple Crimson Shurikens & Player-Mirror Rail Lances
-            this.shotCooldown = Math.floor((enraged ? 13 : 17) / this.fireScale);
-            if (this.patternStep % 3 === 0) {
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#ffffff', 16.0, 26 * this.dmgScale));
+            // 10. SHADOW VALKYRIE ZERO: 5-way Crimson Shurikens & Twin Player-Mirror Rail Lances
+            this.shotCooldown = Math.floor((berserk ? 9 : (enraged ? 12 : 15)) / this.fireScale);
+            if (this.patternStep % 2 === 0) {
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle - 0.05, '#ffffff', 17.5, 26 * this.dmgScale));
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + 0.05, '#ffe600', 17.5, 26 * this.dmgScale));
             } else {
-              for (let s = -0.3; s <= 0.3; s += 0.3) {
-                enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + s, '#e11d48', 10.5, 18 * this.dmgScale));
+              for (let s = -2; s <= 2; s++) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + s * 0.16, '#e11d48', 11.8, 20 * this.dmgScale));
               }
             }
           } else if (this.bossType === 'hivemind') {
-            // 11. NEXUS OVERMIND: Hexagonal Cluster Bullet Hell & Seeker Torpedoes
-            this.shotCooldown = Math.floor((enraged ? 18 : 25) / this.fireScale);
-            for (let h = 0; h < 6; h++) {
-              const ha = (h * Math.PI) / 3 + this.patternStep * 0.15;
-              enemyProjectiles.push(new Projectile(this.x, this.y, ha, '#14b8a6', 7.4, 16 * this.dmgScale));
+            // 11. NEXUS OVERMIND: 12-way Hexagonal Cluster Bullet Hell & Triple Seeker Lances
+            this.shotCooldown = Math.floor((berserk ? 13 : (enraged ? 16 : 22)) / this.fireScale);
+            for (let h = 0; h < 12; h++) {
+              const ha = (h * Math.PI) / 6 + this.patternStep * 0.15;
+              enemyProjectiles.push(new Projectile(this.x, this.y, ha, '#14b8a6', 8.4, 18 * this.dmgScale));
             }
             if (this.patternStep % 2 === 0) {
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle, '#2dd4bf', 11.0, 22 * this.dmgScale));
+              for (let s = -1; s <= 1; s++) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + s * 0.11, '#2dd4bf', 12.5, 24 * this.dmgScale));
+              }
             }
           } else if (this.bossType === 'banshee') {
             // 12. SIREN BANSHEE: Dual Harmonic Resonator Waves & Acoustic Discs
-            this.shotCooldown = Math.floor((enraged ? 15 : 21) / this.fireScale);
-            for (let a = -0.45; a <= 0.45; a += 0.15) {
-              const waveSpeed = 8.0 + Math.sin(this.patternStep + a) * 2;
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + a, '#8b5cf6', waveSpeed, 17 * this.dmgScale));
+            this.shotCooldown = Math.floor((berserk ? 11 : (enraged ? 14 : 18)) / this.fireScale);
+            for (let a = -0.54; a <= 0.54; a += 0.12) {
+              const waveSpeed = 9.5 + Math.sin(this.patternStep + a) * 2.2;
+              enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + a, '#8b5cf6', waveSpeed, 19 * this.dmgScale));
             }
           } else if (this.bossType === 'glacier') {
-            // 13. FROST JOTUNN: Piercing Icicle Spears & 16-way Cryo Snowflake Rings
-            this.shotCooldown = Math.floor((enraged ? 20 : 27) / this.fireScale);
-            if (this.patternStep % 3 === 0) {
+            // 13. FROST JOTUNN: Triple Piercing Icicle Spears & 16-way Cryo Snowflake Rings
+            this.shotCooldown = Math.floor((berserk ? 14 : (enraged ? 18 : 23)) / this.fireScale);
+            if (this.patternStep % 2 === 0) {
               for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
-                enemyProjectiles.push(new Projectile(this.x, this.y, a + (this.cryoShardAngle || 0), '#06b6d4', 6.8, 16 * this.dmgScale));
+                enemyProjectiles.push(new Projectile(this.x, this.y, a + (this.cryoShardAngle || 0), '#06b6d4', 8.2, 18 * this.dmgScale));
               }
             } else {
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - 0.09, '#ffffff', 14.0, 24 * this.dmgScale, 0, true));
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + 0.09, '#ffffff', 14.0, 24 * this.dmgScale, 0, true));
+              for (let s = -1; s <= 1; s++) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + s * 0.08, '#ffffff', 15.5, 26 * this.dmgScale, 0, true));
+              }
             }
           } else if (this.bossType === 'oblivion') {
-            // 14. APEX OBLIVION: 36-way Celestial Kaleidoscope Bullet Storm & Quad Beams
-            this.shotCooldown = Math.floor((enraged ? 14 : 19) / this.fireScale);
+            // 14. APEX OBLIVION: 36-way Celestial Kaleidoscope Bullet Storm & Octa-Beams
+            this.shotCooldown = Math.floor((berserk ? 10 : (enraged ? 13 : 17)) / this.fireScale);
             if (this.patternStep % 2 === 0) {
               for (let a = 0; a < Math.PI * 2; a += Math.PI / 18) {
                 const col = a % (Math.PI / 6) === 0 ? '#ffffff' : (a % (Math.PI / 9) === 0 ? '#ffe600' : '#ff0077');
-                enemyProjectiles.push(new Projectile(this.x, this.y, a + this.patternStep * 0.08, col, 7.5, 18 * this.dmgScale));
+                enemyProjectiles.push(new Projectile(this.x, this.y, a + this.patternStep * 0.09, col, 9.0, 22 * this.dmgScale));
               }
             } else {
-              for (let q = 0; q < 4; q++) {
-                const qAng = this.angle + (q * Math.PI) / 2;
-                enemyProjectiles.push(new Projectile(this.x, this.y, qAng, '#ffffff', 15.0, 26 * this.dmgScale));
+              for (let q = 0; q < 8; q++) {
+                const qAng = this.leadAngle + (q * Math.PI) / 4;
+                enemyProjectiles.push(new Projectile(this.x, this.y, qAng, '#ffffff', 16.5, 28 * this.dmgScale));
               }
             }
           } else {
-            // 15. OMEGA SERAPHIM: 16-way Spiral Nova, 7-way Dreadnought Fan, Twin Rail Lances (Default)
-            this.shotCooldown = Math.floor((enraged ? 22 : 32) / this.fireScale);
+            // 15. OMEGA SERAPHIM: 20-way Spiral Nova, 9-way Dreadnought Fan, Triple Rail Lances (Default)
+            this.shotCooldown = Math.floor((berserk ? 14 : (enraged ? 18 : 25)) / this.fireScale);
             if (this.patternStep % 3 === 0) {
-              for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
-                enemyProjectiles.push(new Projectile(this.x, this.y, a + this.patternStep * 0.18, '#ff0077', 6.6, 17 * this.dmgScale));
+              for (let a = 0; a < Math.PI * 2; a += Math.PI / 10) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, a + this.patternStep * 0.2, '#ff0077', 8.0, 19 * this.dmgScale));
               }
             } else if (this.patternStep % 3 === 1) {
-              for (let a = -0.54; a <= 0.54; a += 0.18) {
-                enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + a, '#9d4edd', 8.0, 18 * this.dmgScale));
+              for (let a = -0.6; a <= 0.6; a += 0.15) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + a, '#9d4edd', 9.6, 20 * this.dmgScale));
               }
             } else {
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle - 0.08, '#ff0055', 14.0, 22 * this.dmgScale));
-              enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + 0.08, '#ff0055', 14.0, 22 * this.dmgScale));
+              for (let s = -1; s <= 1; s++) {
+                enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + s * 0.08, '#ff0055', 15.5, 25 * this.dmgScale));
+              }
             }
           }
         } else {
-          this.shotCooldown = Math.floor(68 / this.fireScale);
-          const spreadCount = this.isElite ? 2 : 1;
+          // Bastion Heavy Cruiser: 5-way (7-way if Elite) Golden Cannon Fan + Armor-Piercing Center Sabot
+          this.shotCooldown = Math.floor(54 / this.fireScale);
+          const spreadCount = this.isElite ? 3 : 2;
           for (let s = -spreadCount; s <= spreadCount; s++) {
-            enemyProjectiles.push(new Projectile(this.x, this.y, this.angle + s * 0.13, '#ffe600', 7.2, 15 * this.dmgScale));
+            enemyProjectiles.push(new Projectile(this.x, this.y, this.leadAngle + s * 0.11, s === 0 ? '#ffffff' : '#ffe600', s === 0 ? 10.5 : 8.4, 16 * this.dmgScale));
           }
         }
       }
@@ -8916,17 +9128,42 @@ class Enemy {
       ctx.drawImage(getGlowSprite(this.color), -gR, -gR, gR * 2, gR * 2);
     }
 
-    // === OVERCLOCKED ELITE GOLDEN HALO RING ===
+    // === OVERCLOCKED ELITE DUAL-HEX GOLDEN SHIELD & 4 ORBITING PYLONS ===
     if (this.isElite) {
       ctx.save();
-      ctx.rotate(-frameCount * 0.05);
+      ctx.rotate(-frameCount * 0.055);
       ctx.strokeStyle = '#ffe600';
-      ctx.lineWidth = 1.8;
-      ctx.setLineDash([8, 6]);
+      ctx.lineWidth = 2.0;
+      ctx.setLineDash([9, 5]);
       ctx.beginPath();
-      ctx.arc(0, 0, this.radius + 7, 0, Math.PI * 2);
+      ctx.arc(0, 0, this.radius + 8, 0, Math.PI * 2);
       ctx.stroke();
       ctx.setLineDash([]);
+
+      // 4 Orbiting Golden Overclock Pylons
+      for (let p = 0; p < 4; p++) {
+        const pa = (p * Math.PI) / 2;
+        const px = Math.cos(pa) * (this.radius + 8);
+        const py = Math.sin(pa) * (this.radius + 8);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(px - 2.5, py - 2.5, 5, 5);
+      }
+      ctx.restore();
+
+      // Counter-rotating inner golden hex-frame
+      ctx.save();
+      ctx.rotate(frameCount * 0.035);
+      ctx.strokeStyle = 'rgba(255, 230, 0, 0.55)';
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      for (let h = 0; h < 6; h++) {
+        const ha = (h * Math.PI) / 3;
+        const hr = this.radius + 4;
+        if (h === 0) ctx.moveTo(Math.cos(ha) * hr, Math.sin(ha) * hr);
+        else ctx.lineTo(Math.cos(ha) * hr, Math.sin(ha) * hr);
+      }
+      ctx.closePath();
+      ctx.stroke();
       ctx.restore();
     }
 
@@ -8938,7 +9175,7 @@ class Enemy {
       ctx.lineWidth = 2;
       ctx.setLineDash([4, 4]);
       ctx.beginPath();
-      ctx.arc(0, 0, this.radius + 11, 0, Math.PI * 2);
+      ctx.arc(0, 0, this.radius + 12, 0, Math.PI * 2);
       ctx.stroke();
       ctx.setLineDash([]);
       ctx.restore();
@@ -9522,7 +9759,66 @@ class Enemy {
        TIER 6: MULTI-APEX MEGA-BOSSES (Hardware-Accelerated Vector Renders)
        ------------------------------------------------------------------- */
     else if (this.isBoss || this.type === 'boss') {
-      const enraged = this.hp < this.maxHp * 0.5;
+      const enraged = this.bossPhase >= 2 || this.hp < this.maxHp * 0.65;
+      const berserk = this.bossPhase >= 3 || this.hp < this.maxHp * 0.30;
+
+      // === UNIVERSAL APEX BOSS COMMAND MATRIX: 6 ORBITING FIN-PYLONS & PHASE HALOS ===
+      ctx.save();
+      const haloRad = this.radius + 16 + pulse * 4;
+      const haloCol = berserk ? '#ff0055' : (enraged ? '#ffe600' : this.color);
+
+      // Phase II+ Overclocked 12-Segment Sacred Geometry Ring
+      if (enraged) {
+        ctx.save();
+        ctx.rotate(-frameCount * (berserk ? 0.045 : 0.025));
+        ctx.strokeStyle = berserk ? 'rgba(255, 0, 85, 0.7)' : 'rgba(255, 230, 0, 0.55)';
+        ctx.lineWidth = berserk ? 2.4 : 1.8;
+        ctx.setLineDash([12, 8]);
+        ctx.beginPath();
+        ctx.arc(0, 0, haloRad + 8, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+      }
+
+      // Phase III Apex Berserk Crimson/White Star-Polygon Corona
+      if (berserk) {
+        ctx.save();
+        ctx.rotate(frameCount * 0.035);
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        for (let s = 0; s < 12; s++) {
+          const sa = (s * Math.PI) / 6;
+          const sr = s % 2 === 0 ? haloRad + 18 : haloRad + 4;
+          if (s === 0) ctx.moveTo(Math.cos(sa) * sr, Math.sin(sa) * sr);
+          else ctx.lineTo(Math.cos(sa) * sr, Math.sin(sa) * sr);
+        }
+        ctx.closePath();
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // 6 Orbiting Fin-Pylons around all 15 Bosses
+      ctx.rotate(frameCount * (berserk ? 0.038 : (enraged ? 0.026 : 0.016)));
+      for (let p = 0; p < 6; p++) {
+        ctx.save();
+        ctx.rotate((p * Math.PI) / 3);
+        ctx.translate(haloRad, 0);
+        ctx.fillStyle = isHit ? '#ffffff' : '#090d16';
+        ctx.strokeStyle = haloCol;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(8, 0);
+        ctx.lineTo(-4, -5);
+        ctx.lineTo(-2, 0);
+        ctx.lineTo(-4, 5);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.restore();
 
       // 1. TITAN GOLIATH SIEGE BATTLESHIP (Colossus)
       if (this.bossType === 'colossus') {
@@ -10415,33 +10711,73 @@ class Enemy {
 
     ctx.restore();
 
+    // On-Canvas Boss Tactical Phase & HP Telemetry Bar (drawn in unrotated camera-world space)
+    if (this.isBoss || this.type === 'boss') {
+      const bw = 136;
+      const by = -this.radius - 28;
+      const pct = Math.max(0, Math.min(1, this.hp / this.maxHp));
+      const pCol = this.bossPhase >= 3 ? '#ff0055' : (this.bossPhase === 2 ? '#ffe600' : this.color);
+
+      // Dark backing & neon border
+      ctx.fillStyle = 'rgba(6, 10, 22, 0.88)';
+      ctx.fillRect(-bw / 2, by, bw, 7);
+      ctx.fillStyle = pCol;
+      ctx.fillRect(-bw / 2, by, bw * pct, 7);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(-bw / 2, by, bw, 7);
+
+      // Phase II (65%) and Phase III (30%) threshold divider ticks
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(-bw / 2 + bw * 0.65 - 0.5, by - 1, 1.5, 9);
+      ctx.fillRect(-bw / 2 + bw * 0.30 - 0.5, by - 1, 1.5, 9);
+
+      // Phase Callout Badge
+      ctx.font = "900 10px 'Segoe UI', sans-serif";
+      ctx.textAlign = 'center';
+      ctx.fillStyle = pCol;
+      const phaseTag = this.bossPhase >= 3
+        ? '[PHASE III // APEX BERSERK • 32% ARMOR]'
+        : (this.bossPhase === 2 ? '[PHASE II // OVERCLOCKED • 18% ARMOR]' : `[PHASE I // ${this.bossTitle.split(' //')[0]}]`);
+      ctx.fillText(phaseTag, 0, by - 5);
+    }
     // HP bar & Elite Badge above regular enemies (drawn in unrotated camera-world space)
-    if (!this.isBoss && this.type !== 'boss' && (this.hp < this.maxHp || this.isElite || this.type === 'juggernaut' || this.type === 'nemesis')) {
-      const w = this.radius * 2.1;
-      ctx.fillStyle = 'rgba(10, 15, 30, 0.8)';
-      ctx.fillRect(-w / 2, -this.radius - 14, w, 4.5);
+    else if (this.hp < this.maxHp || this.isElite || this.type === 'juggernaut' || this.type === 'nemesis') {
+      const w = this.radius * 2.25;
+      const by = -this.radius - 15;
+      ctx.fillStyle = 'rgba(8, 12, 26, 0.86)';
+      ctx.fillRect(-w / 2, by, w, 5);
       ctx.fillStyle = this.type === 'nemesis' ? '#ff0055' : (this.isElite ? '#ffe600' : this.color);
-      ctx.fillRect(-w / 2, -this.radius - 14, Math.max(0, (this.hp / this.maxHp) * w), 4.5);
+      ctx.fillRect(-w / 2, by, Math.max(0, (this.hp / this.maxHp) * w), 5);
+      ctx.strokeStyle = this.isElite ? 'rgba(255, 230, 0, 0.5)' : 'rgba(255, 255, 255, 0.25)';
+      ctx.lineWidth = 0.9;
+      ctx.strokeRect(-w / 2, by, w, 5);
+
       if (this.type === 'nemesis') {
         ctx.font = "900 10px 'Segoe UI', sans-serif";
         ctx.textAlign = 'center';
         ctx.fillStyle = '#ffe600';
-        ctx.fillText('[VIP] NEMESIS BOUNTY', 0, -this.radius - 18);
+        ctx.fillText('[VIP] NEMESIS BOUNTY', 0, by - 5);
         // Vector target diamond
         ctx.strokeStyle = '#ff0055';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
-        ctx.moveTo(0, -this.radius - 34);
-        ctx.lineTo(5, -this.radius - 29);
-        ctx.lineTo(0, -this.radius - 24);
-        ctx.lineTo(-5, -this.radius - 29);
+        ctx.moveTo(0, by - 21);
+        ctx.lineTo(5, by - 16);
+        ctx.lineTo(0, by - 11);
+        ctx.lineTo(-5, by - 16);
         ctx.closePath();
         ctx.stroke();
+      } else if (this.type === 'juggernaut') {
+        ctx.font = "900 9px 'Segoe UI', sans-serif";
+        ctx.textAlign = 'center';
+        ctx.fillStyle = this.isElite ? '#ffe600' : '#ff2a55';
+        ctx.fillText(this.isElite ? '[ELITE SIEGE JUGGERNAUT]' : '[SIEGE JUGGERNAUT]', 0, by - 5);
       } else if (this.isElite) {
         ctx.font = "900 9px 'Segoe UI', sans-serif";
         ctx.textAlign = 'center';
         ctx.fillStyle = '#ffe600';
-        ctx.fillText('[ELITE]', 0, -this.radius - 18);
+        ctx.fillText('[OVERCLOCKED ELITE]', 0, by - 5);
       }
     }
 
@@ -11997,70 +12333,88 @@ function spawnWave() {
     chromaticFlash = Math.max(chromaticFlash, 18);
     const bossY = Math.max(120, player.y - 480);
     enemies.push(new Enemy(bType, player.x, bossY));
+
+    // Boss Royal Guard Escort & Twin-Titan Escalation (Wave 9+)
+    enemies.push(new Enemy('aegis', player.x - 180, bossY + 60, true));
+    enemies.push(new Enemy('aegis', player.x + 180, bossY + 60, true));
+    if (wave >= 7) {
+      enemies.push(new Enemy('phantom', player.x - 260, bossY + 110, true));
+      enemies.push(new Enemy('phantom', player.x + 260, bossY + 110, true));
+    }
+    if (wave >= 11 && wave % 4 === 3) {
+      const twinBoss = bossSchedule[(wave + 3) % bossSchedule.length];
+      enemies.push(new Enemy(twinBoss.type, player.x + 240, Math.max(120, player.y - 420)));
+      spawnFloatingText(player.x, player.y - 90, `TWIN TITAN ALERT: ${twinBoss.name.split(' //')[0]}!`, '#ffe600', 1.45);
+    }
   } else if (wave === 1) {
     announce(`// SECTOR 1 (${threatCfg.name}) — ARMED VANGUARD, STRIKERS & ELITE HUNTERS INBOUND //`, '#ff2a55');
   } else if (wave === 2) {
     announce(`// SECTOR 2 — AEGIS GUARDIANS, RAIL SNIPERS & PHANTOM ASSASSINS INBOUND //`, '#ff7b00');
   } else if (wave === 4) {
-    announce(`// SECTOR 4 — CHRONO-WEAVERS & SIEGE JUGGERNAUTS UNLEASHED //`, '#ff2a55');
+    announce(`// SECTOR 4 — CHRONO-WEAVERS, NEMESIS ACES & SIEGE JUGGERNAUTS UNLEASHED //`, '#ff2a55');
   } else {
     announce(`// SECTOR ${wave} — ${threatLabels[tierIdx]} HOSTILES INBOUND //`, '#ffe600');
   }
 
   // Build aggressive, multi-stage combat waves right from Sector 1!
-  const sMult = threatCfg.spawnMult || 1.25;
+  const sMult = (threatCfg.spawnMult || 1.25) * 1.12;
   const stage1 = []; // Fast armed vanguard: 'drone_bit', 'scout', 'striker'
   const stage2 = []; // Mid-wave pressure: 'striker', 'splitter', 'cruiser'
   const stage3 = []; // Heavy & tactical: 'cruiser', 'aegis', 'sniper'
   const stage4 = []; // Assassin flankers: 'sniper', 'phantom', 'weaver'
-  const stage5 = []; // Climax Elite Strike Force & Juggernauts
+  const stage5 = []; // Climax Elite Strike Force, Juggernauts & Nemesis Aces
 
   // Stage 1: Armed Drones, Lunging Scouts, and Twin-Blaster Strikers right from Sector 1
   const droneCount = Math.round(Math.max(4, 7 - Math.floor(wave / 3)) * sMult);
-  const scoutCount = Math.round((5 + wave) * sMult);
-  for (let i = 0; i < droneCount; i++) stage1.push({ type: 'drone_bit', elite: false });
-  for (let i = 0; i < scoutCount; i++) stage1.push({ type: 'scout', elite: i === 0 });
-  stage1.push({ type: 'striker', elite: false });
+  const scoutCount = Math.round((6 + wave) * sMult);
+  for (let i = 0; i < droneCount; i++) stage1.push({ type: 'drone_bit', elite: i === 0 && wave >= 2 });
+  for (let i = 0; i < scoutCount; i++) stage1.push({ type: 'scout', elite: i < 2 });
+  stage1.push({ type: 'striker', elite: true });
   stage1.push({ type: 'striker', elite: false });
 
   // Stage 2: Strikers, Hydra Splitters & Heavy Cruiser support right in Sector 1!
-  const strikerCount = Math.round((3 + Math.floor(wave * 0.9)) * sMult);
-  const splitterCount = Math.round((2 + Math.floor(wave * 0.65)) * sMult);
-  for (let i = 0; i < strikerCount; i++) stage2.push({ type: 'striker', elite: i === 0 && wave >= 2 });
-  for (let i = 0; i < splitterCount; i++) stage2.push({ type: 'splitter', elite: false });
-  stage2.push({ type: 'cruiser', elite: false });
+  const strikerCount = Math.round((3 + Math.floor(wave * 1.0)) * sMult);
+  const splitterCount = Math.round((2 + Math.floor(wave * 0.75)) * sMult);
+  for (let i = 0; i < strikerCount; i++) stage2.push({ type: 'striker', elite: i < 2 && wave >= 2 });
+  for (let i = 0; i < splitterCount; i++) stage2.push({ type: 'splitter', elite: i === 0 });
+  stage2.push({ type: 'cruiser', elite: wave >= 2 });
 
   // Stage 3: Cruisers, Aegis Shield Guardians & Rail Snipers (Sector 1 gets Cruiser + Aegis + Sniper!)
-  const cruiserCount = Math.round((1 + Math.floor(wave * 0.65)) * sMult);
-  const aegisCount = Math.round((1 + Math.floor(wave * 0.55)) * sMult);
-  for (let i = 0; i < cruiserCount; i++) stage3.push({ type: 'cruiser', elite: false });
-  for (let i = 0; i < aegisCount; i++) stage3.push({ type: 'aegis', elite: false });
-  stage3.push({ type: 'sniper', elite: false });
+  const cruiserCount = Math.round((2 + Math.floor(wave * 0.7)) * sMult);
+  const aegisCount = Math.round((2 + Math.floor(wave * 0.6)) * sMult);
+  for (let i = 0; i < cruiserCount; i++) stage3.push({ type: 'cruiser', elite: i === 0 });
+  for (let i = 0; i < aegisCount; i++) stage3.push({ type: 'aegis', elite: i === 0 });
+  stage3.push({ type: 'sniper', elite: wave >= 2 });
 
-  // Stage 4: Snipers & Blinking Phantoms (Sector 1 climax gets an Elite Striker + Phantom!)
+  // Stage 4: Snipers, Blinking Phantoms & Chrono-Weavers
   if (wave === 1) {
-    stage4.push({ type: 'phantom', elite: false });
+    stage4.push({ type: 'phantom', elite: true });
+    stage4.push({ type: 'sniper', elite: false });
     stage4.push({ type: 'striker', elite: true });
   } else {
-    const sniperCount = Math.round((1 + Math.floor((wave - 1) * 0.55)) * sMult);
-    const phantomCount = Math.round((1 + Math.floor((wave - 1) * 0.6)) * sMult);
-    for (let i = 0; i < sniperCount; i++) stage4.push({ type: 'sniper', elite: i === 0 && wave >= 3 });
-    for (let i = 0; i < phantomCount; i++) stage4.push({ type: 'phantom', elite: false });
+    const sniperCount = Math.round((2 + Math.floor((wave - 1) * 0.6)) * sMult);
+    const phantomCount = Math.round((2 + Math.floor((wave - 1) * 0.65)) * sMult);
+    for (let i = 0; i < sniperCount; i++) stage4.push({ type: 'sniper', elite: i === 0 });
+    for (let i = 0; i < phantomCount; i++) stage4.push({ type: 'phantom', elite: i === 0 });
   }
 
-  // Stage 5: Wave Climax — Elite Commanders, Chrono-Weavers & Juggernauts
+  // Stage 5: Wave Climax — Elite Commanders, Chrono-Weavers, Juggernauts & Nemesis VIP Aces
   if (wave === 1) {
     stage5.push({ type: 'cruiser', elite: true });
     stage5.push({ type: 'aegis', elite: true });
-  } else if (wave === 2) {
-    stage5.push({ type: 'weaver', elite: false });
     stage5.push({ type: 'juggernaut', elite: false });
+  } else if (wave === 2) {
+    stage5.push({ type: 'weaver', elite: true });
+    stage5.push({ type: 'juggernaut', elite: true });
     stage5.push({ type: 'phantom', elite: true });
+    stage5.push({ type: 'nemesis', elite: true });
   } else {
-    const weaverCount = Math.round((1 + Math.floor((wave - 2) * 0.55)) * sMult);
-    const juggCount = 1 + Math.floor((wave - 2) / 2);
-    for (let i = 0; i < weaverCount; i++) stage5.push({ type: 'weaver', elite: i === 0 && wave >= 4 });
-    for (let i = 0; i < juggCount; i++) stage5.push({ type: 'juggernaut', elite: wave >= 5 });
+    const weaverCount = Math.round((1 + Math.floor((wave - 1) * 0.6)) * sMult);
+    const juggCount = 1 + Math.floor(wave / 2);
+    for (let i = 0; i < weaverCount; i++) stage5.push({ type: 'weaver', elite: i < 2 });
+    for (let i = 0; i < juggCount; i++) stage5.push({ type: 'juggernaut', elite: true });
+    stage5.push({ type: 'nemesis', elite: true });
+    if (wave >= 6) stage5.push({ type: 'nemesis', elite: true });
     stage5.push({ type: 'phantom', elite: true });
     stage5.push({ type: 'aegis', elite: true });
   }
@@ -13938,8 +14292,9 @@ function loop() {
   setHudText('lvlText', `LVL ${player.level}`);
   setHudText('score', score.toLocaleString());
 
-  // Boss HUD
-  const activeBoss = enemies.find(e => (e.isBoss || e.type === 'boss' || (e.type && e.type.startsWith('boss'))) && e.active);
+  // Boss HUD (Supports 3-Phase Evolution & Multi-Boss Encounters)
+  const activeBosses = enemies.filter(e => (e.isBoss || e.type === 'boss' || (e.type && e.type.startsWith('boss'))) && e.active);
+  const activeBoss = activeBosses[0] || null;
   const hasBoss = !!activeBoss;
   if (hudCache.hasBoss !== hasBoss) {
     hudCache.hasBoss = hasBoss;
@@ -13948,15 +14303,22 @@ function loop() {
   if (activeBoss) {
     const bPct = Math.max(0, (activeBoss.hp / activeBoss.maxHp) * 100);
     setHudWidth('bossBar', bPct);
-    setHudText('bossText', `${Math.ceil(bPct)}%`);
-    const enraged = activeBoss.phase >= 2 || (activeBoss.hp / activeBoss.maxHp < 0.4);
-    const nameText = `${activeBoss.bossName || activeBoss.name || 'APEX OVERLORD'}${enraged ? ' // ENRAGED //' : ''}`;
+    setHudText('bossText', `${Math.ceil(activeBoss.hp).toLocaleString()} / ${Math.ceil(activeBoss.maxHp).toLocaleString()} (${Math.ceil(bPct)}%)`);
+    const bPhase = activeBoss.bossPhase || (bPct <= 30 ? 3 : (bPct <= 65 ? 2 : 1));
+    const phaseSuffix = bPhase >= 3
+      ? ' // [PHASE III: APEX BERSERK]'
+      : (bPhase === 2 ? ' // [PHASE II: OVERCLOCKED]' : ' // [PHASE I]');
+    const multiTag = activeBosses.length > 1 ? ` [+${activeBosses.length - 1} TITAN]` : '';
+    const baseTitle = activeBoss.bossTitle || activeBoss.bossName || activeBoss.name || 'APEX OVERLORD';
+    const nameText = `${baseTitle}${phaseSuffix}${multiTag}`;
     if (hudEls.bossName && hudCache.bossNameText !== nameText) {
       hudCache.bossNameText = nameText;
-      const bColor = activeBoss.color || '#ff0055';
+      const bColor = bPhase >= 3 ? '#ff0055' : (bPhase === 2 ? '#ffe600' : (activeBoss.color || '#ff0055'));
       hudEls.bossName.innerHTML = `<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="${bColor}" stroke-width="1.8"><polygon points="8,1.5 15,14 1,14"/><line x1="8" y1="6" x2="8" y2="10" stroke="#ffe600"/><circle cx="8" cy="12" r="0.8" fill="#ffe600"/></svg> <span style="color:${bColor}">${nameText}</span>`;
       if (hudEls.bossBar) {
-        hudEls.bossBar.style.background = `linear-gradient(90deg, ${bColor}, #ff0077)`;
+        hudEls.bossBar.style.background = bPhase >= 3
+          ? `linear-gradient(90deg, #ff0055, #ffe600, #ffffff)`
+          : `linear-gradient(90deg, ${ activeBoss.color || '#ff0055' }, #ff0077)`;
       }
     }
   }
@@ -14159,11 +14521,11 @@ loop();
     { type: 'boss_chronos', label: '07 OUROBOROS', color: '#eab308' },
     { type: 'boss_reaper', label: '08 THANATOS', color: '#10b981' },
     { type: 'boss_behemoth', label: '09 GORGON', color: '#84cc16' },
-    { type: 'boss_valkyrie', label: '10 VALKYRIE', color: '#f43f5e' },
-    { type: 'boss_hivemind', label: '11 OVERMIND', color: '#14b8a6' },
-    { type: 'boss_glacier', label: '12 JOTUNN', color: '#06b6d4' },
-    { type: 'boss_solaris', label: '13 HELIOS', color: '#facc15' },
-    { type: 'boss_mechadragon', label: '14 BAHAMUT', color: '#ef4444' },
+    { type: 'boss_pulsar', label: '10 PULSAR', color: '#f43f5e' },
+    { type: 'boss_valkyrie_zero', label: '11 VALKYRIE-0', color: '#e11d48' },
+    { type: 'boss_hivemind', label: '12 OVERMIND', color: '#14b8a6' },
+    { type: 'boss_banshee', label: '13 BANSHEE', color: '#8b5cf6' },
+    { type: 'boss_glacier', label: '14 JOTUNN', color: '#06b6d4' },
     { type: 'boss_oblivion', label: '15 OBLIVION', color: '#c084fc' }
   ];
 
@@ -14460,6 +14822,7 @@ loop();
   }
   requestAnimationFrame(tickTelemetry);
 })();
+
 
   </script>
 </body>

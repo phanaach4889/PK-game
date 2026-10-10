@@ -138,3 +138,4 @@ fs.writeFileSync(BUNDLE_HTML, bundled, 'utf8');
 fs.writeFileSync(ROOT_HTML, bundled, 'utf8');
 
 console.log(`[BUILT] Synced standalone bundle -> PK-game/neon_protocol_overdrive.html & E:/Code/neon_protocol_overdrive.html (${(Buffer.byteLength(bundled, 'utf8') / 1024).toFixed(1)} KB)`);
+

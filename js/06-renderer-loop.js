@@ -1494,8 +1494,9 @@ function loop() {
   setHudText('lvlText', `LVL ${player.level}`);
   setHudText('score', score.toLocaleString());
 
-  // Boss HUD
-  const activeBoss = enemies.find(e => (e.isBoss || e.type === 'boss' || (e.type && e.type.startsWith('boss'))) && e.active);
+  // Boss HUD (Supports 3-Phase Evolution & Multi-Boss Encounters)
+  const activeBosses = enemies.filter(e => (e.isBoss || e.type === 'boss' || (e.type && e.type.startsWith('boss'))) && e.active);
+  const activeBoss = activeBosses[0] || null;
   const hasBoss = !!activeBoss;
   if (hudCache.hasBoss !== hasBoss) {
     hudCache.hasBoss = hasBoss;
@@ -1504,15 +1505,22 @@ function loop() {
   if (activeBoss) {
     const bPct = Math.max(0, (activeBoss.hp / activeBoss.maxHp) * 100);
     setHudWidth('bossBar', bPct);
-    setHudText('bossText', `${Math.ceil(bPct)}%`);
-    const enraged = activeBoss.phase >= 2 || (activeBoss.hp / activeBoss.maxHp < 0.4);
-    const nameText = `${activeBoss.bossName || activeBoss.name || 'APEX OVERLORD'}${enraged ? ' // ENRAGED //' : ''}`;
+    setHudText('bossText', `${Math.ceil(activeBoss.hp).toLocaleString()} / ${Math.ceil(activeBoss.maxHp).toLocaleString()} (${Math.ceil(bPct)}%)`);
+    const bPhase = activeBoss.bossPhase || (bPct <= 30 ? 3 : (bPct <= 65 ? 2 : 1));
+    const phaseSuffix = bPhase >= 3
+      ? ' // [PHASE III: APEX BERSERK]'
+      : (bPhase === 2 ? ' // [PHASE II: OVERCLOCKED]' : ' // [PHASE I]');
+    const multiTag = activeBosses.length > 1 ? ` [+${activeBosses.length - 1} TITAN]` : '';
+    const baseTitle = activeBoss.bossTitle || activeBoss.bossName || activeBoss.name || 'APEX OVERLORD';
+    const nameText = `${baseTitle}${phaseSuffix}${multiTag}`;
     if (hudEls.bossName && hudCache.bossNameText !== nameText) {
       hudCache.bossNameText = nameText;
-      const bColor = activeBoss.color || '#ff0055';
+      const bColor = bPhase >= 3 ? '#ff0055' : (bPhase === 2 ? '#ffe600' : (activeBoss.color || '#ff0055'));
       hudEls.bossName.innerHTML = `<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="${bColor}" stroke-width="1.8"><polygon points="8,1.5 15,14 1,14"/><line x1="8" y1="6" x2="8" y2="10" stroke="#ffe600"/><circle cx="8" cy="12" r="0.8" fill="#ffe600"/></svg> <span style="color:${bColor}">${nameText}</span>`;
       if (hudEls.bossBar) {
-        hudEls.bossBar.style.background = `linear-gradient(90deg, ${bColor}, #ff0077)`;
+        hudEls.bossBar.style.background = bPhase >= 3
+          ? `linear-gradient(90deg, #ff0055, #ffe600, #ffffff)`
+          : `linear-gradient(90deg, ${ activeBoss.color || '#ff0055' }, #ff0077)`;
       }
     }
   }

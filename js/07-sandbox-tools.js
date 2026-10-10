@@ -15,11 +15,11 @@
     { type: 'boss_chronos', label: '07 OUROBOROS', color: '#eab308' },
     { type: 'boss_reaper', label: '08 THANATOS', color: '#10b981' },
     { type: 'boss_behemoth', label: '09 GORGON', color: '#84cc16' },
-    { type: 'boss_valkyrie', label: '10 VALKYRIE', color: '#f43f5e' },
-    { type: 'boss_hivemind', label: '11 OVERMIND', color: '#14b8a6' },
-    { type: 'boss_glacier', label: '12 JOTUNN', color: '#06b6d4' },
-    { type: 'boss_solaris', label: '13 HELIOS', color: '#facc15' },
-    { type: 'boss_mechadragon', label: '14 BAHAMUT', color: '#ef4444' },
+    { type: 'boss_pulsar', label: '10 PULSAR', color: '#f43f5e' },
+    { type: 'boss_valkyrie_zero', label: '11 VALKYRIE-0', color: '#e11d48' },
+    { type: 'boss_hivemind', label: '12 OVERMIND', color: '#14b8a6' },
+    { type: 'boss_banshee', label: '13 BANSHEE', color: '#8b5cf6' },
+    { type: 'boss_glacier', label: '14 JOTUNN', color: '#06b6d4' },
     { type: 'boss_oblivion', label: '15 OBLIVION', color: '#c084fc' }
   ];
 
@@ -316,3 +316,4 @@
   }
   requestAnimationFrame(tickTelemetry);
 })();
+

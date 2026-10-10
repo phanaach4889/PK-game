@@ -1545,70 +1545,88 @@ function spawnWave() {
     chromaticFlash = Math.max(chromaticFlash, 18);
     const bossY = Math.max(120, player.y - 480);
     enemies.push(new Enemy(bType, player.x, bossY));
+
+    // Boss Royal Guard Escort & Twin-Titan Escalation (Wave 9+)
+    enemies.push(new Enemy('aegis', player.x - 180, bossY + 60, true));
+    enemies.push(new Enemy('aegis', player.x + 180, bossY + 60, true));
+    if (wave >= 7) {
+      enemies.push(new Enemy('phantom', player.x - 260, bossY + 110, true));
+      enemies.push(new Enemy('phantom', player.x + 260, bossY + 110, true));
+    }
+    if (wave >= 11 && wave % 4 === 3) {
+      const twinBoss = bossSchedule[(wave + 3) % bossSchedule.length];
+      enemies.push(new Enemy(twinBoss.type, player.x + 240, Math.max(120, player.y - 420)));
+      spawnFloatingText(player.x, player.y - 90, `TWIN TITAN ALERT: ${twinBoss.name.split(' //')[0]}!`, '#ffe600', 1.45);
+    }
   } else if (wave === 1) {
     announce(`// SECTOR 1 (${threatCfg.name}) — ARMED VANGUARD, STRIKERS & ELITE HUNTERS INBOUND //`, '#ff2a55');
   } else if (wave === 2) {
     announce(`// SECTOR 2 — AEGIS GUARDIANS, RAIL SNIPERS & PHANTOM ASSASSINS INBOUND //`, '#ff7b00');
   } else if (wave === 4) {
-    announce(`// SECTOR 4 — CHRONO-WEAVERS & SIEGE JUGGERNAUTS UNLEASHED //`, '#ff2a55');
+    announce(`// SECTOR 4 — CHRONO-WEAVERS, NEMESIS ACES & SIEGE JUGGERNAUTS UNLEASHED //`, '#ff2a55');
   } else {
     announce(`// SECTOR ${wave} — ${threatLabels[tierIdx]} HOSTILES INBOUND //`, '#ffe600');
   }
 
   // Build aggressive, multi-stage combat waves right from Sector 1!
-  const sMult = threatCfg.spawnMult || 1.25;
+  const sMult = (threatCfg.spawnMult || 1.25) * 1.12;
   const stage1 = []; // Fast armed vanguard: 'drone_bit', 'scout', 'striker'
   const stage2 = []; // Mid-wave pressure: 'striker', 'splitter', 'cruiser'
   const stage3 = []; // Heavy & tactical: 'cruiser', 'aegis', 'sniper'
   const stage4 = []; // Assassin flankers: 'sniper', 'phantom', 'weaver'
-  const stage5 = []; // Climax Elite Strike Force & Juggernauts
+  const stage5 = []; // Climax Elite Strike Force, Juggernauts & Nemesis Aces
 
   // Stage 1: Armed Drones, Lunging Scouts, and Twin-Blaster Strikers right from Sector 1
   const droneCount = Math.round(Math.max(4, 7 - Math.floor(wave / 3)) * sMult);
-  const scoutCount = Math.round((5 + wave) * sMult);
-  for (let i = 0; i < droneCount; i++) stage1.push({ type: 'drone_bit', elite: false });
-  for (let i = 0; i < scoutCount; i++) stage1.push({ type: 'scout', elite: i === 0 });
-  stage1.push({ type: 'striker', elite: false });
+  const scoutCount = Math.round((6 + wave) * sMult);
+  for (let i = 0; i < droneCount; i++) stage1.push({ type: 'drone_bit', elite: i === 0 && wave >= 2 });
+  for (let i = 0; i < scoutCount; i++) stage1.push({ type: 'scout', elite: i < 2 });
+  stage1.push({ type: 'striker', elite: true });
   stage1.push({ type: 'striker', elite: false });
 
   // Stage 2: Strikers, Hydra Splitters & Heavy Cruiser support right in Sector 1!
-  const strikerCount = Math.round((3 + Math.floor(wave * 0.9)) * sMult);
-  const splitterCount = Math.round((2 + Math.floor(wave * 0.65)) * sMult);
-  for (let i = 0; i < strikerCount; i++) stage2.push({ type: 'striker', elite: i === 0 && wave >= 2 });
-  for (let i = 0; i < splitterCount; i++) stage2.push({ type: 'splitter', elite: false });
-  stage2.push({ type: 'cruiser', elite: false });
+  const strikerCount = Math.round((3 + Math.floor(wave * 1.0)) * sMult);
+  const splitterCount = Math.round((2 + Math.floor(wave * 0.75)) * sMult);
+  for (let i = 0; i < strikerCount; i++) stage2.push({ type: 'striker', elite: i < 2 && wave >= 2 });
+  for (let i = 0; i < splitterCount; i++) stage2.push({ type: 'splitter', elite: i === 0 });
+  stage2.push({ type: 'cruiser', elite: wave >= 2 });
 
   // Stage 3: Cruisers, Aegis Shield Guardians & Rail Snipers (Sector 1 gets Cruiser + Aegis + Sniper!)
-  const cruiserCount = Math.round((1 + Math.floor(wave * 0.65)) * sMult);
-  const aegisCount = Math.round((1 + Math.floor(wave * 0.55)) * sMult);
-  for (let i = 0; i < cruiserCount; i++) stage3.push({ type: 'cruiser', elite: false });
-  for (let i = 0; i < aegisCount; i++) stage3.push({ type: 'aegis', elite: false });
-  stage3.push({ type: 'sniper', elite: false });
+  const cruiserCount = Math.round((2 + Math.floor(wave * 0.7)) * sMult);
+  const aegisCount = Math.round((2 + Math.floor(wave * 0.6)) * sMult);
+  for (let i = 0; i < cruiserCount; i++) stage3.push({ type: 'cruiser', elite: i === 0 });
+  for (let i = 0; i < aegisCount; i++) stage3.push({ type: 'aegis', elite: i === 0 });
+  stage3.push({ type: 'sniper', elite: wave >= 2 });
 
-  // Stage 4: Snipers & Blinking Phantoms (Sector 1 climax gets an Elite Striker + Phantom!)
+  // Stage 4: Snipers, Blinking Phantoms & Chrono-Weavers
   if (wave === 1) {
-    stage4.push({ type: 'phantom', elite: false });
+    stage4.push({ type: 'phantom', elite: true });
+    stage4.push({ type: 'sniper', elite: false });
     stage4.push({ type: 'striker', elite: true });
   } else {
-    const sniperCount = Math.round((1 + Math.floor((wave - 1) * 0.55)) * sMult);
-    const phantomCount = Math.round((1 + Math.floor((wave - 1) * 0.6)) * sMult);
-    for (let i = 0; i < sniperCount; i++) stage4.push({ type: 'sniper', elite: i === 0 && wave >= 3 });
-    for (let i = 0; i < phantomCount; i++) stage4.push({ type: 'phantom', elite: false });
+    const sniperCount = Math.round((2 + Math.floor((wave - 1) * 0.6)) * sMult);
+    const phantomCount = Math.round((2 + Math.floor((wave - 1) * 0.65)) * sMult);
+    for (let i = 0; i < sniperCount; i++) stage4.push({ type: 'sniper', elite: i === 0 });
+    for (let i = 0; i < phantomCount; i++) stage4.push({ type: 'phantom', elite: i === 0 });
   }
 
-  // Stage 5: Wave Climax — Elite Commanders, Chrono-Weavers & Juggernauts
+  // Stage 5: Wave Climax — Elite Commanders, Chrono-Weavers, Juggernauts & Nemesis VIP Aces
   if (wave === 1) {
     stage5.push({ type: 'cruiser', elite: true });
     stage5.push({ type: 'aegis', elite: true });
-  } else if (wave === 2) {
-    stage5.push({ type: 'weaver', elite: false });
     stage5.push({ type: 'juggernaut', elite: false });
+  } else if (wave === 2) {
+    stage5.push({ type: 'weaver', elite: true });
+    stage5.push({ type: 'juggernaut', elite: true });
     stage5.push({ type: 'phantom', elite: true });
+    stage5.push({ type: 'nemesis', elite: true });
   } else {
-    const weaverCount = Math.round((1 + Math.floor((wave - 2) * 0.55)) * sMult);
-    const juggCount = 1 + Math.floor((wave - 2) / 2);
-    for (let i = 0; i < weaverCount; i++) stage5.push({ type: 'weaver', elite: i === 0 && wave >= 4 });
-    for (let i = 0; i < juggCount; i++) stage5.push({ type: 'juggernaut', elite: wave >= 5 });
+    const weaverCount = Math.round((1 + Math.floor((wave - 1) * 0.6)) * sMult);
+    const juggCount = 1 + Math.floor(wave / 2);
+    for (let i = 0; i < weaverCount; i++) stage5.push({ type: 'weaver', elite: i < 2 });
+    for (let i = 0; i < juggCount; i++) stage5.push({ type: 'juggernaut', elite: true });
+    stage5.push({ type: 'nemesis', elite: true });
+    if (wave >= 6) stage5.push({ type: 'nemesis', elite: true });
     stage5.push({ type: 'phantom', elite: true });
     stage5.push({ type: 'aegis', elite: true });
   }
