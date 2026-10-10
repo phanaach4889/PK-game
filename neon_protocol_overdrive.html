@@ -998,18 +998,26 @@
       cursor: default;
     }
 
+    #startScreen {
+      background: radial-gradient(circle at 50% 40%, rgba(8, 14, 30, 0.52) 0%, rgba(2, 3, 8, 0.84) 100%);
+      backdrop-filter: blur(2.5px);
+      overflow-y: auto;
+      max-height: 100vh;
+      padding: 18px 20px;
+    }
+
     .hidden {
       display: none !important;
     }
 
     .brand-logo-wrap {
-      width: min(760px, 94vw);
-      margin-bottom: 14px;
+      width: min(740px, 92vw);
+      margin-bottom: 10px;
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 22px rgba(0, 240, 255, 0.22));
+      filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 22px rgba(0, 240, 255, 0.25));
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -1054,6 +1062,149 @@
       filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.6));
     }
 
+    /* Live Boot Telemetry Ticker */
+    .boot-telemetry-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: #94a3b8;
+      background: rgba(4, 8, 20, 0.76);
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      border-radius: 99px;
+      padding: 6px 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.12);
+    }
+    .telemetry-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .t-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      box-shadow: 0 0 6px currentColor;
+    }
+
+    /* Combat Chassis Selector Matrix */
+    .chassis-selector-wrap {
+      max-width: 820px;
+      width: 100%;
+      margin-bottom: 14px;
+    }
+    .selector-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 0 6px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .selector-title {
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: #00f0ff;
+      text-transform: uppercase;
+    }
+    .selector-sub {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: #94a3b8;
+    }
+    .chassis-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+    .chassis-btn {
+      background: rgba(8, 14, 28, 0.75);
+      border: 1.5px solid rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+      padding: 9px 12px;
+      text-align: left;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+      color: #cbd5e1;
+    }
+    .chassis-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.18), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .chassis-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 240, 255, 0.6);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 240, 255, 0.25);
+    }
+    .chassis-btn:hover::before {
+      opacity: 1;
+    }
+    .chassis-btn.selected {
+      border-color: #00f0ff;
+      background: rgba(0, 240, 255, 0.14);
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.38), inset 0 0 15px rgba(0, 240, 255, 0.14);
+    }
+    .chassis-btn.selected[data-chassis="titan"] {
+      border-color: #ff2a55;
+      background: rgba(255, 42, 85, 0.15);
+      box-shadow: 0 0 25px rgba(255, 42, 85, 0.38), inset 0 0 15px rgba(255, 42, 85, 0.14);
+    }
+    .chassis-btn.selected[data-chassis="phantom"] {
+      border-color: #d946ef;
+      background: rgba(217, 70, 239, 0.15);
+      box-shadow: 0 0 25px rgba(217, 70, 239, 0.38), inset 0 0 15px rgba(217, 70, 239, 0.14);
+    }
+    .chassis-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .chassis-tier-badge {
+      font-size: 0.64rem;
+      font-weight: 900;
+      font-family: 'Courier New', monospace;
+      padding: 1px 6px;
+      border: 1px solid #00f0ff;
+      color: #00f0ff;
+      border-radius: 4px;
+      background: rgba(0, 240, 255, 0.1);
+    }
+    .chassis-class-tag {
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+    .chassis-name {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+    }
+    .chassis-stat-row {
+      display: flex;
+      gap: 8px;
+      font-size: 0.68rem;
+      color: #94a3b8;
+      font-family: 'Segoe UI', sans-serif;
+      flex-wrap: wrap;
+    }
+
     h1 {
       font-size: clamp(2.6rem, 6vw, 4.4rem);
       font-weight: 900;
@@ -1087,9 +1238,9 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      max-width: 780px;
+      max-width: 820px;
       width: 100%;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .threat-selector-bar {
@@ -1098,7 +1249,7 @@
       justify-content: center;
       gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
 
     .threat-mode-btn {
@@ -1132,22 +1283,49 @@
       .controls-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+      .chassis-grid {
+        grid-template-columns: 1fr;
+      }
       .upgrade-container {
         flex-direction: column;
       }
     }
 
     .control-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(0, 240, 255, 0.2);
+      background: rgba(10, 16, 32, 0.72);
+      border: 1.5px solid rgba(0, 240, 255, 0.18);
       border-radius: 12px;
-      padding: 11px 10px;
-      transition: transform 0.2s, border-color 0.2s;
+      padding: 9px 10px;
+      transition: all 0.22s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .control-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, #00f0ff, transparent);
+      transition: left 0.4s ease;
+    }
+
+    .control-card:hover::after {
+      left: 100%;
     }
 
     .control-card:hover {
       transform: translateY(-3px);
-      border-color: var(--cyan);
+      border-color: rgba(0, 240, 255, 0.55);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(0, 240, 255, 0.22);
+    }
+
+    .card-spec-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-family: 'Courier New', monospace;
+      color: #64748b;
+      margin-top: 3px;
+      letter-spacing: 0.05em;
     }
 
     .key-badge {
@@ -1155,11 +1333,11 @@
       background: rgba(0, 240, 255, 0.15);
       border: 1px solid var(--cyan);
       color: var(--cyan);
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 6px;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 800;
-      margin-bottom: 7px;
+      margin-bottom: 5px;
       box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
     }
 
@@ -1168,21 +1346,37 @@
       background-size: 200% 200%;
       color: #fff;
       border: none;
-      padding: 17px 46px;
+      padding: 16px 44px;
       font-size: 1.15rem;
       font-weight: 900;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       border-radius: 999px;
       cursor: pointer;
-      box-shadow: 0 0 30px rgba(0, 240, 255, 0.65);
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.65), 0 0 70px rgba(0, 119, 255, 0.35);
       transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-main::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -60%; width: 40%; height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+      transform: rotate(25deg);
+      animation: laserSweep 3.2s infinite ease-in-out;
+    }
+
+    @keyframes laserSweep {
+      0%, 20% { left: -60%; }
+      60%, 100% { left: 160%; }
     }
 
     .btn-main:hover {
       transform: scale(1.07);
-      box-shadow: 0 0 50px rgba(255, 0, 119, 0.85), 0 0 25px rgba(0, 240, 255, 0.9);
+      box-shadow: 0 0 55px rgba(255, 0, 119, 0.85), 0 0 30px rgba(0, 240, 255, 0.95);
     }
 
     /* =========================================================================
@@ -2488,63 +2682,128 @@
         <g transform="translate(0, 244)">
           <polygon points="186,0 714,0 698,38 170,38" fill="url(#npOverdriveGrad)" />
           <polygon points="190,3 709,3 695,35 176,35" fill="#060712" />
-          <g fill="#ffe600">
-            <polygon points="186,7 200,7 190,31 176,31" />
-            <polygon points="206,7 220,7 210,31 196,31" />
-            <polygon points="226,7 240,7 230,31 216,31" />
-            <polygon points="658,7 672,7 662,31 648,31" />
-            <polygon points="678,7 692,7 682,31 668,31" />
+          <g fill="#ffe600" opacity="0.9">
+            <polygon points="186,7 198,7 188,31 176,31" />
+            <polygon points="204,7 216,7 206,31 194,31" />
+            <polygon points="222,7 234,7 224,31 212,31" />
+            <polygon points="666,7 678,7 668,31 656,31" />
+            <polygon points="684,7 696,7 686,31 674,31" />
           </g>
-          <text x="442" y="25" text-anchor="middle" fill="#ffe600" font-family="'Segoe UI', 'Arial Black', sans-serif" font-size="16.5" font-weight="900" font-style="italic" letter-spacing="11">
+          <text x="445" y="24" text-anchor="middle" fill="#ffe600" font-family="'Segoe UI', 'Arial Black', sans-serif" font-size="14.5" font-weight="900" font-style="italic" letter-spacing="5">
             OVERDRIVE // SYNTH-ROGUE
           </text>
         </g>
       </svg>
     </div>
-    <p class="game-desc">
-      Drop into an overclocked cyber-sector against <strong>HARDENED SENTINEL ARMADAS</strong>. Unleash <strong>[Q] CYBER-KATANA PARRY</strong>, sweep the <strong>[R] OMEGA ION LASER</strong>, freeze time with <strong>[F] CHRONO SINGULARITY</strong>, deploy <strong>[X] PHANTOM SWARM SALVOS</strong>, and conquer <strong>[C] LIVE CONTRACTS</strong>!
-    </p>
 
+    <!-- Live Telemetry Status Ticker -->
+    <div class="boot-telemetry-bar">
+      <div class="telemetry-item"><span class="t-dot" style="background:#00ff88;"></span><span>SYS: <strong>NEURAL-V9.4</strong></span></div>
+      <div class="telemetry-item"><span class="t-dot" style="background:#00f0ff;"></span><span>SECTOR: <strong>8,400m MATRIX</strong></span></div>
+      <div class="telemetry-item"><span class="t-dot" style="background:#ffe600;"></span><span>CHASSIS: <strong id="telemetryChassis">VALKYRIE MK-IV</strong></span></div>
+      <div class="telemetry-item"><span class="t-dot" style="background:#ff0077;"></span><span>THREAT: <strong id="telemetryThreat">HARDENED (1.4X)</strong></span></div>
+    </div>
+
+    <!-- Interactive Combat Chassis Selection Matrix -->
+    <div class="chassis-selector-wrap">
+      <div class="selector-header">
+        <span class="selector-title">DEPLOYMENT CHASSIS MATRIX</span>
+        <span class="selector-sub">// CLICK CHASSIS TO EQUIP &amp; PREVIEW IN 3D //</span>
+      </div>
+      <div class="chassis-grid">
+        <button class="chassis-btn selected" data-chassis="interceptor" type="button">
+          <div class="chassis-top">
+            <span class="chassis-tier-badge">MK-IV</span>
+            <span class="chassis-class-tag" style="color: #00f0ff;">INTERCEPTOR</span>
+          </div>
+          <div class="chassis-name">VALKYRIE MK-IV</div>
+          <div class="chassis-stat-row">
+            <span>SPD <strong style="color:#00f0ff;">6.4</strong></span>
+            <span>HULL <strong>100</strong></span>
+            <span>TWIN BLASTER</span>
+          </div>
+        </button>
+
+        <button class="chassis-btn" data-chassis="titan" type="button">
+          <div class="chassis-top">
+            <span class="chassis-tier-badge" style="border-color:#ff2a55;color:#ff2a55;">MK-II</span>
+            <span class="chassis-class-tag" style="color: #ff2a55;">DREADNOUGHT</span>
+          </div>
+          <div class="chassis-name">AEGIS GOLIATH</div>
+          <div class="chassis-stat-row">
+            <span>SPD <strong style="color:#ff2a55;">5.5</strong></span>
+            <span>HULL <strong style="color:#ffe600;">160</strong></span>
+            <span>FLAK SPREAD + SHIELD</span>
+          </div>
+        </button>
+
+        <button class="chassis-btn" data-chassis="phantom" type="button">
+          <div class="chassis-top">
+            <span class="chassis-tier-badge" style="border-color:#d946ef;color:#d946ef;">MK-VII</span>
+            <span class="chassis-class-tag" style="color: #d946ef;">INFILTRATOR</span>
+          </div>
+          <div class="chassis-name">VOID REAPER</div>
+          <div class="chassis-stat-row">
+            <span>SPD <strong style="color:#d946ef;">6.9</strong></span>
+            <span>HULL <strong>80</strong></span>
+            <span>PIERCE NEEDLES + CRIT</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Controls & Tactical Arsenal Grid -->
     <div class="controls-grid">
       <div class="control-card">
         <div class="key-badge" style="border-color: #00ff88; color: #00ff88; background: rgba(0,255,136,0.16);">[Q] / MID-CLICK</div>
-        <div style="font-size: 0.78rem; color: #cbd5e1;">Cyber-Katana &amp; 3x Parry</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1; font-weight:700;">Cyber-Katana &amp; 3.5x Parry</div>
+        <div class="card-spec-tag">DEFLECT • SPATIAL RIFT</div>
       </div>
       <div class="control-card">
         <div class="key-badge" style="border-color: var(--cyan); color: var(--cyan); background: rgba(0,240,255,0.16);">[R] OMEGA BEAM</div>
-        <div style="font-size: 0.78rem; color: #cbd5e1;">Sweeping Hyper-Ion Laser</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1; font-weight:700;">Sweeping Hyper-Ion Laser</div>
+        <div class="card-spec-tag">TWIN FUNNELS • RAIL FINALE</div>
       </div>
       <div class="control-card">
         <div class="key-badge" style="border-color: #d946ef; color: #f0abfc; background: rgba(217,70,239,0.18);">[F] CHRONO DOME</div>
-        <div style="font-size: 0.78rem; color: #cbd5e1;">Time-Stop Field + Shatter</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1; font-weight:700;">Time-Stop Field + Shatter</div>
+        <div class="card-spec-tag">ORBIT BULLETS • PRESS [F] AGAIN</div>
       </div>
       <div class="control-card">
         <div class="key-badge" style="border-color: var(--yellow); color: var(--yellow); background: rgba(255,230,0,0.16);">[X] PHANTOM SALVO</div>
-        <div style="font-size: 0.78rem; color: #cbd5e1;">Holo-Decoy + 12x Missiles</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1; font-weight:700;">Holo-Decoy + Macross Salvo</div>
+        <div class="card-spec-tag">TETHER LASER • PRESS [X] SWAP</div>
       </div>
       <div class="control-card">
         <div class="key-badge" style="border-color: var(--magenta); color: #ff66b2; background: rgba(255,0,119,0.18);">[E] / [SPACE]</div>
-        <div style="font-size: 0.78rem; color: #cbd5e1;">Overdrive Nova &amp; Phase Dash</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1; font-weight:700;">Overdrive Nova &amp; Phase Dash</div>
+        <div class="card-spec-tag">6-WING PINIONS • CELESTIAL RAIN</div>
       </div>
       <div class="control-card">
         <div class="key-badge">[C] CONTRACT / [G] AUTO</div>
-        <div style="font-size: 0.78rem; color: #cbd5e1;">Live Missions &amp; Auto-Fire</div>
+        <div style="font-size: 0.78rem; color: #cbd5e1; font-weight:700;">Live Missions &amp; Auto-Fire</div>
+        <div class="card-spec-tag">SLALOM GATES • CORE HEIST</div>
       </div>
     </div>
 
+    <!-- Threat Mode Selector Bar & OST Preview -->
     <div class="threat-selector-bar" id="threatSelectorBar">
-      <button class="threat-mode-btn selected" data-threat="0">
+      <button class="threat-mode-btn selected" data-threat="0" type="button">
         <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1.5L13.5 4.5V10.5L8 14.5L2.5 10.5V4.5L8 1.5Z"/><circle cx="6" cy="7.5" r="1.1" fill="currentColor"/><circle cx="10" cy="7.5" r="1.1" fill="currentColor"/><path d="M5.5 11H10.5"/></svg>HARDENED FLEET (1.4x)
       </button>
-      <button class="threat-mode-btn" data-threat="1">
+      <button class="threat-mode-btn" data-threat="1" type="button">
         <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1.5C11.5 5 13 7.5 13 10.2C13 12.9 10.8 14.8 8 14.8C5.2 14.8 3 12.9 3 10.2C3 8 4.5 6 6.2 4.2C6 6.2 7.2 7 8 5C8.3 3.8 8.2 2.6 8 1.5Z"/><circle cx="8" cy="11" r="1.8" fill="currentColor"/></svg>OVERKILL SWARM (2.0x)
       </button>
-      <button class="threat-mode-btn" data-threat="2">
+      <button class="threat-mode-btn" data-threat="2" type="button">
         <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="1.5,12.5 3,5 6.3,8.5 8,3 9.7,8.5 13,5 14.5,12.5" fill="rgba(255,230,0,0.22)"/><line x1="2" y1="14.2" x2="14" y2="14.2"/></svg>APEX GODSLAYER (2.8x)
+      </button>
+      <button class="threat-mode-btn" id="previewOstBtn" type="button" title="Toggle Synthwave Soundtrack Preview">
+        <svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="2.5,3 13.5,8 2.5,13" fill="currentColor" fill-opacity="0.3"/></svg>PREVIEW OST
       </button>
     </div>
 
-    <button class="btn-main" id="startBtn">
+    <!-- High-Voltage Start Button with Laser Sweep -->
+    <button class="btn-main" id="startBtn" type="button">
       <svg class="ui-svg-icon" style="width:18px;height:18px;vertical-align:-3px;" viewBox="0 0 16 16" fill="currentColor"><polygon points="9.5,1 3,9 8,9 6.5,15 13,7 8,7"/></svg>INITIALIZE PROTOCOL &amp; DROP BEAT
     </button>
   </div>
@@ -3173,6 +3432,76 @@
       }
 
       // ---- SOUND EFFECTS ----
+      uiHover() {
+        if (!this.enabled || !this.ctx) return;
+        try {
+          const t = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(2400, t);
+          osc.frequency.exponentialRampToValueAtTime(3200, t + 0.032);
+          gain.gain.setValueAtTime(0.03, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
+          osc.connect(gain);
+          gain.connect(this.sfxBus);
+          osc.start(t);
+          osc.stop(t + 0.04);
+        } catch (e) {}
+      }
+
+      uiSelect() {
+        if (!this.enabled || !this.ctx) return;
+        try {
+          const t = this.ctx.currentTime;
+          [880, 1760].forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, t + idx * 0.035);
+            gain.gain.setValueAtTime(0.065, t + idx * 0.035);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + idx * 0.035 + 0.075);
+            osc.connect(gain);
+            gain.connect(this.sfxBus);
+            osc.start(t + idx * 0.035);
+            osc.stop(t + idx * 0.035 + 0.08);
+          });
+        } catch (e) {}
+      }
+
+      warpLaunch() {
+        if (!this.enabled || !this.ctx) return;
+        try {
+          const t = this.ctx.currentTime;
+          // Rising spool-up turbine sweep
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(90, t);
+          osc.frequency.exponentialRampToValueAtTime(2600, t + 0.42);
+          gain.gain.setValueAtTime(0.04, t);
+          gain.gain.linearRampToValueAtTime(0.18, t + 0.38);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+          osc.connect(gain);
+          gain.connect(this.sfxBus);
+          osc.start(t);
+          osc.stop(t + 0.52);
+
+          // Sub impact punch at launch
+          const sub = this.ctx.createOscillator();
+          const subGain = this.ctx.createGain();
+          sub.type = 'sine';
+          sub.frequency.setValueAtTime(140, t + 0.32);
+          sub.frequency.exponentialRampToValueAtTime(28, t + 0.78);
+          subGain.gain.setValueAtTime(0.35, t + 0.32);
+          subGain.gain.exponentialRampToValueAtTime(0.001, t + 0.82);
+          sub.connect(subGain);
+          subGain.connect(this.sfxBus);
+          sub.start(t + 0.32);
+          sub.stop(t + 0.84);
+        } catch (e) {}
+      }
+
       laser(isRail = false) {
         if (!this.enabled || !this.ctx) return;
         const t = this.ctx.currentTime;
@@ -3497,8 +3826,10 @@
       document.querySelectorAll('.threat-mode-btn').forEach(btn => {
         btn.classList.toggle('selected', Number(btn.dataset.threat) === threatModeIdx);
       });
+      const tEl = document.getElementById('telemetryThreat');
+      if (tEl) tEl.textContent = `${cfg.name.split(' ')[0]} (${cfg.hpMult}X)`;
       if (notify) {
-        sound.dash();
+        sound.uiSelect();
         announce(`// THREAT PROTOCOL: ${cfg.name} (${cfg.hpMult}x ENEMY POWER) //`, cfg.color);
       }
     }
@@ -3794,12 +4125,14 @@
 
     let currentUpgradeChoices = [];
 
+    let selectedChassis = 'interceptor'; // 'interceptor' | 'titan' | 'phantom'
+
     class Player {
       constructor() {
         this.reset();
       }
 
-      reset() {
+      reset(chassis = selectedChassis || 'interceptor') {
         this.x = WORLD_W / 2;
         this.y = WORLD_H / 2;
         camX = Math.max(0, Math.min(WORLD_W - canvas.width, this.x - canvas.width / 2));
@@ -3808,9 +4141,36 @@
         this.vy = 0;
         this.radius = 16;
         this.angle = 0;
-        this.speed = 6.2;
-        this.maxHp = 100;
-        this.hp = 100;
+
+        this.chassis = chassis;
+        if (chassis === 'titan') {
+          this.speed = 5.5;
+          this.maxHp = 160;
+          this.hp = 160;
+          this.shieldCharges = 1;
+          this.themeColor = '#ff2a55';
+          this.accentColor = '#ffe600';
+          this.chassisName = 'AEGIS GOLIATH';
+        } else if (chassis === 'phantom') {
+          this.speed = 6.9;
+          this.maxHp = 80;
+          this.hp = 80;
+          this.shieldCharges = 0;
+          this.critBonus = 0.25;
+          this.themeColor = '#d946ef';
+          this.accentColor = '#00f0ff';
+          this.chassisName = 'VOID REAPER';
+        } else {
+          // interceptor
+          this.speed = 6.4;
+          this.maxHp = 100;
+          this.hp = 100;
+          this.shieldCharges = 0;
+          this.critBonus = 0;
+          this.themeColor = '#00f0ff';
+          this.accentColor = '#ff0077';
+          this.chassisName = 'VALKYRIE MK-IV';
+        }
 
         this.dashCooldown = 0;
         this.dashMaxCooldown = 95;
@@ -4685,7 +5045,7 @@
 
         const isOver = this.overdriveActive > 0 || this.frenzyTimer > 0;
         const totalShots = isOver ? this.multishot + 2 : this.multishot;
-        const spreadStep = 0.11;
+        const spreadStep = this.chassis === 'titan' ? 0.15 : 0.11;
         const startOffset = -((totalShots - 1) / 2) * spreadStep;
 
         this.x -= Math.cos(this.angle) * 1.1;
@@ -4693,13 +5053,19 @@
 
         for (let i = 0; i < totalShots; i++) {
           const shotAngle = this.angle + startOffset + (i * spreadStep);
-          const color = isOver
+          let color = isOver
             ? (i % 2 === 0 ? '#ffe600' : '#ff0077')
-            : (isRailShot ? '#ff0077' : '#00f0ff');
-          const speed = isRailShot ? 22 : (isOver ? 18.5 : 16.5);
-          const dmg = (isRailShot ? 48 : 26) * (isOver ? 1.35 : 1);
-          const pierce = (isRailShot || isOver);
-          const style = isRailShot ? 'rail' : (isOver ? 'overdrive' : 'plasma');
+            : (isRailShot ? '#ff0077' : (this.themeColor || '#00f0ff'));
+          let speed = isRailShot ? 22 : (isOver ? 18.5 : 16.5);
+          let dmg = (isRailShot ? 48 : 26) * (isOver ? 1.35 : 1);
+          if (this.chassis === 'titan') {
+            dmg *= 1.3;
+            speed *= 0.94;
+          } else if (this.chassis === 'phantom') {
+            speed *= 1.16;
+          }
+          const pierce = (isRailShot || isOver || this.chassis === 'phantom');
+          const style = isRailShot ? 'rail' : (isOver ? 'overdrive' : (this.chassis === 'phantom' ? 'laser' : 'plasma'));
           projectiles.push(new Projectile(
             this.x + Math.cos(this.angle) * 16,
             this.y + Math.sin(this.angle) * 16,
@@ -5026,7 +5392,7 @@
 
         // Twin flickering afterburner plumes
         const flameLen = 10 + Math.random() * 8 + (isOver ? 10 : 0);
-        ctx.fillStyle = isOver ? '#ff0077' : '#00f0ff';
+        ctx.fillStyle = isOver ? '#ff0077' : (this.themeColor || '#00f0ff');
         ctx.beginPath();
         ctx.moveTo(-13, -6);
         ctx.lineTo(-13 - flameLen, -4);
@@ -5036,19 +5402,47 @@
         ctx.lineTo(-13, 6);
         ctx.fill();
 
-        // Outer forward-swept cyber wings
-        ctx.beginPath();
-        ctx.moveTo(22, 0);
-        ctx.lineTo(4, -7);
-        ctx.lineTo(-12, -17);
-        ctx.lineTo(-16, -12);
-        ctx.lineTo(-10, -4);
-        ctx.lineTo(-16, 0);
-        ctx.lineTo(-10, 4);
-        ctx.lineTo(-16, 12);
-        ctx.lineTo(-12, 17);
-        ctx.lineTo(4, 7);
-        ctx.closePath();
+        // Outer cyber wings custom to active chassis
+        if (this.chassis === 'titan') {
+          ctx.beginPath();
+          ctx.moveTo(25, 0);
+          ctx.lineTo(8, -12);
+          ctx.lineTo(-6, -22);
+          ctx.lineTo(-18, -16);
+          ctx.lineTo(-12, -6);
+          ctx.lineTo(-18, 0);
+          ctx.lineTo(-12, 6);
+          ctx.lineTo(-18, 16);
+          ctx.lineTo(-6, 22);
+          ctx.lineTo(8, 12);
+          ctx.closePath();
+        } else if (this.chassis === 'phantom') {
+          ctx.beginPath();
+          ctx.moveTo(28, 0);
+          ctx.lineTo(7, -7);
+          ctx.lineTo(-2, -25);
+          ctx.lineTo(-15, -20);
+          ctx.lineTo(-9, -4);
+          ctx.lineTo(-18, 0);
+          ctx.lineTo(-9, 4);
+          ctx.lineTo(-15, 20);
+          ctx.lineTo(-2, 25);
+          ctx.lineTo(7, 7);
+          ctx.closePath();
+        } else {
+          ctx.beginPath();
+          ctx.moveTo(22, 0);
+          ctx.lineTo(4, -7);
+          ctx.lineTo(-12, -17);
+          ctx.lineTo(-16, -12);
+          ctx.lineTo(-10, -4);
+          ctx.lineTo(-16, 0);
+          ctx.lineTo(-10, 4);
+          ctx.lineTo(-16, 12);
+          ctx.lineTo(-12, 17);
+          ctx.lineTo(4, 7);
+          ctx.closePath();
+        }
         ctx.fillStyle = isOver ? '#2a082e' : '#060a18';
         ctx.strokeStyle = glowColor;
         ctx.lineWidth = 2.4;
@@ -5056,7 +5450,7 @@
         ctx.stroke();
 
         // Wingtip cannon rails
-        ctx.strokeStyle = '#ff0077';
+        ctx.strokeStyle = this.accentColor || '#ff0077';
         ctx.lineWidth = 1.8;
         ctx.beginPath();
         ctx.moveTo(-6, -13);
@@ -5072,7 +5466,7 @@
         ctx.lineTo(-8, 0);
         ctx.lineTo(-5, 5);
         ctx.closePath();
-        ctx.fillStyle = isOver ? '#ffe600' : '#00f0ff';
+        ctx.fillStyle = isOver ? '#ffe600' : (this.themeColor || '#00f0ff');
         ctx.fill();
 
         ctx.beginPath();
@@ -9485,7 +9879,7 @@
     let gameState = 'START';
 
     function startNewGame() {
-      player.reset();
+      player.reset(selectedChassis);
       projectiles = [];
       enemyProjectiles = [];
       missiles = [];
@@ -9522,6 +9916,7 @@
       document.getElementById('gameOverScreen').classList.add('hidden');
       document.getElementById('upgradeScreen').classList.add('hidden');
       updatePerkBadges();
+      announce(`// CHASSIS DEPLOYED: ${player.chassisName} //`, player.themeColor);
       spawnWave();
     }
 
@@ -10412,6 +10807,293 @@
       }
     }
 
+    // 3D Perspective Wireframe Projection & Hologram System
+    function project3D(x, y, z, yaw, pitch, roll, cx, cy, fov = 420) {
+      const cyw = Math.cos(yaw), syw = Math.sin(yaw);
+      const x1 = x * cyw - z * syw;
+      const z1 = x * syw + z * cyw;
+      const y1 = y;
+
+      const cp = Math.cos(pitch), sp = Math.sin(pitch);
+      const y2 = y1 * cp - z1 * sp;
+      const z2 = y1 * sp + z1 * cp;
+      const x2 = x1;
+
+      const cr = Math.cos(roll), sr = Math.sin(roll);
+      const x3 = x2 * cr - y2 * sr;
+      const y3 = x2 * sr + y2 * cr;
+      const z3 = z2;
+
+      const scale = fov / (fov + z3 + 120);
+      return {
+        x: cx + x3 * scale,
+        y: cy + y3 * scale,
+        z: z3,
+        scale
+      };
+    }
+
+    const startHoloParticles = [];
+
+    function drawHologramFighter(cx, cy) {
+      const mouseOffsetX = ((mouse.screenX || canvas.width / 2) - canvas.width / 2) * 0.0008;
+      const mouseOffsetY = ((mouse.screenY || canvas.height / 2) - canvas.height / 2) * 0.0008;
+      const yaw = frameCount * 0.02 + mouseOffsetX;
+      const pitch = -0.32 + Math.sin(frameCount * 0.02) * 0.08 + mouseOffsetY;
+      const roll = Math.sin(frameCount * 0.016) * 0.12;
+
+      let model;
+      let themeCol = '#00f0ff';
+      let secCol = '#ff0077';
+      let label = 'VALKYRIE MK-IV // INTERCEPTOR';
+
+      if (selectedChassis === 'titan') {
+        themeCol = '#ff2a55';
+        secCol = '#ffe600';
+        label = 'AEGIS GOLIATH // DREADNOUGHT';
+        model = {
+          verts: [
+            [0, 4, 48], [-26, 2, 28], [26, 2, 28], [0, -18, 4],
+            [-68, 2, -14], [68, 2, -14], [-42, 6, -30], [42, 6, -30],
+            [0, 4, -44], [-20, 4, -40], [20, 4, -40], [0, -26, -10]
+          ],
+          edges: [
+            [0,1],[0,2],[1,3],[2,3],[1,4],[2,5],[4,6],[5,7],
+            [6,9],[7,10],[9,8],[8,10],[3,11],[11,8],[1,6],[2,7],[0,3]
+          ],
+          thrusters: [[-20, 4, -40], [0, 4, -44], [20, 4, -40]]
+        };
+      } else if (selectedChassis === 'phantom') {
+        themeCol = '#d946ef';
+        secCol = '#00f0ff';
+        label = 'VOID REAPER // INFILTRATOR';
+        model = {
+          verts: [
+            [0, -2, 64], [0, -14, 20], [0, 0, 0], [-28, -4, 28],
+            [28, -4, 28], [-64, 4, -26], [64, 4, -26], [-40, 2, -44],
+            [40, 2, -44], [0, 2, -48], [-16, -2, 42], [16, -2, 42]
+          ],
+          edges: [
+            [0,1],[1,2],[0,3],[0,4],[3,5],[4,6],[5,7],[6,8],
+            [7,9],[8,9],[2,9],[3,10],[4,11],[0,10],[0,11],[1,5],[1,6]
+          ],
+          thrusters: [[0, 2, -48]]
+        };
+      } else {
+        themeCol = '#00f0ff';
+        secCol = '#ff0077';
+        label = 'VALKYRIE MK-IV // INTERCEPTOR';
+        model = {
+          verts: [
+            [0, 3, 58], [0, -11, 16], [0, -7, -14], [0, 11, -2],
+            [-14, 2, 8], [14, 2, 8], [-58, 2, -18], [58, 2, -18],
+            [-24, 4, -28], [24, 4, -28], [-10, 3, -38], [10, 3, -38],
+            [-16, -24, -30], [16, -24, -30]
+          ],
+          edges: [
+            [0,1],[1,2],[0,3],[3,2],[0,4],[0,5],[4,6],[5,7],
+            [6,8],[7,9],[8,10],[9,11],[10,11],[2,12],[2,13],
+            [12,10],[13,11],[1,4],[1,5]
+          ],
+          thrusters: [[-10, 3, -38], [10, 3, -38]]
+        };
+      }
+
+      // Spawn ion particles from thrusters
+      if (model.thrusters && Math.random() < 0.65) {
+        const th = model.thrusters[Math.floor(Math.random() * model.thrusters.length)];
+        const pt = project3D(th[0], th[1], th[2], yaw, pitch, roll, cx, cy);
+        startHoloParticles.push({
+          x: pt.x,
+          y: pt.y,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: Math.random() * 2 + 1.2,
+          life: 25,
+          maxLife: 25,
+          color: themeCol
+        });
+      }
+
+      // Update & draw ion particles
+      for (let i = startHoloParticles.length - 1; i >= 0; i--) {
+        const p = startHoloParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+        if (p.life <= 0) {
+          startHoloParticles.splice(i, 1);
+          continue;
+        }
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = (p.life / p.maxLife) * 0.75;
+        ctx.fillRect(p.x - 1, p.y - 1, 2.5, 2.5);
+      }
+      ctx.globalAlpha = 1.0;
+
+      // Draw Orbiting Holographic Rings
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      // Outer targeting degree scale
+      ctx.save();
+      ctx.rotate(-frameCount * 0.008);
+      ctx.strokeStyle = `rgba(0, 240, 255, 0.22)`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(0, 0, 115, 0, Math.PI * 2);
+      ctx.stroke();
+      for (let i = 0; i < 12; i++) {
+        const a = (i * Math.PI) / 6;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a) * 110, Math.sin(a) * 110);
+        ctx.lineTo(Math.cos(a) * 118, Math.sin(a) * 118);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // Middle dashed ring
+      ctx.save();
+      ctx.rotate(frameCount * 0.016);
+      ctx.setLineDash([8, 8]);
+      ctx.strokeStyle = themeCol;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.arc(0, 0, 96, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      // Inner bracket reticle
+      ctx.strokeStyle = secCol;
+      ctx.lineWidth = 1.5;
+      const bSz = 85;
+      ctx.strokeRect(-bSz, -bSz, 14, 14);
+      ctx.strokeRect(bSz - 14, -bSz, 14, 14);
+      ctx.strokeRect(-bSz, bSz - 14, 14, 14);
+      ctx.strokeRect(bSz - 14, bSz - 14, 14, 14);
+      ctx.restore();
+
+      // Project vertices
+      const proj = model.verts.map(v => project3D(v[0], v[1], v[2], yaw, pitch, roll, cx, cy));
+
+      // Draw wireframe edges
+      ctx.save();
+      ctx.strokeStyle = themeCol;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      for (let i = 0; i < model.edges.length; i++) {
+        const e = model.edges[i];
+        const p1 = proj[e[0]];
+        const p2 = proj[e[1]];
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+      }
+      ctx.stroke();
+
+      // Glowing vertex nodes
+      ctx.fillStyle = '#ffffff';
+      for (let i = 0; i < proj.length; i++) {
+        const p = proj[i];
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Horizontal laser holographic scanline
+      const scanY = cy - 65 + ((frameCount * 2.5) % 130);
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.45)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(cx - 85, scanY);
+      ctx.lineTo(cx + 85, scanY);
+      ctx.stroke();
+
+      // Holographic Telemetry Text Overlay
+      ctx.font = "700 9px 'Courier New', monospace";
+      ctx.textAlign = 'center';
+      ctx.fillStyle = themeCol;
+      ctx.fillText(`CHASSIS: [${label}]`, cx, cy + 132);
+      ctx.fillStyle = '#94a3b8';
+      const deg = Math.round(((yaw % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) * (180 / Math.PI));
+      ctx.fillText(`BEARING: ${deg.toString().padStart(3, '0')}° // STATUS: ARMED // 60 FPS`, cx, cy + 146);
+      ctx.restore();
+    }
+
+    function drawStartScreenBackdrop() {
+      ctx.fillStyle = '#03030a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const cx = canvas.width / 2;
+      const horizonY = canvas.height * 0.62;
+
+      // 1. Moving space stars
+      ctx.fillStyle = '#ffffff';
+      const starSpeed = 0.8 + sound.beatPulse * 1.2;
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        s.y = (s.y + s.z * starSpeed * 0.4) % canvas.height;
+        ctx.globalAlpha = (s.z / 3.2) * 0.8;
+        ctx.fillRect(s.x, s.y, s.z, s.z);
+      }
+      ctx.globalAlpha = 1.0;
+
+      // 2. Synthwave Sunset / Singularity Core on Horizon
+      const sunR = Math.min(180, canvas.width * 0.16);
+      const sunGrad = ctx.createLinearGradient(cx, horizonY - sunR, cx, horizonY);
+      sunGrad.addColorStop(0, '#ffe600');
+      sunGrad.addColorStop(0.5, '#ff0077');
+      sunGrad.addColorStop(1, '#9d4edd');
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, horizonY, sunR, Math.PI, 0, false);
+      ctx.fillStyle = sunGrad;
+      ctx.globalAlpha = 0.55 + sound.beatPulse * 0.25;
+      ctx.fill();
+
+      // Slices through sun
+      ctx.fillStyle = '#03030a';
+      const sliceCount = 8;
+      for (let sl = 1; sl <= sliceCount; sl++) {
+        const slY = horizonY - (sunR * (sl / (sliceCount + 1)));
+        const slH = 2 + sl * 1.2;
+        ctx.fillRect(cx - sunR - 10, slY, (sunR + 10) * 2, slH);
+      }
+      ctx.restore();
+
+      // 3. Undulating 3D Synthwave Horizon Grid
+      ctx.save();
+      const gridScroll = (frameCount * (1.6 + sound.beatPulse * 2.2)) % 40;
+      ctx.lineWidth = 1.2;
+
+      const linesCount = 28;
+      for (let i = -linesCount; i <= linesCount; i++) {
+        const spread = (i / linesCount);
+        const bottomX = cx + spread * (canvas.width * 0.95);
+        ctx.strokeStyle = Math.abs(i) % 2 === 0 ? 'rgba(0, 240, 255, 0.35)' : 'rgba(255, 0, 119, 0.28)';
+        ctx.beginPath();
+        ctx.moveTo(cx, horizonY);
+        ctx.lineTo(bottomX, canvas.height);
+        ctx.stroke();
+      }
+
+      for (let z = 1; z < 18; z++) {
+        const pz = z * 40 - gridScroll;
+        if (pz <= 0) continue;
+        const norm = pz / 720;
+        const lineY = horizonY + Math.pow(norm, 1.8) * (canvas.height - horizonY);
+        if (lineY > canvas.height) break;
+        const alpha = Math.min(0.65, norm * 0.9);
+        ctx.strokeStyle = `rgba(0, 240, 255, ${alpha})`;
+        ctx.beginPath();
+        ctx.moveTo(0, lineY);
+        ctx.lineTo(canvas.width, lineY);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // 4. Interactive 3D Holographic Wireframe Fighter
+      drawHologramFighter(cx, horizonY - 45);
+    }
+
     // Main Loop
     function loop() {
       requestAnimationFrame(loop);
@@ -10420,6 +11102,11 @@
 
       if (hitStopFrames > 0) {
         hitStopFrames--;
+        return;
+      }
+
+      if (gameState === 'START') {
+        drawStartScreenBackdrop();
         return;
       }
 
@@ -10959,10 +11646,59 @@
     }
 
     // Event Listeners
-    document.getElementById('startBtn').onclick = () => {
-      sound.init();
-      startNewGame();
-    };
+    const startBtnEl = document.getElementById('startBtn');
+    if (startBtnEl) {
+      startBtnEl.onclick = () => {
+        sound.init();
+        sound.warpLaunch();
+        screenShake = 18;
+        chromaticFlash = 15;
+        startNewGame();
+      };
+    }
+
+    document.querySelectorAll('.chassis-btn').forEach(btn => {
+      btn.onclick = () => {
+        sound.init();
+        sound.uiSelect();
+        selectedChassis = btn.dataset.chassis || 'interceptor';
+        document.querySelectorAll('.chassis-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+
+        const names = {
+          interceptor: 'VALKYRIE MK-IV',
+          titan: 'AEGIS GOLIATH',
+          phantom: 'VOID REAPER'
+        };
+        const el = document.getElementById('telemetryChassis');
+        if (el) el.textContent = names[selectedChassis] || selectedChassis.toUpperCase();
+      };
+      btn.onmouseenter = () => {
+        sound.uiHover();
+      };
+    });
+
+    const prevOstEl = document.getElementById('previewOstBtn');
+    if (prevOstEl) {
+      prevOstEl.onclick = () => {
+        sound.init();
+        sound.uiSelect();
+        const active = sound.toggle();
+        prevOstEl.classList.toggle('selected', active);
+        prevOstEl.innerHTML = active
+          ? '<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="3" width="4" height="10"/><rect x="9" y="3" width="4" height="10"/></svg>STOP OST'
+          : '<svg class="ui-svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="2.5,3 13.5,8 2.5,13" fill="currentColor" fill-opacity="0.3"/></svg>PREVIEW OST';
+      };
+      prevOstEl.onmouseenter = () => {
+        sound.uiHover();
+      };
+    }
+
+    document.querySelectorAll('.control-card, .threat-mode-btn, .btn-main').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        sound.uiHover();
+      });
+    });
 
     document.getElementById('restartBtn').onclick = () => {
       sound.init();
