@@ -1,0 +1,22 @@
+{
+  "name": "neon-protocol-overdrive",
+  "version": "2.5.0",
+  "description": "NEON PROTOCOL // OVERDRIVE — Modular Cyber-Tactical Action Shooter (HTML5 + CSS3 + Modular JS + A.R.E.S. Sandbox Toolkit)",
+  "main": "index.html",
+  "scripts": {
+    "start": "node tools/dev-server.js",
+    "dev": "node tools/dev-server.js",
+    "build": "node tools/build.js",
+    "check": "node tools/check.js",
+    "deploy": "powershell -ExecutionPolicy Bypass -File deploy.ps1"
+  },
+  "keywords": [
+    "cyberpunk",
+    "shooter",
+    "canvas",
+    "webaudio",
+    "synthwave",
+    "html5-game"
+  ],
+  "license": "MIT"
+}
